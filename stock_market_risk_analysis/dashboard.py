@@ -698,7 +698,7 @@ else:
         section_header("RATIO DEFINITIONS")
         st.markdown("""
         <div style="background:rgba(191,146,162,0.2); border:1px solid #92425e; padding:1rem;
-                    border-radius:2px; margin-top:1rem;">
+                    border-radius:2px; margin-top:1rem; max-width:393px">
             <div style="font-size:0.75rem; color:#b06080; line-height:2;">
                 <strong>X1 = Working Capital / Total Assets :</strong> It measures a company's liquidity.<br>
                 <strong>X2 = Retained Earnings / Total Assets :</strong> It measures profitability.<br>
