@@ -685,11 +685,11 @@ else:
     
         ratios_df = pd.DataFrame([{
             "Ticker": r["symbol"],
-            "X1 (Liquidity)":     round(r["X1"], 2),
-            "X2 (Profitability)": round(r["X2"], 2),
-            "X3 (EBIT/Assets)":   round(r["X3"], 2),
-            "X4 (Leverage)":      round(r["X4"], 2),
-            "X5 (Efficiency)":    round(r["X5"], 2),
+            "X1":     round(r["X1"], 2),
+            "X2": round(r["X2"], 2),
+            "X3":   round(r["X3"], 2),
+            "X4":      round(r["X4"], 2),
+            "X5":    round(r["X5"], 2),
             "Z-Score":            round(r["Z_score"], 2),
         } for r in results])
         pink_table(ratios_df)
