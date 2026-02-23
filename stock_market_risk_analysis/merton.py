@@ -9,7 +9,7 @@ from data import (
 )
 
 def extract_merton_vars(ticker: yf.Ticker,
-                        risk_free_rate: float = 0.05,
+                        risk_free_rate: float = 0.0351,
                         horizon: float = 1.0) -> dict:
     bs = get_balance_sheet(ticker)
 
