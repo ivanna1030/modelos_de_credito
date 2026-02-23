@@ -4,7 +4,7 @@ warnings.filterwarnings("ignore")
 from tabulate import tabulate
 from credit_decision import analyze_portfolio
 
-TICKERS = ["AAPL", "TSLA", "DIS"]
+TICKERS = ["AAPL", "DIS", "WBD"]
 
 def print_results(results: list) -> None:
     

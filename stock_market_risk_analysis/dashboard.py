@@ -1,13 +1,3 @@
-"""
-dashboard.py
-============
-Dashboard de Streamlit para el análisis de riesgo bursátil.
-Estética terminal financiera — oscuro, preciso, profesional.
-
-Uso:
-    streamlit run dashboard.py
-"""
-
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -177,9 +167,9 @@ with st.sidebar:
 
     raw_input = st.text_input(
         "TICKER SYMBOLS",
-        value="AAPL, TSLA, DIS",
-        help="Ingresa los tickers separados por comas. Ej: AAPL, TSLA, MSFT, F",
-        placeholder="AAPL, TSLA, MSFT..."
+        value="AAPL, DIS, WBD",
+        help="Enter the tickers separated by commas. Example: AAPL, TSLA, MSFT, F",
+        placeholder=""
     )
 
     st.markdown("""
@@ -200,9 +190,9 @@ with st.sidebar:
         ◈ DECISION THRESHOLDS
     </div>
     <div style="font-size:0.65rem; color:#b06080; line-height:2; letter-spacing:0.5px;">
-        Z &gt; 3.0 ............ SAFE ZONE<br>
-        1.8 &lt; Z &lt; 3.0 ...... GREY ZONE<br>
         Z &lt; 1.8 ............ DISTRESS ZONE<br>
+        1.8 ≤ Z &lt; 3.0 ...... GREY ZONE<br>
+        Z ≥ 3.0 ............ SAFE ZONE<br>
         <br>
         PD &lt; 5% ............ LOW RISK<br>
         5% ≤ PD &lt; 20% ...... MED RISK<br>
@@ -578,7 +568,7 @@ if "results" not in st.session_state:
 if run_btn:
     tickers = [t.strip().upper() for t in raw_input.split(",") if t.strip()]
     if not tickers:
-        st.error("Ingresa al menos un ticker.")
+        st.error("Enter at least one ticker.")
     else:
         with st.spinner():
             try:
@@ -588,7 +578,7 @@ if run_btn:
                 st.session_state.tickers_done = tickers
                 st.session_state.ticker_objs = ticker_objs
             except Exception as e:
-                st.error(f"Error al obtener datos: {e}")
+                st.error(f"Error fetching data: {e}")
 
 results = st.session_state.results
 tickers = st.session_state.tickers_done
@@ -670,7 +660,7 @@ else:
         df = pd.DataFrame([{
             "Ticker":    r["symbol"],
             "Z-Score":   round(r["Z_score"], 2),
-            "Z Zone":    r["Z_class"],
+            "Zone":    r["Z_class"],
             "Asset Value": f"${r['Asset_Value_B']:.2f}B",
             "Asset Vol": f"{r['Asset_Vol']:.2%}",
             "Default Prob": f"{r['Default_Prob']:.2%}",
@@ -691,6 +681,7 @@ else:
             "X4":      round(r["X4"], 2),
             "X5":    round(r["X5"], 2),
             "Z-Score":            round(r["Z_score"], 2),
+            "Zone": r["Z_class"],
         } for r in results])
         pink_table(ratios_df)
 
@@ -719,6 +710,14 @@ else:
             to predict the likelihood that a company will go bankrupt within two years, assessing the 
             overall financial health of a company. It analyzes several financial ratios and combines five 
             of them using a weighting system to calculate the overall Z-Score.<br><br>
+            <b>Formula:</b><br>
+            &nbsp;Z = 1.2X₁ + 1.4X₂ + 3.3X₃ + 0.6X₄ + 1.0X₅<br><br>
+            <b>Where:</b><br>
+            &nbsp;<strong>X1 = Working Capital / Total Assets :</strong> It measures a company's liquidity.<br>
+            &nbsp;<strong>X2 = Retained Earnings / Total Assets :</strong> It measures profitability.<br>
+            &nbsp;<strong>X3 = EBIT / Total Assets :</strong> It measures operating efficiency.<br>
+            &nbsp;<strong>X4 = Market Cap / Total Liabilities :</strong> It measures leverage.<br>
+            &nbsp;<strong>X5 = Revenue / Total Assets :</strong> It measures asset turnover.<br><br>
             <b>Applications:</b><br>
             &nbsp;• <b>Financial status:</b> indicates financial solvency and predicts bankruptcy.<br>
             &nbsp;• <b>Investment decisions:</b> helps investors evaluate investment risks.<br>
@@ -778,8 +777,8 @@ else:
             st.markdown("""
             <div style="font-family:'IBM Plex Mono'; font-size:0.7rem; color:#92425e; line-height:2;">
             <b style="color:#92425e">Merton Model</b> uses option pricing theory to estimate a company's probability of default 
-            by modeling equity as a call option on the firm's assets, with debt as the strike price.<br><br>
-            <b>Core Concept:</b><br>
+            by modeling equity as a call option on the company's assets, with debt as the strike price.<br><br>
+            <b>Basic structure:</b><br>
             &nbsp;• <b>Assets (A):</b> total firm value.<br>
             &nbsp;• <b>Liabilities (L):</b> debt with a future maturity.<br>
             &nbsp;• <b>Equity (E):</b> treated as a call option on assets: E = max(A - L, 0).<br><br>
@@ -787,7 +786,7 @@ else:
             &nbsp;• If assets exceed debt at maturity, shareholders keep A - L.<br>
             &nbsp;• If assets are less than debt, the firm defaults and creditors take over.<br><br>
             <b>Distance to Default (DD):</b> Number of standard deviations between expected asset value at debt maturity and the liability threshold.<br>
-            &nbsp;• DD = (ln(V/D) + (r + σ²/2)·T) / (σ·√T)<br>
+            &nbsp;• DD = (ln(V/D) + (r + σ²/2)T) / (σ√T)<br>
             &nbsp;• A lower distance to default indicates a higher probability of default.<br><br>
             <b>Probability of Default (PD):</b> Probability of the asset value falling below the liability threshold.<br>
             &nbsp;• PD = 1 - N(DD)<br><br>
