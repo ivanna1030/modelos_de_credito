@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo de Crédito Tradicional</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --blue-dark: #0f2d5e;
+  --blue: #1a4fa0;
+  --blue-mid: #2563c4;
+  --blue-bright: #3b82f6;
+  --blue-light: #60a5fa;
+  --sky: #93c5fd;
+  --white: #f8faff;
+  --text: #e8f0ff;
+  --muted: #8ba7cc;
+  --accent: #38bdf8;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --card: rgba(15,45,94,0.6);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(26,79,160,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 80%, rgba(56,189,248,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 10%, rgba(37,99,196,0.2) 0%, transparent 50%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(10,22,40,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+}
+.nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  color: var(--accent);
+}
+.nav-tag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nav-sections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 0 32px;
+  height: 44px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-sections::-webkit-scrollbar { display: none; }
+.nav-sections a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.nav-sections a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+.nav-sections a.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(56,189,248,0.07); }
+.nav-sections a .n-num { font-family: 'DM Serif Display', serif; font-size: 10px; color: var(--blue-bright); opacity: 0.7; }
+
+/* ── HERO / PORTADA ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 92px 40px 40px;
+  overflow: hidden;
+}
+.hero-logo-corner {
+  position: absolute;
+  top: 100px;
+  left: 60px;
+  width: 160px;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+  z-index: 2;
+}
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%);
+}
+.hero-cover {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+  max-width: 680px;
+  width: 100%;
+}
+.hero-cover {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  max-width: 680px;
+  width: 100%;
+  height: calc(100vh - 92px);
+  justify-content: space-evenly;
+}
+.cover-uni {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px;
+  letter-spacing: 8px;
+  color: var(--sky);
+  text-transform: uppercase;
+}
+.cover-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--white);
+  letter-spacing: 4px;
+}
+.cover-title span {
+  color: var(--white);
+  font-style: normal;
+  display: block;
+}
+.cover-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.cover-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.cover-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  display: block;
+}
+.cover-materia {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+.cover-profesor {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.cover-materia-blanca { font-size: 13px; letter-spacing: 2px; color: var(--white); }
+.cover-integrantes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+.cover-member {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+.cover-member .cover-id {
+  color: var(--accent);
+  font-size: 11px;
+  margin-left: 8px;
+  font-weight: 300;
+}
+.cover-fecha {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+.cover-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.cover-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  display: block;
+  margin-bottom: 4px;
+}
+.cover-materia {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+.cover-integrantes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.cover-member {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 1px;
+  font-family: 'DM Sans', sans-serif;
+}
+.cover-member .cover-id {
+  color: var(--white);
+  font-size: 13px;
+  margin-left: 8px;
+  font-weight: 300;
+}
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: floatY 3s ease-in-out infinite;
+}
+@keyframes floatY {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+.scroll-hint::after {
+  content:'';
+  width:1px; height:40px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+}
+
+/* ── PROGRESS + BACK TO TOP ── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-bright), var(--accent));
+  z-index: 200;
+  width: 0%;
+  transition: width 0.1s;
+}
+.back-top {
+  position: fixed;
+  bottom: 55px; right: 42px;
+  width: 44px; height: 44px;
+  background: var(--blue-mid);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  font-size: 18px;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.back-top.show { opacity: 1; transform: translateY(0); }
+.back-top:hover { background: var(--blue-bright); }
+
+/* ── SECTIONS ── */
+.page-section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 80px;
+  border-top: 1px solid var(--glass-border);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.page-section.visible { opacity: 1; transform: translateY(0); }
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.section-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13px;
+  color: var(--accent);
+  background: rgba(56,189,248,0.1);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.1;
+  text-align: center;
+}
+.section-desc {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 560px;
+  margin-bottom: 56px;
+  line-height: 1.7;
+  text-align: center;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 960px;
+}
+.content-card {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.content-card:hover { border-color: rgba(56,189,248,0.3); transform: translateY(-2px); }
+.content-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.content-card h3::before {
+  content:'';
+  width:3px; height:20px;
+  background: var(--accent);
+  border-radius:2px;
+  flex-shrink:0;
+}
+.placeholder-box {
+  background: rgba(56,189,248,0.05);
+  border: 1px dashed rgba(56,189,248,0.2);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+.placeholder-box::before { content: '✏️  '; }
+
+/* ── ACCORDION ── */
+.accordion { max-width: 800px; display: flex; flex-direction: column; gap: 8px; }
+.accord-item {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.accord-item.open { border-color: rgba(56,189,248,0.3); }
+.accord-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  cursor: pointer;
+  user-select: none;
+}
+.accord-header h3 { font-size: 16px; font-weight: 500; color: var(--text); }
+.accord-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.accord-item.open .accord-icon { background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.3); color: var(--accent); transform: rotate(45deg); }
+.accord-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.accord-body-inner { padding: 0 24px 24px; }
+
+/* ── SCORECARD TABLE ── */
+.scorecard-table { width: 100%; border-collapse: collapse; max-width: 900px; }
+.scorecard-table thead tr { background: rgba(26,79,160,0.6); }
+.scorecard-table th { padding: 14px 20px; text-align: left; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--sky); font-weight: 500; }
+.scorecard-table td { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; }
+.scorecard-table tbody tr { transition: background 0.2s; }
+.scorecard-table tbody tr:hover { background: rgba(56,189,248,0.05); }
+.weight-bar-cell { display: flex; align-items: center; gap: 12px; }
+.weight-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; max-width: 120px; }
+.weight-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue-bright), var(--accent)); border-radius: 2px; transition: width 1.5s ease; }
+.weight-num { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--accent); min-width: 50px; text-align: right; }
+
+/* ── METRICS ── */
+.metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin-bottom: 48px; }
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.metric-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, var(--blue-bright), var(--accent)); transform: scaleX(0); transition: transform 0.3s; }
+.metric-card:hover::before { transform: scaleX(1); }
+.metric-card:hover { border-color: rgba(56,189,248,0.3); transform: translateY(-4px); }
+.metric-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.metric-value { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--white); line-height: 1; margin-bottom: 8px; transition: color 0.3s; }
+.metric-card:hover .metric-value { color: var(--accent); }
+.metric-sub { font-size: 12px; color: var(--muted); }
+
+/* ── CONFUSION MATRIX ── */
+.confusion-wrapper { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: start; max-width: 700px; }
+.confusion-matrix { display: grid; grid-template-columns: auto 1fr 1fr; grid-template-rows: auto 1fr 1fr; gap: 4px; }
+.cm-header { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 8px 12px; display: flex; align-items: center; justify-content: center; }
+.cm-cell { padding: 24px; border-radius: 8px; text-align: center; font-family: 'DM Serif Display', serif; }
+.cm-tp { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); }
+.cm-tn { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); }
+.cm-fp { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); }
+.cm-fn { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); }
+.cm-cell .cell-val { font-size: 32px; color: var(--white); display: block; }
+.cm-cell .cell-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; margin-top: 4px; }
+
+/* ── RANGES ── */
+.ranges { display: flex; flex-direction: column; gap: 16px; max-width: 680px; }
+.range-item { display: grid; grid-template-columns: 120px 1fr 100px; align-items: center; gap: 20px; }
+.range-label { font-size: 13px; color: var(--text); }
+.range-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+.range-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 1.5s cubic-bezier(.22,1,.36,1); }
+.range-approved .range-fill { background: linear-gradient(90deg, #10b981, #34d399); }
+.range-review .range-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.range-rejected .range-fill { background: linear-gradient(90deg, #ef4444, #f87171); }
+.range-score { font-size: 12px; color: var(--muted); text-align: right; }
+
+/* ── REFLECTION ── */
+.reflection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; }
+.reflection-card {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.reflection-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--blue-bright), var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+.reflection-card:hover::after { transform: scaleX(1); }
+.reflection-card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.25); }
+.reflection-card .rc-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+.reflection-card h3 { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--white); margin-bottom: 16px; }
+
+/* ── ANNEXES ── */
+.annex-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; }
+.annex-card { background: rgba(26,79,160,0.2); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; padding: 28px; transition: all 0.3s; }
+.annex-card:hover { background: rgba(26,79,160,0.35); border-color: rgba(59,130,246,0.4); }
+.annex-letter { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--blue-bright); opacity: 0.5; margin-bottom: 12px; }
+.annex-card h3 { font-size: 16px; font-weight: 500; color: var(--white); margin-bottom: 12px; }
+
+/* ── FOOTER ── */
+footer {
+  background: rgba(10,22,40,0.92);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 40px;
+  height: 48px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.footer-logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  color: var(--accent);
+}
+
+.footer-right {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .nav-top { padding: 0 20px; }
+  .nav-tag { display: none; }
+  .nav-sections { padding: 0 12px; }
+  .hero, .page-section, footer { padding: 80px 24px; }
+  .two-col { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: repeat(2, 1fr); }
+  .reflection-grid, .annex-grid { grid-template-columns: 1fr; }
+  .confusion-wrapper { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-top">
+    <div class="nav-logo">MODELO DE PUNTUACIÓN CREDITICIA</div>
+    <div class="nav-tag">ITESO · MODELOS DE CRÉDITO · 2026</div>
+  </div>
+  <div class="nav-sections">
+    <a href="#intro"><span class="n-num">01</span> Introducción</a>
+    <a href="#marco"><span class="n-num">02</span> Marco Teórico</a>
+    <a href="#scorecard"><span class="n-num">03</span> Scorecard</a>
+    <a href="#supuestos"><span class="n-num">04</span> Supuestos</a>
+    <a href="#resultados"><span class="n-num">05</span> Resultados</a>
+    <a href="#errores"><span class="n-num">06</span> Errores</a>
+    <a href="#conclusiones"><span class="n-num">07</span> Conclusiones</a>
+    <a href="#reflexion"><span class="n-num">08</span> Reflexión</a>
+    <a href="#anexos"><span class="n-num">★</span> Anexos</a>
+  </div>
+</nav>
+
+<!-- PORTADA -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-cover">
+
+    <!-- UNIVERSIDAD Y LOGO -->
+    <p class="cover-uni">ITESO</p>
+
+    <div class="cover-divider"></div>
+
+    <!-- TÍTULO -->
+    <h1 class="cover-title">MODELO DE<br><span>PUNTUACIÓN CREDITICIA</span></h1>
+
+    <div class="cover-divider"></div>
+
+    <!-- MATERIA -->
+    <div class="cover-block">
+      <span class="cover-label">Materia</span>
+      <p class="cover-materia-blanca">MODELOS DE CRÉDITO</p>
+    </div>
+
+    <div class="cover-divider"></div>
+
+    <!-- PROFESOR -->
+    <div class="cover-block">
+      <span class="cover-label">Profesor</span>
+      <p class="cover-profesor">RODOLFO SLAY RAMOS</p>
+    </div>
+
+    <div class="cover-divider"></div>
+
+    <!-- INTEGRANTES -->
+    <div class="cover-block">
+      <span class="cover-label">Integrantes</span>
+      <div class="cover-integrantes">
+        <p class="cover-member">IVANNA HERRERA IBARRA <span class="cover-id">744614</span></p>
+        <p class="cover-member">ANA SOFÍA HINOJOSA BALE <span class="cover-id">742594</span></p>
+        <p class="cover-member">LUIS FERNANDO MÁRQUEZ BAÑUELOS <span class="cover-id">744489</span></p>
+      </div>
+    </div>
+
+    <div class="cover-divider"></div>
+
+    <!-- FECHA -->
+    <div class="cover-block">
+      <span class="cover-label">Fecha</span>
+      <p class="cover-fecha">08 DE MARZO DE 2026</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 1. INTRODUCCIÓN -->
+<section class="page-section" id="intro">
+  <div class="section-eyebrow">
+    <span class="section-num">01</span>
+    <span class="section-label">Contexto y motivación</span>
+  </div>
+  <h2 class="section-title">Introducción</h2>
+  <p class="section-desc">El punto de partida: qué problema resolvemos y por qué importa.</p>
+  <div class="two-col">
+    <div class="content-card">
+      <h3>Contexto General</h3>
+      <div class="placeholder-box">Explica qué es el crédito y por qué es crucial en el sistema financiero. ¿Por qué los modelos de scoring son fundamentales para bancos y fintech?</div>
+    </div>
+    <div class="content-card">
+      <h3>Problemática</h3>
+      <div class="placeholder-box">¿Cuál es el problema a resolver? ¿Qué consecuencias tiene una mala evaluación crediticia: impago, exclusión financiera, pérdidas institucionales?</div>
+    </div>
+    <div class="content-card">
+      <h3>Objetivo del Proyecto</h3>
+      <div class="placeholder-box">Desarrollar un modelo de crédito capaz de evaluar a n solicitantes y comparar su desempeño contra una clasificación de referencia (dataset de test).</div>
+    </div>
+    <div class="content-card">
+      <h3>Alcance y Limitaciones</h3>
+      <div class="placeholder-box">Define qué cubre tu modelo (tipo de crédito, perfil de solicitantes, variables disponibles) y qué queda fuera del alcance.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. MARCO TEÓRICO -->
+<section class="page-section" id="marco">
+  <div class="section-eyebrow">
+    <span class="section-num">02</span>
+    <span class="section-label">Fundamentos académicos</span>
+  </div>
+  <h2 class="section-title">Marco Teórico</h2>
+  <p class="section-desc">Las bases conceptuales que sustentan nuestro modelo de scoring.</p>
+  <div class="accordion">
+    <div class="accord-item open" data-acc>
+      <div class="accord-header"><h3>Riesgo de Crédito — PD, LGD y EAD</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <div class="placeholder-box">Define el riesgo de crédito. Explica PD (Probabilidad de Default), LGD (Loss Given Default) y EAD (Exposure at Default). ¿Cuál es central en su modelo?</div>
+      </div></div>
+    </div>
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Modelos de Scoring Crediticio</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <div class="placeholder-box">¿Qué es un Credit Scorecard? Menciona su historia (FICO Score), los tipos de modelos y justifica por qué eligieron el enfoque tradicional.</div>
+      </div></div>
+    </div>
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Las 5 C's del Crédito</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <div class="placeholder-box">Describe las 5 C's: Capacidad, Capital, Carácter, Colateral y Condiciones. Señala cuáles tomaron en cuenta en su modelo.</div>
+      </div></div>
+    </div>
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Metodología de Evaluación</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <div class="placeholder-box">¿Cómo medirán el desempeño? Explica la comparación entre su clasificación y el dataset de referencia. Métricas: accuracy, matriz de confusión, tasa de error.</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SCORECARD -->
+<section class="page-section" id="scorecard">
+  <div class="section-eyebrow">
+    <span class="section-num">03</span>
+    <span class="section-label">Estructura del modelo</span>
+  </div>
+  <h2 class="section-title">Tablero de Puntaje</h2>
+  <p class="section-desc">Variables seleccionadas, pesos asignados y rangos de clasificación.</p>
+
+  <div class="content-card" style="max-width:900px; margin-bottom:40px;">
+    <h3>Variables y Ponderaciones</h3>
+    <table class="scorecard-table">
+      <thead><tr><th>#</th><th>Variable</th><th>Descripción</th><th>Peso / Puntos</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Variable 1</td><td><span style="color:var(--muted);font-style:italic">Ej. Historial crediticio</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="85%"></div></div><span class="weight-num">XX</span></div></td></tr>
+        <tr><td>2</td><td>Variable 2</td><td><span style="color:var(--muted);font-style:italic">Ej. Ingresos mensuales</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="70%"></div></div><span class="weight-num">XX</span></div></td></tr>
+        <tr><td>3</td><td>Variable 3</td><td><span style="color:var(--muted);font-style:italic">Ej. Relación deuda-ingreso</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="55%"></div></div><span class="weight-num">XX</span></div></td></tr>
+        <tr><td>4</td><td>Variable 4</td><td><span style="color:var(--muted);font-style:italic">Ej. Años de empleo</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="40%"></div></div><span class="weight-num">XX</span></div></td></tr>
+        <tr><td>5</td><td>Variable 5</td><td><span style="color:var(--muted);font-style:italic">Agregar la tuya aquí</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="30%"></div></div><span class="weight-num">XX</span></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="content-card" style="max-width:680px;">
+    <h3>Rangos de Clasificación</h3>
+    <div class="ranges" style="margin-top:16px;">
+      <div class="range-item range-approved"><span class="range-label">✅ Aprobado</span><div class="range-track"><div class="range-fill" data-width="75%"></div></div><span class="range-score">XXX – XXX pts</span></div>
+      <div class="range-item range-review"><span class="range-label">⚠️ Revisión</span><div class="range-track"><div class="range-fill" data-width="50%"></div></div><span class="range-score">XXX – XXX pts</span></div>
+      <div class="range-item range-rejected"><span class="range-label">❌ Rechazado</span><div class="range-track"><div class="range-fill" data-width="25%"></div></div><span class="range-score">0 – XXX pts</span></div>
+    </div>
+    <div class="placeholder-box" style="margin-top:24px;">Define los umbrales exactos. ¿Cómo determinaron estos cortes? ¿Por distribución estadística, regla de negocio o decisión del equipo?</div>
+  </div>
+</section>
+
+<!-- 4. SUPUESTOS -->
+<section class="page-section" id="supuestos">
+  <div class="section-eyebrow">
+    <span class="section-num">04</span>
+    <span class="section-label">Hipótesis y decisiones</span>
+  </div>
+  <h2 class="section-title">Supuestos del Modelo</h2>
+  <p class="section-desc">Las hipótesis concretas sobre las que se construye el modelo.</p>
+  <div class="two-col">
+    <div class="content-card"><h3>Sobre los Datos</h3><div class="placeholder-box">¿Asumieron datos completos, sin outliers extremos, representativos de la población? ¿Cómo manejaron valores faltantes?</div></div>
+    <div class="content-card"><h3>Sobre las Variables</h3><div class="placeholder-box">¿Asumieron independencia entre variables? ¿Priorizaron alguna por criterio experto o estadístico? ¿Cómo definieron los pesos?</div></div>
+    <div class="content-card"><h3>Sobre el Comportamiento Crediticio</h3><div class="placeholder-box">¿Qué definición de "buen pagador" vs "mal pagador" usaron? ¿Cuál es el criterio de default? ¿30 días de mora? ¿60?</div></div>
+    <div class="content-card"><h3>Limitaciones Conocidas</h3><div class="placeholder-box">Describe honestamente lo que el modelo NO puede hacer y dónde podría tener sesgos.</div></div>
+  </div>
+</section>
+
+<!-- 5. RESULTADOS -->
+<section class="page-section" id="resultados">
+  <div class="section-eyebrow">
+    <span class="section-num">05</span>
+    <span class="section-label">Desempeño del modelo</span>
+  </div>
+  <h2 class="section-title">Resultados</h2>
+  <p class="section-desc">Comparación entre la clasificación del modelo y el dataset de referencia.</p>
+  <div class="metrics-row">
+    <div class="metric-card"><div class="metric-label">Exactitud</div><div class="metric-value">XX%</div><div class="metric-sub">Accuracy total</div></div>
+    <div class="metric-card"><div class="metric-label">Evaluados</div><div class="metric-value">XXX</div><div class="metric-sub">Solicitantes en test</div></div>
+    <div class="metric-card"><div class="metric-label">Correctos</div><div class="metric-value">XXX</div><div class="metric-sub">Aciertos del modelo</div></div>
+    <div class="metric-card"><div class="metric-label">Errores</div><div class="metric-value">XX</div><div class="metric-sub">Clasificaciones incorrectas</div></div>
+  </div>
+  <h3 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:24px;">Matriz de Confusión</h3>
+  <div class="confusion-wrapper">
+    <div class="confusion-matrix">
+      <div></div>
+      <div class="cm-header">Pred: Bueno</div>
+      <div class="cm-header">Pred: Malo</div>
+      <div class="cm-header" style="writing-mode:vertical-rl;text-align:center;">Real: Bueno</div>
+      <div class="cm-cell cm-tp"><span class="cell-val">XX</span><span class="cell-label">VP</span></div>
+      <div class="cm-cell cm-fn"><span class="cell-val">XX</span><span class="cell-label">FN</span></div>
+      <div class="cm-header" style="writing-mode:vertical-rl;text-align:center;">Real: Malo</div>
+      <div class="cm-cell cm-fp"><span class="cell-val">XX</span><span class="cell-label">FP</span></div>
+      <div class="cm-cell cm-tn"><span class="cell-val">XX</span><span class="cell-label">VN</span></div>
+    </div>
+    <div class="content-card">
+      <h3>Interpretación</h3>
+      <div class="placeholder-box">Explica cada cuadrante. ¿Cuál error es más costoso? FP (dar crédito a quien no debería) vs FN (rechazar a quien sí lo merece).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. ERRORES -->
+<section class="page-section" id="errores">
+  <div class="section-eyebrow">
+    <span class="section-num">06</span>
+    <span class="section-label">Diagnóstico de fallas</span>
+  </div>
+  <h2 class="section-title">Análisis de Errores</h2>
+  <p class="section-desc">¿Dónde, cuánto y por qué se equivocó el modelo?</p>
+  <div class="two-col">
+    <div class="content-card"><h3>Cantidad y Tipo de Errores</h3><div class="placeholder-box">¿Cuántos errores totales? ¿Predominaron los FP o FN? Incluye porcentajes sobre el total evaluado.</div></div>
+    <div class="content-card"><h3>Análisis de Causas</h3><div class="placeholder-box">¿Por qué falló el modelo? ¿Hay un perfil de solicitante donde falla más? ¿Falta alguna variable importante?</div></div>
+    <div class="content-card"><h3>Casos Atípicos (Outliers)</h3><div class="placeholder-box">¿Detectaron casos donde el modelo falló por valores extremos? ¿Cómo impactaron en el desempeño general?</div></div>
+    <div class="content-card"><h3>Posibles Mejoras</h3><div class="placeholder-box">¿Qué cambiarían para reducir errores? ¿Nuevas variables, distintos pesos, otro método de clasificación?</div></div>
+  </div>
+</section>
+
+<!-- 7. CONCLUSIONES -->
+<section class="page-section" id="conclusiones">
+  <div class="section-eyebrow">
+    <span class="section-num">07</span>
+    <span class="section-label">Síntesis final</span>
+  </div>
+  <h2 class="section-title">Conclusiones</h2>
+  <p class="section-desc">¿Qué logramos, qué aprendimos y qué implicaciones tiene esto en la vida real?</p>
+  <div class="two-col">
+    <div class="content-card"><h3>Sobre el Modelo</h3><div class="placeholder-box">¿Qué tan bueno resultó? ¿Superó las expectativas? ¿Qué tan similar fue la clasificación al dataset de referencia?</div></div>
+    <div class="content-card"><h3>Sobre el Proceso</h3><div class="placeholder-box">¿Qué decisiones fueron más críticas? ¿Qué harían diferente si empezaran de nuevo?</div></div>
+    <div class="content-card"><h3>Implicaciones Prácticas y Éticas</h3><div class="placeholder-box">Si este modelo se usara en una institución real, ¿qué consideraciones éticas habría? ¿Podría haber sesgos o discriminación indirecta?</div></div>
+    <div class="content-card"><h3>Trabajo Futuro</h3><div class="placeholder-box">Con más tiempo o datos, ¿cómo extenderían el proyecto? ¿Regresión logística, random forest, redes neuronales?</div></div>
+  </div>
+</section>
+
+<!-- 8. REFLEXIÓN -->
+<section class="page-section" id="reflexion">
+  <div class="section-eyebrow">
+    <span class="section-num">08</span>
+    <span class="section-label">Perspectiva del equipo</span>
+  </div>
+  <h2 class="section-title">Reflexión del Equipo</h2>
+  <p class="section-desc">Los mayores retos, cómo los superaron y qué se llevan de esta experiencia.</p>
+  <div class="reflection-grid">
+    <div class="reflection-card"><span class="rc-icon">🧗</span><h3>Mayores Retos</h3><div class="placeholder-box">¿Cuáles fueron los obstáculos más grandes? (datos sucios, elección de variables, calibración de pesos, tiempo, trabajo en equipo).</div></div>
+    <div class="reflection-card"><span class="rc-icon">🔧</span><h3>Cómo los Superaron</h3><div class="placeholder-box">¿Qué estrategias tomaron? ¿Buscaron referencias externas, iteraron el modelo, dividieron el trabajo de cierta manera?</div></div>
+    <div class="reflection-card"><span class="rc-icon">💡</span><h3>Aprendizajes del Equipo</h3><div class="placeholder-box">Más allá del contenido técnico, ¿qué se llevan? Trabajo colaborativo, pensamiento crítico, el rol del crédito en la sociedad.</div></div>
+  </div>
+</section>
+
+<!-- ANEXOS -->
+<section class="page-section" id="anexos">
+  <div class="section-eyebrow">
+    <span class="section-num">★</span>
+    <span class="section-label">Material complementario</span>
+  </div>
+  <h2 class="section-title">Anexos</h2>
+  <p class="section-desc">Código fuente, dataset y referencias bibliográficas del proyecto.</p>
+  <div class="annex-grid">
+    <div class="annex-card"><div class="annex-letter">A</div><h3>Código Python / Archivo Excel</h3><div class="placeholder-box">Describe tu código o archivo Excel. ¿Qué librerías usaron? ¿Cómo está organizado?</div></div>
+    <div class="annex-card"><div class="annex-letter">B</div><h3>Descripción del Dataset</h3><div class="placeholder-box">¿Cuántas columnas y filas? ¿Qué tipo de datos contiene? ¿Cómo se distribuía la variable objetivo?</div></div>
+    <div class="annex-card"><div class="annex-letter">C</div><h3>Referencias Bibliográficas</h3><div class="placeholder-box">Lista las fuentes con el formato que pida tu institución (APA, MLA, Chicago, etc.).</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MODELO DE PUNTUACIÓN CREDITICIA</div>
+  <div class="footer-right">ITESO · MODELOS DE CRÉDITO · 2026</div>
+</footer>
+
+<a href="#" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑</a>
+
+<script>
+const progress = document.getElementById('progress');
+const backTop = document.getElementById('backTop');
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  progress.style.width = (scrolled / total * 100) + '%';
+  if (scrolled > 400) backTop.classList.add('show');
+  else backTop.classList.remove('show');
+  document.querySelectorAll('.page-section').forEach(sec => {
+    const top = sec.offsetTop - 100;
+    const id = sec.getAttribute('id');
+    const link = document.querySelector('.nav-sections a[href="#' + id + '"]');
+    if (!link) return;
+    if (scrolled >= top && scrolled < top + sec.offsetHeight) {
+      document.querySelectorAll('.nav-sections a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      setTimeout(() => {
+        e.target.querySelectorAll('[data-width]').forEach(bar => {
+          bar.style.width = bar.getAttribute('data-width');
+        });
+      }, 200);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.page-section').forEach(s => observer.observe(s));
+
+document.querySelectorAll('[data-acc]').forEach(item => {
+  const header = item.querySelector('.accord-header');
+  const body = item.querySelector('.accord-body');
+  if (item.classList.contains('open')) body.style.maxHeight = body.scrollHeight + 'px';
+  header.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('[data-acc]').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.accord-body').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
