@@ -43,6 +43,35 @@ body::before {
   z-index:0;
 }
 
+.download-btn {
+  display: inline-block;
+  margin-bottom: 12px; /* separa del contenido debajo */
+  padding: 8px 16px;
+  background: var(--blue-bright);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.download-btn:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+}
+
+.accord-body-inner pre {
+    background: rgba(56,189,248,0.05);
+    border: 1px dashed rgba(56,189,248,0.2);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--text);
+}
+
 /* ── NAV ── */
 nav {
   position: fixed;
@@ -522,8 +551,23 @@ nav {
 .reflection-card h3 { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--white); margin-bottom: 16px; }
 
 /* ── ANNEXES ── */
-.annex-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; }
-.annex-card { background: rgba(26,79,160,0.2); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; padding: 28px; transition: all 0.3s; }
+/* Grilla de anexos más ancha */
+.annex-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(1000px, 1fr)); 
+  gap: 24px; 
+  max-width: 1000px; /* más ancho que antes */
+}
+
+/* Tarjetas de anexos más amplias */
+.annex-card { 
+  background: rgba(26,79,160,0.25); 
+  border: 1px solid rgba(59,130,246,0.3); 
+  border-radius: 12px; 
+  padding: 32px; /* un poco más de padding también ayuda */
+  transition: all 0.3s; 
+}
+
 .annex-card:hover { background: rgba(26,79,160,0.35); border-color: rgba(59,130,246,0.4); }
 .annex-letter { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--blue-bright); opacity: 0.5; margin-bottom: 12px; }
 .annex-card h3 { font-size: 16px; font-weight: 500; color: var(--white); margin-bottom: 12px; }
@@ -849,10 +893,112 @@ footer {
   </div>
   <h2 class="section-title">Anexos</h2>
   <p class="section-desc">Código fuente, dataset y referencias bibliográficas del proyecto.</p>
+  
   <div class="annex-grid">
-    <div class="annex-card"><div class="annex-letter">A</div><h3>Código Python / Archivo Excel</h3><div class="placeholder-box">Describe tu código o archivo Excel. ¿Qué librerías usaron? ¿Cómo está organizado?</div></div>
-    <div class="annex-card"><div class="annex-letter">B</div><h3>Descripción del Dataset</h3><div class="placeholder-box">¿Cuántas columnas y filas? ¿Qué tipo de datos contiene? ¿Cómo se distribuía la variable objetivo?</div></div>
-    <div class="annex-card"><div class="annex-letter">C</div><h3>Referencias Bibliográficas</h3><div class="placeholder-box">Lista las fuentes con el formato que pida tu institución (APA, MLA, Chicago, etc.).</div></div>
+    <!-- Anexo A -->
+    <div class="annex-card accord-item" data-acc>
+      <div class="accord-header">
+        <div class="annex-letter">Archivo 1.ipynb</div>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-body-inner">
+          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
+          <div class="accord-body-inner">
+            <pre><code>
+          # Ejemplo de código Python para scoring
+          import pandas as pd
+          from sklearn.linear_model import LogisticRegression
+
+          # Cargar datos
+          df = pd.read_excel('dataset_credito.xlsx')
+
+          # Definir variables y target
+          X = df[['historial', 'ingresos', 'deuda_ingreso']]
+          y = df['buen_pagador']
+
+          # Entrenar modelo
+          modelo = LogisticRegression()
+          modelo.fit(X, y)
+
+          # Predecir y guardar resultados
+          df['prediccion'] = modelo.predict(X)
+          df.to_excel('resultados.xlsx', index=False)
+            </code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anexo B -->
+    <div class="annex-card accord-item" data-acc>
+      <div class="accord-header">
+        <div class="annex-letter">Archivo 2.ipynb</div>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-body-inner">
+          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
+          <div class="accord-body-inner">
+            <pre><code>
+          # Ejemplo de código Python para scoring
+          import pandas as pd
+          from sklearn.linear_model import LogisticRegression
+
+          # Cargar datos
+          df = pd.read_excel('dataset_credito.xlsx')
+
+          # Definir variables y target
+          X = df[['historial', 'ingresos', 'deuda_ingreso']]
+          y = df['buen_pagador']
+
+          # Entrenar modelo
+          modelo = LogisticRegression()
+          modelo.fit(X, y)
+
+          # Predecir y guardar resultados
+          df['prediccion'] = modelo.predict(X)
+          df.to_excel('resultados.xlsx', index=False)
+            </code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anexo C -->
+    <div class="annex-card accord-item" data-acc>
+      <div class="accord-header">
+        <div class="annex-letter">Archivo 3.ipynb</div>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-body-inner">
+          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
+          <div class="accord-body-inner">
+            <pre><code>
+          # Ejemplo de código Python para scoring
+          import pandas as pd
+          from sklearn.linear_model import LogisticRegression
+
+          # Cargar datos
+          df = pd.read_excel('dataset_credito.xlsx')
+
+          # Definir variables y target
+          X = df[['historial', 'ingresos', 'deuda_ingreso']]
+          y = df['buen_pagador']
+
+          # Entrenar modelo
+          modelo = LogisticRegression()
+          modelo.fit(X, y)
+
+          # Predecir y guardar resultados
+          df['prediccion'] = modelo.predict(X)
+          df.to_excel('resultados.xlsx', index=False)
+            </code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
