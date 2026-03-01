@@ -614,6 +614,51 @@ footer {
   .reflection-grid, .annex-grid { grid-template-columns: 1fr; }
   .confusion-wrapper { grid-template-columns: 1fr; }
 }
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  max-width: 900px;
+  width: 100%;
+}
+.tab-btn {
+  padding: 8px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover {
+  color: var(--white);
+  border-color: rgba(56,189,248,0.3);
+}
+.tab-btn.active {
+  color: var(--accent);
+  background: rgba(56,189,248,0.1);
+  border-color: rgba(56,189,248,0.4);
+}
+.tab-content {
+  width: 100%;
+  max-width: 800px;
+}
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+}
+
 </style>
 </head>
 <body>
@@ -629,13 +674,14 @@ footer {
   <div class="nav-sections">
     <a href="#intro"><span class="n-num">01</span> Introducción</a>
     <a href="#marco"><span class="n-num">02</span> Marco Teórico</a>
-    <a href="#scorecard"><span class="n-num">03</span> Scorecard</a>
+    <a href="#metodologia"><span class="n-num">03</span> Metodología</a>
     <a href="#supuestos"><span class="n-num">04</span> Supuestos</a>
-    <a href="#resultados"><span class="n-num">05</span> Resultados</a>
-    <a href="#errores"><span class="n-num">06</span> Errores</a>
-    <a href="#conclusiones"><span class="n-num">07</span> Conclusiones</a>
-    <a href="#reflexion"><span class="n-num">08</span> Reflexión</a>
-    <a href="#referencias"><span class="n-num">09</span> Referencias</a>
+    <a href="#scorecard"><span class="n-num">05</span> Scorecard</a>
+    <a href="#resultados"><span class="n-num">06</span> Resultados</a>
+    <a href="#errores"><span class="n-num">07</span> Errores</a>
+    <a href="#conclusiones"><span class="n-num">08</span> Conclusiones</a>
+    <a href="#reflexion"><span class="n-num">09</span> Reflexión</a>
+    <a href="#referencias"><span class="n-num">10</span> Referencias</a>
     <a href="#anexos"><span class="n-num">★</span> Anexos</a>
   </div>
 </nav>
@@ -755,10 +801,225 @@ footer {
   </div>
 </section>
 
-<!-- 3. SCORECARD -->
-<section class="page-section" id="scorecard">
+<!-- 3. METODOLOGÍA -->
+<section class="page-section" id="metodologia">
   <div class="section-eyebrow">
     <span class="section-num">03</span>
+    <span class="section-label">Proceso y decisiones técnicas</span>
+  </div>
+  <h2 class="section-title">Metodología</h2>
+  <p class="section-desc">Descripción detallada del proceso: datos, preprocesamiento, modelo y optimización.</p>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="datos">Datos</button>
+    <button class="tab-btn" data-tab="prepro">Preprocesamiento</button>
+    <button class="tab-btn" data-tab="particion">Partición</button>
+    <button class="tab-btn" data-tab="benchmark">Benchmark</button>
+    <button class="tab-btn" data-tab="variables">Variables</button>
+    <button class="tab-btn" data-tab="score">Score</button>
+    <button class="tab-btn" data-tab="umbrales">Umbrales</button>
+  </div>
+
+  <div class="tab-content">
+
+    <!-- 3.1 -->
+    <div class="tab-panel active" id="tab-datos">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Fuente y Estructura</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Describe la fuente del dataset, tamaño (100k registros), estructura de columnas y tipo de variables disponibles.</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Distribución de Clases</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Describe la distribución original de clases (bueno/malo). ¿Había desbalance? ¿Qué proporción tenía cada clase?</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.2 -->
+    <div class="tab-panel" id="tab-prepro">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Valores Faltantes — KNN Imputation</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Explica qué es KNN Imputation y por qué lo eligieron sobre otras alternativas (media, mediana, eliminación de filas).</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Variables Categóricas — Dummies</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Por qué usaron dummies en lugar de label encoding u otro método? ¿Qué variables se transformaron?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Detección y Tratamiento de Outliers</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué método usaron para detectar outliers (IQR, Z-score)? ¿Los eliminaron, winsoризaron o mantuvieron?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Criterios de Limpieza</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué criterios definieron para eliminar registros o variables? ¿Cuántos registros quedaron tras la limpieza?</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.3 -->
+    <div class="tab-panel" id="tab-particion">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Proporciones Train-Test</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué proporción usaron (80/20, 70/30)? Justifica la elección según el tamaño del dataset.</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Estratificación</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Por qué estratificaron la partición? ¿Qué problema resuelve la estratificación cuando hay desbalance de clases?</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.4 -->
+    <div class="tab-panel" id="tab-benchmark">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Justificación del Baseline</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Por qué Regresión Logística como modelo benchmark? ¿Qué ventajas tiene como punto de comparación?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Resultados del Benchmark</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Accuracy = 0.55. ¿Qué indica este resultado? ¿Por qué es un punto de referencia útil para comparar con su modelo final?</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.5 -->
+    <div class="tab-panel" id="tab-variables">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>XGBoost — Feature Importance</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Cómo usaron XGBoost para identificar las variables más relevantes? ¿Qué métrica de importancia utilizaron?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>SHAP Values</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Explica qué son los SHAP values y cómo los usaron para interpretar la contribución de cada variable al score.</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Criterio 2 de 3</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Explica los 3 conjuntos de variables evaluados y por qué una variable debía aparecer en al menos 2 de los 3 para ser seleccionada.</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Análisis de Separabilidad — Violin Plots</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué muestran los violin plots? ¿Cómo validaron que las variables seleccionadas realmente separan las clases bueno/malo?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Variables Finales Seleccionadas</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Lista las 10 variables continuas y las 3 binarias seleccionadas. Justifica brevemente por qué cada una aporta al modelo.</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.6 -->
+    <div class="tab-panel" id="tab-score">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Asignación de Pesos</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Cómo usaron feature_importances_ de XGBoost para asignar los pesos de cada variable en el score final?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Ajuste de Signos</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué variables tienen relación negativa con ser buen pagador? ¿Cómo ajustaron el signo para que el score sea intuitivo (mayor = mejor)?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Fórmula del Score Final</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Presenta la fórmula matemática del score. Ej: Score = w₁·var₁ + w₂·var₂ − w₃·var₃ + ... Explica el rango resultante.</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.7 -->
+    <div class="tab-panel" id="tab-umbrales">
+      <div class="accordion">
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Primera Iteración — Maximización de Accuracy (Optuna)</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué es Optuna y cómo lo usaron para encontrar los umbrales que maximizan accuracy? ¿Cuántas iteraciones corrieron?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Problema de Desbalance Detectado</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Qué problema encontraron con la primera iteración? ¿El modelo clasificaba casi todo en una sola clase? ¿Cómo lo detectaron?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Segunda Iteración — Optimización con Penalización</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">¿Cómo modificaron la función objetivo de Optuna para penalizar el desbalance? ¿Qué métrica usaron en lugar de solo accuracy?</div>
+          </div></div>
+        </div>
+        <div class="accord-item" data-acc>
+          <div class="accord-header"><h3>Umbrales Finales — Poor / Standard / Good</h3><div class="accord-icon">+</div></div>
+          <div class="accord-body"><div class="accord-body-inner">
+            <div class="placeholder-box">Presenta los umbrales finales para cada categoría (Poor, Standard, Good) y el porcentaje de solicitantes que cae en cada una.</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. SUPUESTOS -->
+<section class="page-section" id="supuestos">
+  <div class="section-eyebrow">
+    <span class="section-num">04</span>
+    <span class="section-label">Hipótesis y decisiones</span>
+  </div>
+  <h2 class="section-title">Supuestos del Modelo</h2>
+  <p class="section-desc">Las hipótesis concretas sobre las que se construye el modelo.</p>
+  <div class="two-col">
+    <div class="content-card"><h3>Sobre los Datos</h3><div class="placeholder-box">¿Asumieron datos completos, sin outliers extremos, representativos de la población? ¿Cómo manejaron valores faltantes?</div></div>
+    <div class="content-card"><h3>Sobre las Variables</h3><div class="placeholder-box">¿Asumieron independencia entre variables? ¿Priorizaron alguna por criterio experto o estadístico? ¿Cómo definieron los pesos?</div></div>
+    <div class="content-card"><h3>Sobre el Comportamiento Crediticio</h3><div class="placeholder-box">¿Qué definición de "buen pagador" vs "mal pagador" usaron? ¿Cuál es el criterio de default? ¿30 días de mora? ¿60?</div></div>
+    <div class="content-card"><h3>Limitaciones Conocidas</h3><div class="placeholder-box">Describe honestamente lo que el modelo NO puede hacer y dónde podría tener sesgos.</div></div>
+  </div>
+</section>
+
+<!-- 5. SCORECARD -->
+<section class="page-section" id="scorecard">
+  <div class="section-eyebrow">
+    <span class="section-num">05</span>
     <span class="section-label">Estructura del modelo</span>
   </div>
   <h2 class="section-title">Tablero de Puntaje</h2>
@@ -789,26 +1050,10 @@ footer {
   </div>
 </section>
 
-<!-- 4. SUPUESTOS -->
-<section class="page-section" id="supuestos">
-  <div class="section-eyebrow">
-    <span class="section-num">04</span>
-    <span class="section-label">Hipótesis y decisiones</span>
-  </div>
-  <h2 class="section-title">Supuestos del Modelo</h2>
-  <p class="section-desc">Las hipótesis concretas sobre las que se construye el modelo.</p>
-  <div class="two-col">
-    <div class="content-card"><h3>Sobre los Datos</h3><div class="placeholder-box">¿Asumieron datos completos, sin outliers extremos, representativos de la población? ¿Cómo manejaron valores faltantes?</div></div>
-    <div class="content-card"><h3>Sobre las Variables</h3><div class="placeholder-box">¿Asumieron independencia entre variables? ¿Priorizaron alguna por criterio experto o estadístico? ¿Cómo definieron los pesos?</div></div>
-    <div class="content-card"><h3>Sobre el Comportamiento Crediticio</h3><div class="placeholder-box">¿Qué definición de "buen pagador" vs "mal pagador" usaron? ¿Cuál es el criterio de default? ¿30 días de mora? ¿60?</div></div>
-    <div class="content-card"><h3>Limitaciones Conocidas</h3><div class="placeholder-box">Describe honestamente lo que el modelo NO puede hacer y dónde podría tener sesgos.</div></div>
-  </div>
-</section>
-
-<!-- 5. RESULTADOS -->
+<!-- 6. RESULTADOS -->
 <section class="page-section" id="resultados">
   <div class="section-eyebrow">
-    <span class="section-num">05</span>
+    <span class="section-num">06</span>
     <span class="section-label">Desempeño del modelo</span>
   </div>
   <h2 class="section-title">Resultados</h2>
@@ -839,10 +1084,10 @@ footer {
   </div>
 </section>
 
-<!-- 6. ERRORES -->
+<!-- 7. ERRORES -->
 <section class="page-section" id="errores">
   <div class="section-eyebrow">
-    <span class="section-num">06</span>
+    <span class="section-num">07</span>
     <span class="section-label">Diagnóstico de fallas</span>
   </div>
   <h2 class="section-title">Análisis de Errores</h2>
@@ -855,10 +1100,10 @@ footer {
   </div>
 </section>
 
-<!-- 7. CONCLUSIONES -->
+<!-- 8. CONCLUSIONES -->
 <section class="page-section" id="conclusiones">
   <div class="section-eyebrow">
-    <span class="section-num">07</span>
+    <span class="section-num">08</span>
     <span class="section-label">Síntesis final</span>
   </div>
   <h2 class="section-title">Conclusiones</h2>
@@ -871,10 +1116,10 @@ footer {
   </div>
 </section>
 
-<!-- 8. REFLEXIÓN -->
+<!-- 9. REFLEXIÓN -->
 <section class="page-section" id="reflexion">
   <div class="section-eyebrow">
-    <span class="section-num">08</span>
+    <span class="section-num">09</span>
     <span class="section-label">Perspectiva del equipo</span>
   </div>
   <h2 class="section-title">Reflexión del Equipo</h2>
@@ -886,10 +1131,10 @@ footer {
   </div>
 </section>
 
-<!-- REFERENCIAS -->
+<!-- 10. REFERENCIAS -->
 <section class="page-section" id="referencias">
   <div class="section-eyebrow">
-    <span class="section-num">09</span>
+    <span class="section-num">10</span>
     <span class="section-label">Fuentes consultadas</span>
   </div>
   <h2 class="section-title">Referencias</h2>
@@ -1103,6 +1348,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
 });
+
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  });
+});
+
 </script>
 </body>
 </html>
