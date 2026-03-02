@@ -442,7 +442,7 @@ nav {
   font-style: italic;
   line-height: 1.6;
 }
-.placeholder-box::before { content: '✏️  '; }
+.placeholder-box::before { content: ''; }
 
 /* ── ACCORDION ── */
 .accordion { max-width: 800px; display: flex; flex-direction: column; gap: 8px; }
@@ -659,6 +659,69 @@ footer {
   display: block;
 }
 
+/* ── VARIABLES GRID ── */
+.vars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+.var-card {
+  background: rgba(15,45,94,0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.var-card:hover {
+  border-color: rgba(56,189,248,0.3);
+  transform: translateY(-2px);
+}
+.var-card-binary {
+  background: rgba(37,99,196,0.15);
+  border-color: rgba(59,130,246,0.2);
+}
+.var-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+.var-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+}
+.var-tag {
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.var-tag.pos {
+  background: rgba(16,185,129,0.15);
+  color: #34d399;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+.var-tag.neg {
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+.var-tag.bin {
+  background: rgba(56,189,248,0.1);
+  color: var(--accent);
+  border: 1px solid rgba(56,189,248,0.2);
+}
+.var-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 </style>
 </head>
 <body>
@@ -829,13 +892,49 @@ footer {
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Fuente y Estructura</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Describe la fuente del dataset, tamaño (100k registros), estructura de columnas y tipo de variables disponibles.</div>
+            <div class="placeholder-box">Los datos utilizados en el proyecto provienen de un dataset compuesto por 100,000 registros individuales y 28 variables, que incluyen información demográfica y financiera como edad, ingresos anuales, número de cuentas bancarias, comportamiento de pago, ocupación, entre otras. <br><br> El conjunto de datos presenta diversos problemas de calidad, tales como valores nulos, registros inconsistentes (por ejemplo, edades superiores a 100 años) y variables numéricas almacenadas como texto (por ejemplo, 38000_). Por ello, es necesario realizar un proceso de limpieza y preprocesamiento para la corrección de formatos, depuración de valores atípicos y la imputación adecuada de datos faltantes.</div>
           </div></div>
         </div>
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Distribución de Clases</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Describe la distribución original de clases (bueno/malo). ¿Había desbalance? ¿Qué proporción tenía cada clase?</div>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:24px;">
+              El objetivo del proyecto es clasificar la calidad crediticia de cada individuo en tres categorías.
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:14px; max-width:500px; margin:0 auto">
+
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                  <span style="font-size:13px; color:var(--white); font-weight:500;">Poor</span>
+                  <span style="font-size:13px; color:#f87171;">29%</span>
+                </div>
+                <div style="height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                  <div style="height:100%; width:29%; background:linear-gradient(90deg, #ef4444, #f87171); border-radius:4px;"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                  <span style="font-size:13px; color:var(--white); font-weight:500;">Standard</span>
+                  <span style="font-size:13px; color:var(--accent);">53.17%</span>
+                </div>
+                <div style="height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                  <div style="height:100%; width:53.17%; background:linear-gradient(90deg, #3b82f6, #60a5fa); border-radius:4px;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                  <span style="font-size:13px; color:var(--white); font-weight:500;">Good</span>
+                  <span style="font-size:13px; color:#34d399;">17.83%</span>
+                </div>
+                <div style="height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                  <div style="height:100%; width:17.83%; background:linear-gradient(90deg, #10b981, #34d399); border-radius:4px;"></div>
+                </div>
+              </div>
+
+            </div>
           </div></div>
         </div>
       </div>
@@ -937,7 +1036,113 @@ footer {
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Variables Finales Seleccionadas</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Lista las 10 variables continuas y las 3 binarias seleccionadas. Justifica brevemente por qué cada una aporta al modelo.</div>
+            <div class="vars-grid">
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Outstanding Debt</span>
+                  <span class="var-tag neg">↑ riesgo</span>
+                </div>
+                <p class="var-desc">Fuerte relación para identificar personas con Credit Score malo.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Credit Inquiries</span>
+                  <span class="var-tag neg">↑ riesgo</span>
+                </div>
+                <p class="var-desc">Clara separación entre Credit Score bueno y malo.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Delayed Payments</span>
+                  <span class="var-tag neg">↑ riesgo</span>
+                </div>
+                <p class="var-desc">Buena separación entre los que tienen buen Credit Score y los demás.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Interest Rate</span>
+                  <span class="var-tag neg">↓ mejor</span>
+                </div>
+                <p class="var-desc">Mientras menor sea la tasa, mejor el Credit Score.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Delay from Due Date</span>
+                  <span class="var-tag neg">↓ mejor</span>
+                </div>
+                <p class="var-desc">Mientras menor sea el retraso, mejor el Credit Score.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Number of Credit Cards</span>
+                  <span class="var-tag neg">↓ mejor</span>
+                </div>
+                <p class="var-desc">Mientras menor sea el número de tarjetas, mejor el Credit Score.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Bank Accounts</span>
+                  <span class="var-tag neg">↓ mejor</span>
+                </div>
+                <p class="var-desc">A menor número de cuentas bancarias, mejor el Credit Score.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Credit History Age</span>
+                  <span class="var-tag pos">↑ mejor</span>
+                </div>
+                <p class="var-desc">A mayor antigüedad del historial, mejor el Credit Score.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Monthly Inhand Salary</span>
+                  <span class="var-tag pos">↑ mejor</span>
+                </div>
+                <p class="var-desc">A mayor salario mensual disponible, mayor Credit Score.</p>
+              </div>
+
+              <div class="var-card">
+                <div class="var-top">
+                  <span class="var-name">Age</span>
+                  <span class="var-tag pos">↑ mejor</span>
+                </div>
+                <p class="var-desc">Tendencia de mayor edad, mayor Credit Score.</p>
+              </div>
+
+              <div class="var-card var-card-binary">
+                <div class="var-top">
+                  <span class="var-name">Pay Min — Yes</span>
+                  <span class="var-tag bin">binaria</span>
+                </div>
+                <p class="var-desc">De las dummies mejor puntuadas en feature importances.</p>
+              </div>
+
+              <div class="var-card var-card-binary">
+                <div class="var-top">
+                  <span class="var-name">Pay Min — No</span>
+                  <span class="var-tag bin">binaria</span>
+                </div>
+                <p class="var-desc">De las dummies mejor puntuadas en feature importances.</p>
+              </div>
+
+              <div class="var-card var-card-binary">
+                <div class="var-top">
+                  <span class="var-name">High Spent Medium Value</span>
+                  <span class="var-tag bin">binaria</span>
+                </div>
+                <p class="var-desc">De las dummies mejor puntuadas en feature importances.</p>
+              </div>
+
+            </div>
           </div></div>
         </div>
       </div>
