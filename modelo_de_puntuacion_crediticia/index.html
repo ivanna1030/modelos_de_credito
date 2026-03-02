@@ -845,9 +845,9 @@ footer {
     <div class="tab-panel" id="tab-prepro">
       <div class="accordion">
         <div class="accord-item" data-acc>
-          <div class="accord-header"><h3>Valores Faltantes — KNN Imputation</h3><div class="accord-icon">+</div></div>
+          <div class="accord-header"><h3>Criterios de Limpieza</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Explica qué es KNN Imputation y por qué lo eligieron sobre otras alternativas (media, mediana, eliminación de filas).</div>
+            <div class="placeholder-box">¿Qué criterios definieron para eliminar registros o variables? ¿Cuántos registros quedaron tras la limpieza?</div>
           </div></div>
         </div>
         <div class="accord-item" data-acc>
@@ -863,9 +863,9 @@ footer {
           </div></div>
         </div>
         <div class="accord-item" data-acc>
-          <div class="accord-header"><h3>Criterios de Limpieza</h3><div class="accord-icon">+</div></div>
+          <div class="accord-header"><h3>Valores Faltantes — KNN Imputation</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">¿Qué criterios definieron para eliminar registros o variables? ¿Cuántos registros quedaron tras la limpieza?</div>
+            <div class="placeholder-box">Explica qué es KNN Imputation y por qué lo eligieron sobre otras alternativas (media, mediana, eliminación de filas).</div>
           </div></div>
         </div>
       </div>
@@ -1212,41 +1212,6 @@ footer {
     <div class="annex-card accord-item" data-acc>
       <div class="accord-header">
         <div class="annex-letter">Archivo 2.ipynb</div>
-        <div class="accord-icon">+</div>
-      </div>
-      <div class="accord-body">
-        <div class="accord-body-inner">
-          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
-          <div class="accord-body-inner">
-            <pre><code>
-          # Ejemplo de código Python para scoring
-          import pandas as pd
-          from sklearn.linear_model import LogisticRegression
-
-          # Cargar datos
-          df = pd.read_excel('dataset_credito.xlsx')
-
-          # Definir variables y target
-          X = df[['historial', 'ingresos', 'deuda_ingreso']]
-          y = df['buen_pagador']
-
-          # Entrenar modelo
-          modelo = LogisticRegression()
-          modelo.fit(X, y)
-
-          # Predecir y guardar resultados
-          df['prediccion'] = modelo.predict(X)
-          df.to_excel('resultados.xlsx', index=False)
-            </code></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Anexo C -->
-    <div class="annex-card accord-item" data-acc>
-      <div class="accord-header">
-        <div class="annex-letter">Archivo 3.ipynb</div>
         <div class="accord-icon">+</div>
       </div>
       <div class="accord-body">
