@@ -722,6 +722,42 @@ footer {
   line-height: 1.5;
 }
 
+.content-card.accord-item .content-card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.content-card.accord-item.open .content-card-body {
+  max-height: 1000px;
+}
+.content-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.content-card-header .accord-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  font-size: 18px;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.content-card.accord-item.open .content-card-header .accord-icon {
+  background: rgba(56,189,248,0.1);
+  border-color: rgba(56,189,248,0.3);
+  color: var(--accent);
+  transform: rotate(45deg);
+}
+
+.two-col {
+  align-items: start;
+}
+
 </style>
 </head>
 <body>
@@ -739,12 +775,11 @@ footer {
     <a href="#marco"><span class="n-num">02</span> Marco Teórico</a>
     <a href="#metodologia"><span class="n-num">03</span> Metodología</a>
     <a href="#supuestos"><span class="n-num">04</span> Supuestos</a>
-    <a href="#scorecard"><span class="n-num">05</span> Scorecard</a>
-    <a href="#resultados"><span class="n-num">06</span> Resultados</a>
-    <a href="#errores"><span class="n-num">07</span> Errores</a>
-    <a href="#conclusiones"><span class="n-num">08</span> Conclusiones</a>
-    <a href="#reflexion"><span class="n-num">09</span> Reflexión</a>
-    <a href="#referencias"><span class="n-num">10</span> Referencias</a>
+    <a href="#resultados"><span class="n-num">05</span> Resultados</a>
+    <a href="#errores"><span class="n-num">06</span> Errores</a>
+    <a href="#conclusiones"><span class="n-num">07</span> Conclusiones</a>
+    <a href="#reflexion"><span class="n-num">08</span> Reflexión</a>
+    <a href="#referencias"><span class="n-num">09</span> Referencias</a>
     <a href="#anexos"><span class="n-num">★</span> Anexos</a>
   </div>
 </nav>
@@ -804,27 +839,131 @@ footer {
 <section class="page-section" id="intro">
   <div class="section-eyebrow">
     <span class="section-num">01</span>
-    <span class="section-label">Contexto y motivación</span>
+    <span class="section-label">Contexto</span>
   </div>
   <h2 class="section-title">Introducción</h2>
-  <p class="section-desc">El punto de partida: qué problema resolvemos y por qué importa.</p>
+  <p class="section-desc">Contexto del riesgo de crédito, problemática del modelo y objetivos del proyecto.</p>
   <div class="two-col">
-    <div class="content-card">
-      <h3>Contexto General</h3>
-      <div class="placeholder-box">Explica qué es el crédito y por qué es crucial en el sistema financiero. ¿Por qué los modelos de scoring son fundamentales para bancos y fintech?</div>
+
+    <div class="content-card accord-item" data-card>
+      <div class="content-card-header">
+        <h3>Contexto General</h3>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="content-card-body">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:16px;">
+          El otorgamiento de crédito constituye uno de los pilares fundamentales del sistema financiero moderno, ya que permite canalizar recursos hacia el consumo, la inversión y el crecimiento económico. Sin embargo, toda operación crediticia implica la exposición a riesgo de incumplimiento, lo que puede generar pérdidas significativas para las instituciones financieras si no se gestiona adecuadamente.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:16px;">
+          Tradicionalmente, la evaluación crediticia se ha apoyado en modelos clásicos de scoring, como el modelo FICO y el análisis de las 5 C's del crédito. Si bien estos modelos han demostrado ser útiles por su simplicidad e interpretabilidad, presentan limitaciones para capturar relaciones no lineales y patrones complejos presentes en grandes volúmenes de datos.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          Ante este escenario, surge la necesidad de combinar enfoques clásicos y técnicas de machine learning, buscando un equilibrio entre capacidad predictiva, interpretabilidad y solidez metodológica.
+        </p>
+      </div>
     </div>
-    <div class="content-card">
-      <h3>Problemática</h3>
-      <div class="placeholder-box">¿Cuál es el problema a resolver? ¿Qué consecuencias tiene una mala evaluación crediticia: impago, exclusión financiera, pérdidas institucionales?</div>
+
+    <div class="content-card accord-item" data-card>
+      <div class="content-card-header">
+        <h3>Problemática</h3>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="content-card-body">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          El riesgo de crédito se ha convertido en una de las principales fuentes de vulnerabilidad para bancos y entidades financieras, especialmente en contextos de alta incertidumbre macroeconómica. Una evaluación inadecuada del perfil de riesgo de los solicitantes puede traducirse en:
+        </p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Aumentos en la <strong style="color:var(--white);">morosidad</strong>.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Deterioro de la <strong style="color:var(--white);">cartera crediticia</strong>.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Presión sobre la <strong style="color:var(--white);">estabilidad del sistema financiero</strong>.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="content-card">
-      <h3>Objetivo del Proyecto</h3>
-      <div class="placeholder-box">Desarrollar un modelo de crédito capaz de evaluar a n solicitantes y comparar su desempeño contra una clasificación de referencia (dataset de test).</div>
+
+    <div class="content-card accord-item" data-card>
+      <div class="content-card-header">
+        <h3>Objetivo del Proyecto</h3>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="content-card-body">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          El objetivo principal es desarrollar un modelo de clasificación para predecir la calidad crediticia de los individuos, categorizándolos en Poor, Standard y Good Credit Score, a partir de información demográfica y financiera.
+        </p>
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Para lograrlo, se propone</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">1</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify; padding-top:3px;">Implementar un modelo base de regresión logística como benchmark.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">2</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify; padding-top:3px;">Aplicar técnicas de machine learning para la selección de variables relevantes.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">3</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify; padding-top:3px;">Evaluar el desempeño utilizando métricas adecuadas para problemas con desequilibrio de clases.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">4</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify; padding-top:3px;">Comparar el modelo propuesto frente al benchmark, evaluando si la mayor complejidad se traduce en una mejora sustancial en capacidad predictiva.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="content-card">
-      <h3>Alcance y Limitaciones</h3>
-      <div class="placeholder-box">Define qué cubre tu modelo (tipo de crédito, perfil de solicitantes, variables disponibles) y qué queda fuera del alcance.</div>
+
+    <div class="content-card accord-item" data-card>
+      <div class="content-card-header">
+        <h3>Alcance y Limitaciones</h3>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="content-card-body">
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Alcances</p>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Limpieza y preprocesamiento exhaustivo de los datos.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Implementación de técnicas de imputación avanzadas.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Selección estructurada de variables combinando métodos estadísticos y de machine learning.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Evaluación cuantitativa del modelo en un conjunto de prueba independiente.</p>
+          </div>
+        </div>
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Limitaciones</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#f87171; flex-shrink:0;">✗</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El modelo se entrena con datos históricos y asume estabilidad estructural en los patrones de comportamiento crediticio.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#f87171; flex-shrink:0;">✗</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">No se incorporan variables macroeconómicas externas que podrían afectar el riesgo sistémico.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#f87171; flex-shrink:0;">✗</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Al ser un modelo clásico no captura bien las relaciones no lineales entre las variables.</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+  </div>
   </div>
 </section>
 
@@ -835,7 +974,7 @@ footer {
     <span class="section-label">Fundamentos académicos</span>
   </div>
   <h2 class="section-title">Marco Teórico</h2>
-  <p class="section-desc">Las bases conceptuales que sustentan nuestro modelo de scoring.</p>
+  <p class="section-desc">Las bases conceptuales que sustentan el modelo de scoring.</p>
   <div class="accordion">
     <div class="accord-item" data-acc>
     <div class="accord-header"><h3>Fundamentos del Riesgo de Crédito</h3><div class="accord-icon">+</div></div>
@@ -1162,7 +1301,161 @@ footer {
     <div class="accord-item" data-acc>
       <div class="accord-header"><h3>Machine Learning en la Elección de Variables</h3><div class="accord-icon">+</div></div>
       <div class="accord-body"><div class="accord-body-inner">
-        <div class="placeholder-box">¿Cómo medirán el desempeño? Explica la comparación entre su clasificación y el dataset de referencia. Métricas: accuracy, matriz de confusión, tasa de error.</div>
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          Aunque el score crediticio final se construye mediante una estructura clásica de suma ponderada de variables, la selección de dichas variables y la determinación de su relevancia no se realizó de manera arbitraria ni exclusivamente mediante criterios tradicionales. En su lugar, se incorporaron técnicas de machine learning y análisis estadístico exploratorio como parte del proceso de modelado.
+        </p>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
+          <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:16px 20px; flex:1; min-width:200px;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">Modelo Clásico</p>
+            <p style="font-size:13px; color:var(--text); line-height:1.6;">El modelo clásico lineal, implementado como una regresión logística transformada en scorecard, ofrece interpretabilidad. Las decisiones pueden explicarse y justificarse ante reguladores, instituciones financieras y clientes. Presenta limitaciones para capturar relaciones no lineales e interacciones complejas.</p>
+          </div>
+          <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:16px 20px; flex:1; min-width:200px;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">Machine Learning</p>
+            <p style="font-size:13px; color:var(--text); line-height:1.6;">Permite evaluar la importancia relativa de cada característica, identificar relaciones no lineales y detectar variables redundantes o poco informativas.</p>
+          </div>
+        </div>
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          El uso de XGBoost se basa en el marco del boosting descrito por Trevor Hastie, Robert Tibshirani y Jerome Friedman (2009), el cual construye modelos aditivos mediante optimización secuencial. Este enfoque permite capturar relaciones no lineales e interacciones complejas entre variables, lo que resulta particularmente útil en el scoring crediticio, donde los patrones financieros no suelen ser estrictamente lineales.
+        </p>
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          Por esta razón, se emplearon modelos de machine learning como herramienta de apoyo en la etapa de selección de variables. Estos modelos permiten evaluar la importancia relativa de cada característica, identificar relaciones no lineales y detectar variables redundantes o poco informativas. A través de métricas como feature importance, fue posible determinar cuáles variables aportaban mayor poder predictivo al modelo.
+        </p>
+
+        <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px; margin-bottom:20px;">
+          <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px;">Estrategia Híbrida</p>
+          <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+            El uso de machine learning en esta fase no implica sustituir el modelo clásico, sino <strong style="color:var(--white);">fortalecerlo</strong>. En lugar de utilizar un modelo complejo como estructura final, se aprovechó la capacidad exploratoria y predictiva del ML para filtrar y priorizar variables. Posteriormente, estas variables seleccionadas fueron incorporadas a un modelo lineal tradicional, garantizando un equilibrio entre poder predictivo y explicabilidad.
+          </p>
+        </div>
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Por qué funciona esta combinación</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El <strong style="color:var(--white);">machine learning</strong> descubre patrones complejos y determina qué variables aportan mayor poder predictivo.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El <strong style="color:var(--white);">modelo clásico</strong> mantiene una estructura simple, defendible e interpretable como score final.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El score final está respaldado por un proceso <strong style="color:var(--white);">riguroso de análisis de datos y validación empírica</strong>.</p>
+          </div>
+        </div>
+
+      </div></div>
+    </div>
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Tablero de Puntaje</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:16px;">Variables y Coeficientes</p>
+        <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; overflow:hidden; margin-bottom:24px;">
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <thead>
+              <tr style="background:rgba(26,79,160,0.6);">
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">#</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Variable</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Descripción</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Coeficiente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">1</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Outstanding_Debt</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Monto total de deuda pendiente que mantiene el cliente en sus diferentes líneas de crédito.</td>
+                <td style="padding:10px 16px; color:#f87171; text-align:center;">−0.032156</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">2</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Interest_Rate</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Tasa de interés promedio asociada a los productos de crédito del cliente.</td>
+                <td style="padding:10px 16px; color:#f87171; text-align:center;">−0.026707</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">3</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Delay_from_due_date</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Número de días de retraso promedio en los pagos respecto a la fecha de vencimiento.</td>
+                <td style="padding:10px 16px; color:#f87171; text-align:center;">−0.014050</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">4</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Credit_Card</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Cantidad total de tarjetas de crédito que posee el cliente.</td>
+                <td style="padding:10px 16px; color:#f87171; text-align:center;">−0.017951</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">5</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Credit_Inquiries</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Número de consultas o solicitudes recientes de crédito realizadas por el cliente.</td>
+                <td style="padding:10px 16px; color:#f87171; text-align:center;">−0.012550</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">6</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Bank_Accounts</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Número total de cuentas bancarias que mantiene activas el cliente.</td>
+                <td style="padding:10px 16px; color:#f87171; text-align:center;">−0.010737</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">7</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Pay_Min_Yes</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Indica si el cliente suele realizar únicamente el pago mínimo requerido en sus créditos.</td>
+                <td style="padding:10px 16px; color:#34d399; text-align:center;">+0.090979</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">8</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Pay_Min_No</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Indica si el cliente normalmente paga más que el mínimo requerido en sus obligaciones de crédito.</td>
+                <td style="padding:10px 16px; color:#34d399; text-align:center;">+0.068036</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">9</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix_Good</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Variable indicadora que señala si el cliente tiene una combinación saludable de productos de crédito.</td>
+                <td style="padding:10px 16px; color:#34d399; text-align:center;">+0.262000</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">10</td>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix_Standard</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">Variable indicadora que señala si el cliente tiene una combinación intermedia de productos de crédito.</td>
+                <td style="padding:10px 16px; color:#34d399; text-align:center;">+0.141270</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:16px;">Rangos de Clasificación</p>
+        <div class="ranges" style="margin-top:16px; margin-bottom:24px;">
+          <div class="range-item range-rejected">
+            <span class="range-label" style="color:#f87171;">Poor</span>
+            <div class="range-track"><div class="range-fill" data-width="47%"></div></div>
+            <span class="range-score">0 – 234 pts</span>
+          </div>
+          <div class="range-item range-review">
+            <span class="range-label" style="color:#fbbf24;">Standard</span>
+            <div class="range-track"><div class="range-fill" data-width="82%"></div></div>
+            <span class="range-score">235 – 411 pts</span>
+          </div>
+          <div class="range-item range-approved">
+            <span class="range-label" style="color:#34d399;">Good</span>
+            <div class="range-track"><div class="range-fill" data-width="100%"></div></div>
+            <span class="range-score">412 – 500 pts</span>
+          </div>
+        </div>
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Interpretación del Tablero de Puntaje</p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:24px;">
+          En el tablero se muestran las 10 variables utilizadas en el modelo de score crediticio, ya que fueron identificadas como las más relevantes durante el proceso de selección de variables. <br><br>
+        Las variables que presentan coeficientes negativos indican una relación inversa con la calificación crediticia. Esto significa que, a medida que estas variables aumentan, el score crediticio tiende a disminuir. Esto ocurre porque el modelo está diseñado de tal forma que un mayor score represente un mejor perfil crediticio. <br><br>
+        Por el contrario, las variables con coeficientes positivos tienen una relación directa con el score, lo que implica que un incremento en estas variables se asocia con una mejora en la calificación crediticia. De esta manera, el tablero permite identificar de forma clara qué factores contribuyen positiva o negativamente al score, facilitando la interpretación del modelo y la comprensión de los principales determinantes del perfil crediticio.
+        </p>
+
       </div></div>
     </div>
   </div>
@@ -1196,7 +1489,9 @@ footer {
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Fuente y Estructura</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Los datos utilizados en el proyecto provienen de un dataset compuesto por 100,000 registros individuales y 28 variables, que incluyen información demográfica y financiera como edad, ingresos anuales, número de cuentas bancarias, comportamiento de pago, ocupación, entre otras. <br><br> El conjunto de datos presenta diversos problemas de calidad, tales como valores nulos, registros inconsistentes (por ejemplo, edades superiores a 100 años) y variables numéricas almacenadas como texto (por ejemplo, 38000_). Por ello, es necesario realizar un proceso de limpieza y preprocesamiento para la corrección de formatos, depuración de valores atípicos y la imputación adecuada de datos faltantes.</div>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:0px;">
+              Los datos utilizados en el proyecto provienen de un dataset compuesto por 100,000 registros individuales y 28 variables, que incluyen información demográfica y financiera como edad, ingresos anuales, número de cuentas bancarias, comportamiento de pago, ocupación, entre otras. <br><br> El conjunto de datos presenta diversos problemas de calidad, tales como valores nulos, registros inconsistentes (por ejemplo, edades superiores a 100 años) y variables numéricas almacenadas como texto (por ejemplo, 38000_). Por ello, es necesario realizar un proceso de limpieza y preprocesamiento para la corrección de formatos, depuración de valores atípicos y la imputación adecuada de datos faltantes.
+            </p>
           </div></div>
         </div>
         <div class="accord-item" data-acc>
@@ -1326,6 +1621,7 @@ footer {
 
             <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Variables Transformadas</p>
             <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; justify-content:center;">
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Credit_Mix</span>
               <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Occupation</span>
               <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Payment_of_Min_Amount</span>
               <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Payment_Behaviour</span>
@@ -1395,7 +1691,7 @@ footer {
             </div>
             <div style="background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 18px;">
               <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:justify;">
-                En estas variables se observaron valores considerablemente elevados. No obstante, existen cientos e incluso miles de observaciones con magnitudes similares, lo que sugiere que no se trata de errores aislados de captura, sino de <strong style="color:#fbbf24;">comportamientos extremos pero plausibles</strong> dentro de la población analizada. Su eliminación implicaría la pérdida de una proporción significativa de información relevante para el modelo.
+                En estas variables se observaron valores considerablemente elevados. No obstante, existen cientos e incluso miles de observaciones con magnitudes similares, lo que sugiere que no se trata de errores aislados de captura, sino de comportamientos extremos pero plausibles dentro de la población analizada. Su eliminación implicaría la pérdida de una proporción significativa de información relevante para el modelo.
               </p>
             </div>
 
@@ -1552,7 +1848,7 @@ footer {
             </p>
 
             <div style="display:flex; justify-content:center;">
-              <img src="feature_importance_xgboost.png" alt="Feature Importance XGBoost" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+              <img src="feature_importance_xgboost_1.png" alt="Feature Importance XGBoost" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
             </div>
 
           </div></div>
@@ -1566,7 +1862,7 @@ footer {
             </p>
 
             <div style="display:flex; justify-content:center; margin-bottom:20px;">
-              <img src="shap_values.png" alt="SHAP Values" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+              <img src="shap_values_1.png" alt="SHAP Values" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
             </div>
 
             <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
@@ -1578,7 +1874,7 @@ footer {
             </p>
 
             <div style="display:flex; justify-content:center;">
-              <img src="shap_values_poor.png" alt="SHAP Values — Poor Credit Score" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+              <img src="shap_values_poor_1.png" alt="SHAP Values — Poor Credit Score" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
             </div>
 
           </div></div>
@@ -1609,11 +1905,11 @@ footer {
 
             <div style="display:flex; gap:16px; flex-wrap:wrap;">
               <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:14px 24px; text-align:center; flex:1; min-width:120px;">
-                <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">16</div>
+                <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">14</div>
                 <div style="font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:4px;">Variables numéricas</div>
               </div>
               <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:14px 24px; text-align:center; flex:1; min-width:120px;">
-                <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">3</div>
+                <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">5</div>
                 <div style="font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:4px;">Variables binarias</div>
               </div>
             </div>
@@ -1691,14 +1987,6 @@ footer {
 
               <div class="var-card">
                 <div class="var-top">
-                  <span class="var-name">Delayed Payments</span>
-                  <span class="var-tag neg">↑ riesgo</span>
-                </div>
-                <p class="var-desc">Buena separación entre los que tienen buen Credit Score y los demás.</p>
-              </div>
-
-              <div class="var-card">
-                <div class="var-top">
                   <span class="var-name">Interest Rate</span>
                   <span class="var-tag neg">↓ mejor</span>
                 </div>
@@ -1729,30 +2017,6 @@ footer {
                 <p class="var-desc">A menor número de cuentas bancarias, mejor el Credit Score.</p>
               </div>
 
-              <div class="var-card">
-                <div class="var-top">
-                  <span class="var-name">Credit History Age</span>
-                  <span class="var-tag pos">↑ mejor</span>
-                </div>
-                <p class="var-desc">A mayor antigüedad del historial, mejor el Credit Score.</p>
-              </div>
-
-              <div class="var-card">
-                <div class="var-top">
-                  <span class="var-name">Monthly Inhand Salary</span>
-                  <span class="var-tag pos">↑ mejor</span>
-                </div>
-                <p class="var-desc">A mayor salario mensual disponible, mayor Credit Score.</p>
-              </div>
-
-              <div class="var-card">
-                <div class="var-top">
-                  <span class="var-name">Age</span>
-                  <span class="var-tag pos">↑ mejor</span>
-                </div>
-                <p class="var-desc">Tendencia de mayor edad, mayor Credit Score.</p>
-              </div>
-
               <div class="var-card var-card-binary">
                 <div class="var-top">
                   <span class="var-name">Pay Min — Yes</span>
@@ -1771,11 +2035,89 @@ footer {
 
               <div class="var-card var-card-binary">
                 <div class="var-top">
-                  <span class="var-name">High Spent Medium Value</span>
+                  <span class="var-name">Credit Mix — Good</span>
                   <span class="var-tag bin">binaria</span>
                 </div>
                 <p class="var-desc">De las dummies mejor puntuadas en feature importances.</p>
               </div>
+
+              <div class="var-card var-card-binary">
+                <div class="var-top">
+                  <span class="var-name">Credit Mix — Standard</span>
+                  <span class="var-tag bin">binaria</span>
+                </div>
+                <p class="var-desc">De las dummies mejor puntuadas en feature importances.</p>
+              </div>
+
+            </div>
+
+            <div style="margin-top:28px;">
+              <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:24px;">
+                Las variables seleccionadas son consistentes con los determinantes tradicionales del riesgo crediticio en el ámbito de personas físicas, donde el objetivo principal es estimar la probabilidad de incumplimiento individual. De acuerdo con el Basel Committee on Banking Supervision (2006), la medición del riesgo de crédito se fundamenta en la estimación de la probabilidad de incumplimiento (PD), la cual depende de factores asociados a capacidad de pago, comportamiento histórico y exposición al crédito.
+              </p>
+
+              <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:16px;">Justificación por variable</p>
+
+              <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
+
+                <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px;">
+                  <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px;">
+                    <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:#f87171;">Outstanding_Debt</span>
+                    <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:#f87171;">Interest_Rate</span>
+                  </div>
+                  <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+                    Outstanding_Debt representa el nivel de endeudamiento del individuo. En términos financieros, un mayor nivel de obligaciones reduce la capacidad de pago ante eventos adversos inesperados, incrementando la probabilidad de incumplimiento. Aunque el modelo estructural de Robert C. Merton (1974) fue desarrollado para deuda corporativa, el principio económico subyacente (mayor deuda implica mayor riesgo de default) es igualmente aplicable a individuos. Además, Interest_Rate impacta directamente sobre el servicio de la deuda; tasas más altas aumentan la carga financiera periódica y reducen el ingreso disponible, afectando negativamente la capacidad de pago (Basel Committee on Banking Supervision, 2006).
+                  </p>
+                </div>
+
+                <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px;">
+                  <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px;">
+                    <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:#f87171;">Delay_from_due_date</span>
+                    <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--accent);">Pay_Min_Yes</span>
+                    <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--accent);">Pay_Min_No</span>
+                  </div>
+                  <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+                    Las variables de comportamiento como Delay_from_due_date constituyen uno de los predictores más sólidos en modelos de credit scoring. La evidencia empírica muestra que la morosidad pasada es altamente informativa respecto al incumplimiento futuro debido a la persistencia en patrones financieros (David Hand & William E. Henley, 1997). De manera similar, Pay_Min_Yes / Pay_Min_No funciona como señal de liquidez: pagar únicamente el mínimo requerido suele asociarse con alta utilización del crédito y mayor vulnerabilidad ante deterioros en el ingreso disponible, fenómeno documentado ampliamente en la literatura de scoring para consumidores (Credit Scoring and Its Applications).
+                  </p>
+                </div>
+
+                <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px;">
+                  <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px;">
+                    <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:#f87171;">Num_Credit_Card</span>
+                    <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:#f87171;">Num_Credit_Inquiries</span>
+                    <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:#f87171;">Num_Bank_Accounts</span>
+                  </div>
+                  <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+                    Las variables de exposición como Num_Credit_Card, Num_Credit_Inquiries y Num_Bank_Accounts capturan la intensidad de uso y búsqueda activa de crédito. Un mayor número de consultas recientes es interpretado en la industria como señal de mayor riesgo potencial, ya que puede reflejar necesidad de financiamiento (credit seeking behavior). Este tipo de variable forma parte de los componentes estándar en modelos desarrollados por la industria del scoring, como los utilizados por FICO. Asimismo, el número de líneas abiertas incrementa la exposición total al crédito y la probabilidad de un endeudamiento excesivo.
+                  </p>
+                </div>
+
+                <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px;">
+                  <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:10px;">
+                    <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--accent);">Credit_Mix_Good</span>
+                    <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--accent);">Credit_Mix_Standard</span>
+                  </div>
+                  <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+                    Credit_Mix_Good y Credit_Mix_Standard reflejan la composición del portafolio crediticio del individuo. En modelos de scoring para personas, la diversidad y manejo adecuado de distintos tipos de crédito (revolvente, a plazos, hipotecario) se considera señal de experiencia financiera y comportamiento responsable. La estructura del portafolio es un componente explícito en los modelos industriales de calificación crediticia (FICO), ya que aporta información adicional sobre estabilidad financiera y gestión del riesgo individual.
+                  </p>
+                </div>
+
+              </div>
+
+              <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px;">
+                <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px;">Los 4 pilares del riesgo crediticio</p>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+                  <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Capacidad de pago</span>
+                  <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Comportamiento histórico</span>
+                  <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Exposición al crédito</span>
+                  <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent);">Estructura del portafolio</span>
+                </div>
+                <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center; margin-top:12px;">
+                  En conjunto, las variables seleccionadas capturan los cuatro pilares fundamentales del riesgo crediticio en personas, alineándose con la teoría financiera y con la práctica bancaria internacional.
+                </p>
+              </div>
+
+            </div>
 
             </div>
           </div></div>
@@ -1786,54 +2128,229 @@ footer {
     <!-- 3.6 -->
     <div class="tab-panel" id="tab-score">
       <div class="accordion">
+
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Asignación de Pesos</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">¿Cómo usaron feature_importances_ de XGBoost para asignar los pesos de cada variable en el score final?</div>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:16px;">
+              XGBoost es uno de los modelos más eficaces para problemas de clasificación en calificación crediticia, debido a su alto poder predictivo y capacidad para capturar relaciones complejas entre variables. Por esta razón, se utilizó como referencia para determinar los pesos en la construcción del modelo de scoring clásico.
+            </p>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+              El feature importance de XGBoost cuantifica la contribución relativa de cada variable al desempeño del modelo. Cuando estos valores se normalizan, pueden interpretarse como la proporción del impacto que cada variable tiene en la predicción, lo que permite asignar pesos de manera directa y consistente. Además, estos valores mantienen una relación jerárquica entre sí, reflejando la importancia relativa de cada variable dentro del modelo.
+            </p>
           </div></div>
         </div>
+
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Ajuste de Signos</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">¿Qué variables tienen relación negativa con ser buen pagador? ¿Cómo ajustaron el signo para que el score sea intuitivo (mayor = mejor)?</div>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+              En el diseño del score crediticio se estableció que la escala fuera intuitiva: a mayor puntaje, mejor calificación crediticia. Para garantizar esta coherencia, es fundamental analizar previamente el comportamiento y la dirección de las variables seleccionadas.
+            </p>
+
+            <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px;">
+              <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:16px 20px; flex:1; min-width:200px;">
+                <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#f87171; margin-bottom:8px;">Signo negativo</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6;">Las 6 variables numéricas presentan relación negativa con la calidad crediticia — a mayor valor, mayor riesgo. Sus pesos se definen con signo negativo para que incrementos en estas variables <strong style="color:var(--white);">reduzcan el puntaje final</strong>.</p>
+              </div>
+              <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:16px 20px; flex:1; min-width:200px;">
+                <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#34d399; margin-bottom:8px;">Signo positivo</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6;">Las variables binarias y categóricas con relación positiva contribuyen con signo positivo, asegurando que un <strong style="color:var(--white);">mayor score refleje un mejor perfil crediticio</strong>.</p>
+              </div>
+            </div>
+
           </div></div>
         </div>
+
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Fórmula del Score Final</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Presenta la fórmula matemática del score. Ej: Score = w₁·var₁ + w₂·var₂ − w₃·var₃ + ... Explica el rango resultante.</div>
+
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+              Para definir la fórmula del score es necesario estandarizar previamente las variables incluidas en el modelo, de modo que todas se encuentren en una misma escala. Esto evita que diferencias en magnitud o unidades de medida distorsionen su contribución dentro del indicador. <br><br>
+              Al trabajar con variables estandarizadas, los pesos (que representan la importancia relativa estimada por el modelo) mantienen coherencia económica y estadística, permitiendo que su interpretación como proporción de impacto sea consistente y que la lógica del score se preserve adecuadamente. <br><br>
+            </p>
+
+            <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Score Base — Combinación lineal ponderada</p>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:20px;">
+              El modelo final del score crediticio puede expresarse como una combinación lineal ponderada de las variables seleccionadas, incorporando signo negativo en aquellas que presentan una relación inversa con la calidad crediticia.
+            </p>
+            <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:20px 24px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:center;">
+              <div style="display:inline-flex; flex-direction:column; gap:8px; align-items:flex-start;">
+                <p style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--white); margin-bottom:16px; text-align:center; width:100%;">Score<sub>base</sub> =</p>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#f87171; font-size:13px; min-width:16px; text-align:center;">−</span>
+                  <code style="font-size:13px; color:var(--accent);">0.032156</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Outstanding_Debt</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#f87171; font-size:13px; min-width:16px; text-align:center;">−</span>
+                  <code style="font-size:13px; color:var(--accent);">0.026707</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Interest_Rate</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#f87171; font-size:13px; min-width:16px; text-align:center;">−</span>
+                  <code style="font-size:13px; color:var(--accent);">0.014050</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Delay_from_due_date</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#f87171; font-size:13px; min-width:16px; text-align:center;">−</span>
+                  <code style="font-size:13px; color:var(--accent);">0.017951</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Num_Credit_Card</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#f87171; font-size:13px; min-width:16px; text-align:center;">−</span>
+                  <code style="font-size:13px; color:var(--accent);">0.012550</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Num_Credit_Inquiries</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#f87171; font-size:13px; min-width:16px; text-align:center;">−</span>
+                  <code style="font-size:13px; color:var(--accent);">0.010737</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Num_Bank_Accounts</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#34d399; font-size:13px; min-width:16px; text-align:center;">+</span>
+                  <code style="font-size:13px; color:var(--accent);">0.090979</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Pay_Min_Yes</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#34d399; font-size:13px; min-width:16px; text-align:center;">+</span>
+                  <code style="font-size:13px; color:var(--accent);">0.068036</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Pay_Min_No</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#34d399; font-size:13px; min-width:16px; text-align:center;">+</span>
+                  <code style="font-size:13px; color:var(--accent);">0.262000</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Credit_Mix_Good</span>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <span style="color:#34d399; font-size:13px; min-width:16px; text-align:center;">+</span>
+                  <code style="font-size:13px; color:var(--accent);">0.141270</code>
+                  <span style="font-size:13px; color:var(--muted);">·</span>
+                  <span style="font-size:13px; color:var(--text);">Credit_Mix_Standard</span>
+                </div>
+              </div>
+            </div>
+            </div>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:20px;">
+              Donde las primeras seis variables incorporan signo negativo debido a su relación adversa con la calidad crediticia, asegurando que un mayor valor en dichas variables reduzca el score final y, por tanto, refleje un mayor riesgo. <br><br>
+            </p>
+
+            <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Normalización — Min-Max Scaling (0 a 500)</p>
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:20px;">
+              Para una mejor interpretabilidad el score se normaliza en un rango entre 0 y 500 con un min-max scaling.
+            </p>
+            <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:16px 24px; margin-bottom:16px; text-align:center;">
+              <p style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--white); margin-bottom:12px;">
+                Score = 500 · (Score<sub>base</sub> − Score<sub>min</sub>) / (Score<sub>max</sub> − Score<sub>min</sub>)
+              </p>
+              <div style="height:1px; background:rgba(56,189,248,0.2); margin:12px auto; max-width:400px;"></div>
+              <p style="font-family:'DM Serif Display',serif; font-size:15px; color:var(--muted);">
+                Score = 500 · (Score<sub>base</sub> − (−0.7899777)) / (0.4228750 − (−0.7899777))
+              </p>
+            </div>
+
           </div></div>
         </div>
+
       </div>
     </div>
 
     <!-- 3.7 -->
     <div class="tab-panel" id="tab-umbrales">
       <div class="accordion">
+
         <div class="accord-item" data-acc>
-          <div class="accord-header"><h3>Primera Iteración — Maximización de Accuracy (Optuna)</h3><div class="accord-icon">+</div></div>
+          <div class="accord-header"><h3>Definición de Umbrales (Optuna)</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">¿Qué es Optuna y cómo lo usaron para encontrar los umbrales que maximizan accuracy? ¿Cuántas iteraciones corrieron?</div>
+
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+              Una vez construido el score continuo, es necesario transformarlo en una variable categórica que permita clasificar a los individuos en los tres niveles definidos. Para ello, se estiman dos puntos de corte t₁ y t₂:
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
+              <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:12px 20px; display:flex; align-items:center; gap:16px; justify-content:center; text-align:center;">
+                <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#f87171; min-width:80px;">Poor</span>
+                <span style="font-size:13px; color:var(--text);">Score &lt; t₁</span>
+              </div>
+              <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:12px 20px; display:flex; align-items:center; gap:16px; justify-content:center; text-align:center;">
+                <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#fbbf24; min-width:80px;">Standard</span>
+                <span style="font-size:13px; color:var(--text);">t₁ ≤ Score &lt; t₂</span>
+              </div>
+              <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:8px; padding:12px 20px; display:flex; align-items:center; gap:16px; justify-content:center; text-align:center;">
+                <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#34d399; min-width:80px;">Good</span>
+                <span style="font-size:13px; color:var(--text);">Score ≥ t₂</span>
+              </div>
+            </div>
+
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+              En lugar de fijar estos umbrales de forma arbitraria, se plantea su determinación como un problema de optimización. El objetivo es encontrar los valores de t₁ y t₂ que maximicen la capacidad de clasificación del modelo, medida a través de la accuracy sobre el conjunto de evaluación. De esta manera, los puntos de corte se seleccionan de forma consistente con la estructura empírica de los datos y no mediante criterios subjetivos.
+            </p>
+
+            <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px; margin-bottom:20px;">
+              <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px;">¿Qué es Optuna?</p>
+              <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:justify;">
+                Optuna es un framework de optimización automática de hiperparámetros ampliamente utilizado en machine learning. Implementa métodos avanzados de búsqueda como <strong style="color:var(--white);">TPE (Tree-structured Parzen Estimator)</strong>, que modelan de manera probabilística el espacio de soluciones y permiten explorar eficientemente combinaciones de parámetros. A diferencia de una búsqueda exhaustiva (grid search), Optuna adapta dinámicamente la exploración con base en resultados previos, mejorando la eficiencia computacional y la probabilidad de encontrar soluciones óptimas.
+              </p>
+            </div>
+
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+              En este contexto, los umbrales t₁ y t₂ se tratan como hiperparámetros enteros dentro del rango observado del score. En cada iteración, el algoritmo propone una combinación de valores, calcula la clasificación resultante y evalúa su precisión. Tras múltiples ensayos (trials), el estudio selecciona la combinación que maximiza la métrica objetivo. Este procedimiento garantiza que la segmentación final del score sea estadísticamente óptima respecto a la capacidad predictiva del modelo clásico.
+            </p>
+
           </div></div>
         </div>
-        <div class="accord-item" data-acc>
-          <div class="accord-header"><h3>Problema de Desbalance Detectado</h3><div class="accord-icon">+</div></div>
-          <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">¿Qué problema encontraron con la primera iteración? ¿El modelo clasificaba casi todo en una sola clase? ¿Cómo lo detectaron?</div>
-          </div></div>
-        </div>
-        <div class="accord-item" data-acc>
-          <div class="accord-header"><h3>Segunda Iteración — Optimización con Penalización</h3><div class="accord-icon">+</div></div>
-          <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">¿Cómo modificaron la función objetivo de Optuna para penalizar el desbalance? ¿Qué métrica usaron en lugar de solo accuracy?</div>
-          </div></div>
-        </div>
+
         <div class="accord-item" data-acc>
           <div class="accord-header"><h3>Umbrales Finales — Poor / Standard / Good</h3><div class="accord-icon">+</div></div>
           <div class="accord-body"><div class="accord-body-inner">
-            <div class="placeholder-box">Presenta los umbrales finales para cada categoría (Poor, Standard, Good) y el porcentaje de solicitantes que cae en cada una.</div>
+
+            <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+              Una vez implementado Optuna para optimizar los umbrales, se realizaron múltiples procesos de optimización con el objetivo de garantizar estabilidad y consistencia en los resultados. Los umbrales que mostraron el mejor desempeño fueron los siguientes:
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
+              <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#f87171;">Poor</span>
+                <span style="font-size:13px; color:var(--text);">Score &lt; <strong style="color:var(--white);">235</strong></span>
+                <span style="font-size:11px; letter-spacing:1px; background:rgba(239,68,68,0.15); border-radius:20px; padding:3px 12px; color:#f87171;">Clasificación 0</span>
+              </div>
+              <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#fbbf24;">Standard</span>
+                <span style="font-size:13px; color:var(--text);"><strong style="color:var(--white);">235</strong> ≤ Score &lt; <strong style="color:var(--white);">412</strong></span>
+                <span style="font-size:11px; letter-spacing:1px; background:rgba(245,158,11,0.15); border-radius:20px; padding:3px 12px; color:#fbbf24;">Clasificación 1</span>
+              </div>
+              <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:8px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#34d399;">Good</span>
+                <span style="font-size:13px; color:var(--text);">Score ≥ <strong style="color:var(--white);">412</strong></span>
+                <span style="font-size:11px; letter-spacing:1px; background:rgba(16,185,129,0.15); border-radius:20px; padding:3px 12px; color:#34d399;">Clasificación 2</span>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:center; margin-bottom:24px;">
+              <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:20px 40px; text-align:center;">
+                <div style="font-family:'DM Serif Display',serif; font-size:48px; color:var(--white); line-height:1;">59%</div>
+                <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-top:6px;">Accuracy en conjunto de prueba</div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:center;">
+              <img src="umbrales.png" alt="Matriz de Confusión" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+            </div>
+
           </div></div>
         </div>
+
       </div>
     </div>
 
@@ -1848,159 +2365,1020 @@ footer {
   </div>
   <h2 class="section-title">Supuestos del Modelo</h2>
   <p class="section-desc">Las hipótesis concretas sobre las que se construye el modelo.</p>
-  <div class="two-col">
-    <div class="content-card"><h3>Sobre los Datos</h3><div class="placeholder-box">¿Asumieron datos completos, sin outliers extremos, representativos de la población? ¿Cómo manejaron valores faltantes?</div></div>
-    <div class="content-card"><h3>Sobre las Variables</h3><div class="placeholder-box">¿Asumieron independencia entre variables? ¿Priorizaron alguna por criterio experto o estadístico? ¿Cómo definieron los pesos?</div></div>
-    <div class="content-card"><h3>Sobre el Comportamiento Crediticio</h3><div class="placeholder-box">¿Qué definición de "buen pagador" vs "mal pagador" usaron? ¿Cuál es el criterio de default? ¿30 días de mora? ¿60?</div></div>
-    <div class="content-card"><h3>Limitaciones Conocidas</h3><div class="placeholder-box">Describe honestamente lo que el modelo NO puede hacer y dónde podría tener sesgos.</div></div>
-  </div>
-</section>
 
-<!-- 5. SCORECARD -->
-<section class="page-section" id="scorecard">
-  <div class="section-eyebrow">
-    <span class="section-num">05</span>
-    <span class="section-label">Estructura del modelo</span>
-  </div>
-  <h2 class="section-title">Tablero de Puntaje</h2>
-  <p class="section-desc">Variables seleccionadas, pesos asignados y rangos de clasificación.</p>
+  <div class="accordion" style="max-width:900px; width:100%;">
 
-  <div class="content-card" style="max-width:900px; margin-bottom:40px;">
-    <h3>Variables y Ponderaciones</h3>
-    <table class="scorecard-table">
-      <thead><tr><th>#</th><th>Variable</th><th>Descripción</th><th>Peso / Puntos</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Variable 1</td><td><span style="color:var(--muted);font-style:italic">Ej. Historial crediticio</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="85%"></div></div><span class="weight-num">XX</span></div></td></tr>
-        <tr><td>2</td><td>Variable 2</td><td><span style="color:var(--muted);font-style:italic">Ej. Ingresos mensuales</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="70%"></div></div><span class="weight-num">XX</span></div></td></tr>
-        <tr><td>3</td><td>Variable 3</td><td><span style="color:var(--muted);font-style:italic">Ej. Relación deuda-ingreso</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="55%"></div></div><span class="weight-num">XX</span></div></td></tr>
-        <tr><td>4</td><td>Variable 4</td><td><span style="color:var(--muted);font-style:italic">Ej. Años de empleo</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="40%"></div></div><span class="weight-num">XX</span></div></td></tr>
-        <tr><td>5</td><td>Variable 5</td><td><span style="color:var(--muted);font-style:italic">Agregar la tuya aquí</span></td><td><div class="weight-bar-cell"><div class="weight-bar"><div class="weight-bar-fill" style="width:0%" data-width="30%"></div></div><span class="weight-num">XX</span></div></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="content-card" style="max-width:680px;">
-    <h3>Rangos de Clasificación</h3>
-    <div class="ranges" style="margin-top:16px;">
-      <div class="range-item range-approved"><span class="range-label">✅ Aprobado</span><div class="range-track"><div class="range-fill" data-width="75%"></div></div><span class="range-score">XXX – XXX pts</span></div>
-      <div class="range-item range-review"><span class="range-label">⚠️ Revisión</span><div class="range-track"><div class="range-fill" data-width="50%"></div></div><span class="range-score">XXX – XXX pts</span></div>
-      <div class="range-item range-rejected"><span class="range-label">❌ Rechazado</span><div class="range-track"><div class="range-fill" data-width="25%"></div></div><span class="range-score">0 – XXX pts</span></div>
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Sobre los Datos y Variables</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Se asume que el conjunto de datos constituye una muestra representativa de la población de personas que solicitan un crédito. Esto implica que la distribución de las variables incluidas refleja de manera adecuada el comportamiento de estas mismas variables en la población general.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Se considera que los datos provienen de registros confiables y los valores observados representan de forma fiel el estado real del historial crediticio de los individuos.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Se asume que las relaciones observadas entre las variables independientes y la variable dependiente se mantienen relativamente estables a lo largo del tiempo, lo que permite utilizarlas para fines de análisis y modelado predictivo.</p>
+          </div>
+        </div>
+      </div></div>
     </div>
-    <div class="placeholder-box" style="margin-top:24px;">Define los umbrales exactos. ¿Cómo determinaron estos cortes? ¿Por distribución estadística, regla de negocio o decisión del equipo?</div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Sobre el Comportamiento Crediticio</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:16px;">
+          El modelo se basa en el supuesto de que el comportamiento financiero pasado de los individuos es un indicador útil para estimar su comportamiento futuro en relación con el cumplimiento de sus obligaciones crediticias.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Variables relacionadas con el historial de pagos, nivel de endeudamiento y grado de utilización del crédito se consideran especialmente informativas.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Un historial de pagos puntuales y un manejo responsable del crédito pueden indicar un menor riesgo.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Se asume que los patrones observados en el comportamiento crediticio histórico contienen información que puede ser utilizada para identificar tendencias y relaciones relevantes entre las variables analizadas y el riesgo de incumplimiento.</p>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Sobre el Uso del Modelo</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          Para utilizar el modelo de manera adecuada y obtener el score crediticio, se requiere que el conjunto de datos contenga uno de los dos siguientes sets de columnas:
+        </p>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
+          <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px; flex:1; min-width:220px;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:12px;">Variables Originales</p>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Outstanding_Debt</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Interest_Rate</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Delay_from_due_date</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Num_Credit_Card</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Num_Credit_Inquiries</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Num_Bank_Accounts</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Payment_of_Min_Amount</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Credit_Mix</span>
+            </div>
+          </div>
+          <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px; flex:1; min-width:220px;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:12px;">Variables Modificadas</p>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Outstanding_Debt</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Interest_Rate</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Delay_from_due_date</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Num_Credit_Card</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Num_Credit_Inquiries</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Num_Bank_Accounts</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Pay_Min_Yes</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Pay_Min_No</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Credit_Mix_Good</span>
+              <span style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:20px; padding:2px 10px; font-size:11px; color:var(--text);">Credit_Mix_Standard</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Tipos de dato requeridos</p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:20px;">
+          Se asume que los datos contenidos en dichas variables se encuentran completos y en el formato correspondiente:
+        </p>
+        <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; overflow:hidden; margin-bottom:20px;">
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <thead>
+              <tr style="background:rgba(26,79,160,0.6);">
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Variable</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Tipo</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Nota</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Outstanding_Debt</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">float</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Interest_Rate</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">float</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Delay_from_due_date</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">float</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Credit_Card</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">float</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Credit_Inquiries</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">float</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Bank_Accounts</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">float</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Payment_of_Min_Amount</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">object</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">'Yes', 'No', 'NM'</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">object</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">'Standard', 'Good', 'Bad', '_' / 'Unknown'</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Pay_Min_Yes</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">bool</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Pay_Min_No</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">bool</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix_Good</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">bool</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+              <tr>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix_Standard</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;">bool</td>
+                <td style="padding:10px 16px; color:var(--muted); text-align:center;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Estandarización — Medias y Desviaciones Estándar del Set de Entrenamiento</p>
+        <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:16px;">
+          Para el uso del modelo se estandarizan las variables utilizadas. Se asume que las medias y desviaciones estándar del set de entrenamiento son lo suficientemente representativas para estandarizar cualquier set introducido al modelo.
+        </p>
+        <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; overflow:hidden; margin-bottom:20px;">
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <thead>
+              <tr style="background:rgba(26,79,160,0.6);">
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Feature</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Mean</th>
+                <th style="padding:10px 16px; text-align:center; color:var(--sky); font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:500;">Std</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Outstanding_Debt</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">1428.19891</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">1157.393198</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Interest_Rate</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">72.783925</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">467.552386</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Delay_from_due_date</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">21.06815</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">14.868123</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Credit_Card</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">22.498987</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">129.425374</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Credit_Inquiries</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">27.34054</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">190.491199</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Num_Bank_Accounts</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">17.57829</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">120.56635</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Pay_Min_Yes</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.5228</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.49948</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Pay_Min_No</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.357575</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.479286</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix_Good</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.243737</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.429336</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 16px; color:var(--accent); text-align:center;">Credit_Mix_Standard</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.364787</td>
+                <td style="padding:10px 16px; color:var(--text); text-align:center;">0.481371</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px;">
+          <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px;">Escalamiento del Score (0 a 500)</p>
+          <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center; margin-bottom:12px;">
+            El modelo escala el score obtenido a un rango de 0 a 500 utilizando el score mínimo y máximo obtenidos en el conjunto de entrenamiento, asumiendo que estos valores son representativos y adecuados para realizar el escalamiento.
+          </p>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:12px 20px; flex:1; min-width:140px; text-align:center;">
+              <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px;">Score Mínimo</div>
+              <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">-0.7899777238287378</div>
+            </div>
+            <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:12px 20px; flex:1; min-width:140px; text-align:center;">
+              <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px;">Score Máximo</div>
+              <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">0.42287501409236394</div>
+            </div>
+            <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:12px 20px; flex:1; min-width:140px; text-align:center;">
+              <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px;">Rango Final</div>
+              <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--accent);">0 — 500</div>
+            </div>
+          </div>
+        </div>
+
+      </div></div>
+    </div>
+
   </div>
 </section>
 
-<!-- 6. RESULTADOS -->
+<!-- 5. RESULTADOS -->
 <section class="page-section" id="resultados">
   <div class="section-eyebrow">
-    <span class="section-num">06</span>
+    <span class="section-num">05</span>
     <span class="section-label">Desempeño del modelo</span>
   </div>
   <h2 class="section-title">Resultados</h2>
-  <p class="section-desc">Comparación entre la clasificación del modelo y el dataset de referencia.</p>
+  <p class="section-desc">Desempeño del modelo sobre el conjunto de prueba.</p>
+
   <div class="metrics-row">
-    <div class="metric-card"><div class="metric-label">Exactitud</div><div class="metric-value">XX%</div><div class="metric-sub">Accuracy total</div></div>
-    <div class="metric-card"><div class="metric-label">Evaluados</div><div class="metric-value">XXX</div><div class="metric-sub">Solicitantes en test</div></div>
-    <div class="metric-card"><div class="metric-label">Correctos</div><div class="metric-value">XXX</div><div class="metric-sub">Aciertos del modelo</div></div>
-    <div class="metric-card"><div class="metric-label">Errores</div><div class="metric-value">XX</div><div class="metric-sub">Clasificaciones incorrectas</div></div>
+    <div class="metric-card"><div class="metric-label">Exactitud</div><div class="metric-value">59%</div><div class="metric-sub">Accuracy total</div></div>
+    <div class="metric-card"><div class="metric-label">Evaluados</div><div class="metric-value">20K</div><div class="metric-sub">Observaciones en test</div></div>
+    <div class="metric-card"><div class="metric-label">Benchmark</div><div class="metric-value">55%</div><div class="metric-sub">Regresión Logística</div></div>
+    <div class="metric-card"><div class="metric-label">Mejora</div><div class="metric-value">+4%</div><div class="metric-sub">Sobre el benchmark</div></div>
   </div>
-  <h3 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:24px;">Matriz de Confusión</h3>
-  <div class="confusion-wrapper">
-    <div class="confusion-matrix">
-      <div></div>
-      <div class="cm-header">Pred: Bueno</div>
-      <div class="cm-header">Pred: Malo</div>
-      <div class="cm-header" style="writing-mode:vertical-rl;text-align:center;">Real: Bueno</div>
-      <div class="cm-cell cm-tp"><span class="cell-val">XX</span><span class="cell-label">VP</span></div>
-      <div class="cm-cell cm-fn"><span class="cell-val">XX</span><span class="cell-label">FN</span></div>
-      <div class="cm-header" style="writing-mode:vertical-rl;text-align:center;">Real: Malo</div>
-      <div class="cm-cell cm-fp"><span class="cell-val">XX</span><span class="cell-label">FP</span></div>
-      <div class="cm-cell cm-tn"><span class="cell-val">XX</span><span class="cell-label">VN</span></div>
+
+  <div class="accordion" style="max-width:900px; width:100%;">
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Accuracy, Precision y Recall por Clase</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:24px;">
+          El modelo clásico de scoring optimizado mediante la calibración de umbrales alcanza una accuracy global de 59% sobre el conjunto de prueba (20,000 observaciones). Considerando que se trata de un problema multiclase con tres categorías (Poor, Standard y Good), este desempeño indica que el modelo logra capturar patrones discriminantes relevantes, aunque con diferencias en desempeño entre clases.
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+
+          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+              <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#f87171;">Poor</span>
+              <div style="display:flex; gap:16px;">
+                <div style="text-align:center;">
+                  <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">0.51</div>
+                  <div style="font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase;">Precision</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">0.54</div>
+                  <div style="font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase;">Recall</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El modelo muestra una capacidad moderada para identificar perfiles de mayor riesgo. Desde una perspectiva financiera, el recall en esta clase es especialmente importante, ya que indica que el 54% de los individuos con mayor probabilidad de incumplimiento son correctamente detectados.</p>
+          </div>
+
+          <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+              <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#fbbf24;">Standard</span>
+              <div style="display:flex; gap:16px;">
+                <div style="text-align:center;">
+                  <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">0.71</div>
+                  <div style="font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase;">Precision</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">0.60</div>
+                  <div style="font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase;">Recall</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Presenta la mayor precision (0.71), lo que indica que cuando el modelo asigna esta categoría, suele hacerlo correctamente. No obstante, su recall es de 0.60, lo que implica que una proporción relevante de individuos de riesgo medio es clasificada en otra categoría. Dado que es la clase con mayor soporte (10,635 observaciones), su desempeño tiene un impacto significativo en la accuracy global.</p>
+          </div>
+
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+              <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#34d399;">Good</span>
+              <div style="display:flex; gap:16px;">
+                <div style="text-align:center;">
+                  <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">0.50</div>
+                  <div style="font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase;">Precision</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">0.66</div>
+                  <div style="font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase;">Recall</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El modelo logra recuperar una proporción considerable de buenos pagadores, aunque con cierta confusión frente a clases adyacentes.</p>
+          </div>
+
+        </div>
+
+        <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px; margin-top:16px;">
+          <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+            En conjunto, los resultados indican que el modelo posee capacidad discriminante razonable, especialmente en la clase predominante (Standard), aunque existe margen de mejora en la identificación precisa de perfiles extremos (Poor y Good).
+          </p>
+        </div>
+
+      </div></div>
     </div>
-    <div class="content-card">
-      <h3>Interpretación</h3>
-      <div class="placeholder-box">Explica cada cuadrante. ¿Cuál error es más costoso? FP (dar crédito a quien no debería) vs FN (rechazar a quien sí lo merece).</div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Comparación con Benchmark</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
+          <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:16px 20px; flex:1; min-width:180px; text-align:center;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Benchmark</p>
+            <p style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">55%</p>
+            <p style="font-size:11px; color:var(--muted); margin-top:4px;">Regresión Logística</p>
+          </div>
+          <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:16px 20px; flex:1; min-width:180px; text-align:center;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">Modelo Final</p>
+            <p style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">59%</p>
+            <p style="font-size:11px; color:var(--muted); margin-top:4px;">Scoring Optimizado</p>
+          </div>
+        </div>
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          En términos globales, el modelo propuesto muestra una mejora en capacidad predictiva agregada. La principal diferencia se observa en la distribución del desempeño por clase.
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">La regresión logística presenta un recall muy alto en la clase Standard (0.74), lo que indica que tiende a concentrar sus predicciones en la categoría intermedia.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Sin embargo, esto ocurre a costa de una pérdida total de capacidad discriminante en la clase Good (2), donde tanto precision como recall son 0.00. Es decir, el modelo no logra identificar ningún individuo de bajo riesgo correctamente.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">En la clase Poor (0), ambos modelos muestran desempeños similares (recall cercano a 0.55), aunque el modelo optimizado mantiene mayor equilibrio entre clases.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">La regresión logística presenta un sesgo claro hacia la clase mayoritaria (Standard), sacrificando completamente la detección de la clase Good.</p>
+          </div>
+        </div>
+
+        <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Benchmark vs Modelo de Scoring</p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px;">
+            <p style="font-size:11px; color:var(--muted); margin-bottom:8px; text-align:center;">Benchmark</p>
+            <img src="matriz_benchmark.png" alt="Matriz Benchmark" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+          </div>
+          <div style="flex:1; min-width:200px;">
+            <p style="font-size:11px; color:var(--muted); margin-bottom:8px; text-align:center;">Modelo de Scoring</p>
+            <img src="matriz_modelo_scoring.png" alt="Matriz Scoring" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+          </div>
+        </div>
+
+      </div></div>
     </div>
+
   </div>
 </section>
 
-<!-- 7. ERRORES -->
+<!-- 6. ERRORES -->
 <section class="page-section" id="errores">
   <div class="section-eyebrow">
-    <span class="section-num">07</span>
+    <span class="section-num">06</span>
     <span class="section-label">Diagnóstico de fallas</span>
   </div>
   <h2 class="section-title">Análisis de Errores</h2>
   <p class="section-desc">¿Dónde, cuánto y por qué se equivocó el modelo?</p>
-  <div class="two-col">
-    <div class="content-card"><h3>Cantidad y Tipo de Errores</h3><div class="placeholder-box">¿Cuántos errores totales? ¿Predominaron los FP o FN? Incluye porcentajes sobre el total evaluado.</div></div>
-    <div class="content-card"><h3>Análisis de Causas</h3><div class="placeholder-box">¿Por qué falló el modelo? ¿Hay un perfil de solicitante donde falla más? ¿Falta alguna variable importante?</div></div>
-    <div class="content-card"><h3>Casos Atípicos (Outliers)</h3><div class="placeholder-box">¿Detectaron casos donde el modelo falló por valores extremos? ¿Cómo impactaron en el desempeño general?</div></div>
-    <div class="content-card"><h3>Posibles Mejoras</h3><div class="placeholder-box">¿Qué cambiarían para reducir errores? ¿Nuevas variables, distintos pesos, otro método de clasificación?</div></div>
+
+  <div class="accordion" style="max-width:900px; width:100%;">
+
+    <!-- Matriz de Confusión -->
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Matriz de Confusión</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; justify-content:center; margin-bottom:24px;">
+          <img src="matriz_errores.png" alt="Matriz de Confusión" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+        </div>
+
+        <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Errores principales</p>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
+
+          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <span style="font-size:13px; color:#f87171; font-weight:500;">Clase 1 (Standard) → Clase 0 (Poor)</span>
+              <span style="font-family:'DM Serif Display',serif; font-size:20px; color:var(--white);">2,583 casos</span>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">El error más frecuente en volumen absoluto. El modelo está clasificando clientes de calidad crediticia media como de alto riesgo, lo que implica rechazar solicitudes viables o cobrar tasas más altas de lo justificado. Impacto: pérdida de oportunidad de negocio y posible insatisfacción del cliente.</p>
+          </div>
+
+          <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:10px; padding:14px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <span style="font-size:13px; color:#f87171; font-weight:500;">Clase 0 (Poor) → Clase 1 (Standard)</span>
+              <span style="font-family:'DM Serif Display',serif; font-size:20px; color:var(--white);">1,932 casos</span>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">El error más crítico para el negocio. Son clientes de alto riesgo que el modelo clasifica como aceptables, lo que implica pérdidas directas por incumplimiento. Sin embargo, representa solo el 33.4% de los errores de Clase 0, mostrando que el modelo es relativamente efectivo en detectar riesgo alto.</p>
+          </div>
+
+          <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <span style="font-size:13px; color:#fbbf24; font-weight:500;">Clase 2 (Good) → Clase 0 (Poor)</span>
+              <span style="font-family:'DM Serif Display',serif; font-size:20px; color:var(--white);">468 casos</span>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">Error poco frecuente pero muy perjudicial para la relación con el cliente, rechazando a buenos pagadores.</p>
+          </div>
+
+        </div>
+
+        <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px;">
+          <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px;">Orientación del modelo</p>
+          <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+            El modelo parece estar calibrado para minimizar falsos positivos en la Clase 0, es decir, reducir la probabilidad de clasificar incorrectamente a clientes de alto riesgo como perfiles de bajo riesgo. Desde una perspectiva de gestión crediticia, esta orientación es estratégicamente adecuada, ya que los errores en esta dirección pueden generar pérdidas financieras directas al otorgar crédito a individuos con alta probabilidad de incumplimiento.
+          </p>
+          <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:justify;">
+            Este comportamiento es consistente con la estrategia de selección de variables, las cuales en parte fueron determinadas a partir del análisis de los SHAP values para la clase Poor, priorizando aquellas con mayor contribución en la identificación de perfiles de alto riesgo. De esta manera, la construcción del modelo no solo responde a criterios estadísticos, sino que también está alineada con el objetivo financiero de fortalecer la detección temprana de clientes con mayor probabilidad de impago.
+          </p>
+        </div>
+
+      </div></div>
+    </div>
+
+    <!-- Distribución de Clases -->
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Distribución de Clases Predichas vs Reales</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+
+          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <span style="font-size:13px; color:#f87171; font-weight:500;">Clase 0 — Poor</span>
+              <div style="display:flex; gap:16px;">
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Real</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">28.99%</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Predicha</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">30.96%</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Δ</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:#f87171;">+1.97pp</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">El modelo sobrepredice esta clase: está siendo conservador, clasificando más clientes como de alto riesgo de lo que realmente son. Esto protege contra pérdidas pero reduce la cartera potencial.</p>
+          </div>
+
+          <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <span style="font-size:13px; color:#fbbf24; font-weight:500;">Clase 1 — Standard</span>
+              <div style="display:flex; gap:16px;">
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Real</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">53.17%</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Predicha</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">45.36%</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Δ</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:#f87171;">-7.81pp</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">El modelo subpredice la clase mayoritaria: está siendo "redistribuida" hacia los extremos. Clientes Standard están siendo reclasificados como Poor o Good, lo que sugiere que el modelo tiene dificultad para capturar el rango medio de riesgo crediticio.</p>
+          </div>
+
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:14px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <span style="font-size:13px; color:#34d399; font-weight:500;">Clase 2 — Good</span>
+              <div style="display:flex; gap:16px;">
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Real</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">17.83%</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Predicha</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--white);">23.68%</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:12px; color:var(--muted);">Δ</div>
+                  <div style="font-family:'DM Serif Display',serif; font-size:18px; color:#34d399;">+5.85pp</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">El modelo sobrepredice buenos clientes. Si bien esto favorece la aprobación, debe validarse que estos clientes realmente tengan bajo riesgo de incumplimiento.</p>
+          </div>
+
+        </div>
+
+      </div></div>
+    </div>
+
+    <!-- Análisis de Separabilidad -->
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Análisis de Separabilidad entre Clases</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; justify-content:center; margin-bottom:24px;">
+          <img src="separabilidad_1.png" alt="Separabilidad entre clases" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;"><strong style="color:var(--white);">Poor (0) y Standard (1)</strong> tienen considerable solapamiento entre scores 200-300, explicando los 1,932 + 2,583 errores bidireccionales entre estas clases.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;"><strong style="color:var(--white);">Standard (1) y Good (2)</strong> se solapan significativamente en 350-450, justificando los 1,654 errores de sobreestimación de Clase 2.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:var(--accent); flex-shrink:0;">—</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;"><strong style="color:var(--white);">Poor (0) y Good (2)</strong> están relativamente bien separadas (picos en ~270 vs ~500), lo que explica los bajos errores directos entre estas clases (726 + 468).</p>
+          </div>
+        </div>
+
+      </div></div>
+    </div>
+
+    <!-- Calibración -->
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Calibración del Modelo por Clase</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; justify-content:center; margin-bottom:24px;">
+          <img src="calibracion.png" alt="Calibración por clase" style="max-width:100%; border-radius:10px; border:1px solid var(--glass-border);">
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+
+          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px 20px;">
+            <p style="font-size:12px; color:#f87171; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Clase 0 — Poor</p>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">Buena calibración. La distribución predicha replica casi perfectamente la distribución real, con pico en ~270. El modelo entiende bien qué caracteriza a un cliente de alto riesgo. Sin embargo, existen varios clientes de alto riesgo con un score muy alto que no logra identificar.</p>
+          </div>
+
+          <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:14px 20px;">
+            <p style="font-size:12px; color:#fbbf24; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Clase 1 — Standard</p>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; margin-bottom:8px; text-align:justify">Descalibración significativa. La distribución predicha muestra:</p>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="color:var(--accent); flex-shrink:0;">—</span>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">Un pico principal en ~380 (correcto).</p>
+              </div>
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="color:var(--accent); flex-shrink:0;">—</span>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">Dos picos secundarios en ~240 y ~300 (clientes Standard confundidos con Poor).</p>
+              </div>
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="color:var(--accent); flex-shrink:0;">—</span>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">La distribución real es más dispersa y multimodal, sugiriendo heterogeneidad dentro de esta clase que el modelo no captura completamente.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:14px 20px;">
+            <p style="font-size:12px; color:#34d399; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Clase 2 — Good</p>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify">Buena calibración general, con pico bien definido en ~500. Sin embargo, la distribución predicha es más concentrada que la real, sugiriendo que el modelo es más "confiado" en sus predicciones de buenos clientes de lo que debería.</p>
+          </div>
+
+        </div>
+
+      </div></div>
+    </div>
+
   </div>
 </section>
 
-<!-- 8. CONCLUSIONES -->
+<!-- 7. CONCLUSIONES -->
 <section class="page-section" id="conclusiones">
   <div class="section-eyebrow">
-    <span class="section-num">08</span>
+    <span class="section-num">07</span>
     <span class="section-label">Síntesis final</span>
   </div>
   <h2 class="section-title">Conclusiones</h2>
-  <p class="section-desc">¿Qué logramos, qué aprendimos y qué implicaciones tiene esto en la vida real?</p>
-  <div class="two-col">
-    <div class="content-card"><h3>Sobre el Modelo</h3><div class="placeholder-box">¿Qué tan bueno resultó? ¿Superó las expectativas? ¿Qué tan similar fue la clasificación al dataset de referencia?</div></div>
-    <div class="content-card"><h3>Sobre el Proceso</h3><div class="placeholder-box">¿Qué decisiones fueron más críticas? ¿Qué harían diferente si empezaran de nuevo?</div></div>
-    <div class="content-card"><h3>Implicaciones Prácticas y Éticas</h3><div class="placeholder-box">Si este modelo se usara en una institución real, ¿qué consideraciones éticas habría? ¿Podría haber sesgos o discriminación indirecta?</div></div>
-    <div class="content-card"><h3>Trabajo Futuro</h3><div class="placeholder-box">Con más tiempo o datos, ¿cómo extenderían el proyecto? ¿Regresión logística, random forest, redes neuronales?</div></div>
+  <p class="section-desc">¿Qué se logró y qué implicaciones tiene esto en la vida real?</p>
+
+  <div class="accordion" style="max-width:900px; width:100%;">
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Desempeño General del Modelo</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px;">
+          <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:20px; flex:1; min-width:140px; text-align:center;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">Modelo Final</p>
+            <p style="font-family:'DM Serif Display',serif; font-size:40px; color:var(--white); line-height:1;">59%</p>
+            <p style="font-size:11px; color:var(--muted); margin-top:4px;">Accuracy</p>
+          </div>
+          <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:20px; flex:1; min-width:140px; text-align:center;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Benchmark</p>
+            <p style="font-family:'DM Serif Display',serif; font-size:40px; color:var(--white); line-height:1;">55%</p>
+            <p style="font-size:11px; color:var(--muted); margin-top:4px;">Regresión Logística</p>
+          </div>
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:20px; flex:1; min-width:140px; text-align:center;">
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#34d399; margin-bottom:8px;">Mejora</p>
+            <p style="font-family:'DM Serif Display',serif; font-size:40px; color:var(--white); line-height:1;">+4%</p>
+            <p style="font-size:11px; color:var(--muted); margin-top:4px;">Sobre el benchmark</p>
+          </div>
+        </div>
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          El modelo de Credit Score desarrollado tras el proceso de análisis alcanzó un accuracy del 59%. Esto indica que, aunque no se trata de un modelo con capacidad de predicción perfecta, sí posee cierta capacidad predictiva sobre el score crediticio. Además, el modelo supera el benchmark establecido, cuyo accuracy fue del 55%. Por lo tanto, el modelo propuesto muestra un mejor desempeño que el benchmark, así como que otros enfoques más simples, como un modelo aleatorio donde se asigne un score al azar.
+        </p>
+
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Desempeño por Clase</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+
+          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+              <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#f87171;">Poor</span>
+              <span style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">3,141 <span style="font-size:12px; color:var(--muted); font-family:'DM Sans',sans-serif;">correctos</span></span>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; margin-bottom:10px; text-align:justify;">Para la clase de 'Poor', el modelo clasifica correctamente 3,141 casos, aunque existe una cantidad relevante de observaciones que se confunden principalmente con la clase 'Standard' (1,932 casos) y en menor medida con la clase 'Good' (726 casos).</p>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Aunque clasificar un score que realmente es 'Poor' como 'Standard' implica cierto riesgo, este es menor que el de clasificarlo como 'Good', ya que en ese caso se estaría sobreestimando significativamente la calidad crediticia del cliente. Dado que el modelo no comete este último error con gran frecuencia, se considera que el nivel de riesgo asociado a estas confusiones no es excesivamente elevado.</p>
+          </div>
+
+          <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+              <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#fbbf24;">Standard</span>
+              <span style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">6,398 <span style="font-size:12px; color:var(--muted); font-family:'DM Sans',sans-serif;">correctos</span></span>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">En la clase 'Standard', el modelo logra 6,398 clasificaciones correctas, siendo esta la clase con mejor desempeño. No obstante, también se observan errores hacia la clase 'Poor' (2,583 casos) y hacia la clase 'Good' (1,654 casos). El modelo, en el caso de esta clase, tiende a subestimar el score crediticio más que sobreestimarlo.</p>
+          </div>
+
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:16px 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+              <span style="font-family:'DM Serif Display',serif; font-size:18px; color:#34d399;">Good</span>
+              <span style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--white);">2,356 <span style="font-size:12px; color:var(--muted); font-family:'DM Sans',sans-serif;">correctos</span></span>
+            </div>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Para la clase 'Good', el modelo identifica correctamente 2,356 observaciones, aunque se presentan algunas confusiones con la clase 'Standard' (742 casos) y en menor medida con la clase 'Poor' (468 casos). En el caso de esta clase, la predicción resulta relativamente buena, ya que no son muchos los errores.</p>
+          </div>
+
+        </div>
+
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Limitaciones del Modelo</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          El modelo desarrollado es un modelo lineal, lo que implica ciertas limitaciones, ya que pueden existir relaciones no lineales entre las variables que el modelo no es capaz de capturar adecuadamente. Como consecuencia, esto puede afectar su capacidad predictiva y hacer que no prediga de la mejor manera posible. Si bien se utilizaron modelos de Machine Learning para la selección de variables, el modelo final sigue siendo lineal, por lo que mantiene las limitaciones a este tipo de modelos mencionadas anteriormente.
+        </p>
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Recomendaciones para Mejorar el Score</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:20px;">
+          De acuerdo con el modelo desarrollado en este proyecto, a una persona que desee mejorar su score crediticio se le recomendaría lo siguiente:
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">En primer lugar, diversificar los tipos de crédito y préstamos que posee, ya que estas variables tienen un peso importante dentro del modelo.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">Es fundamental realizar los pagos a tiempo y cubrir al menos el pago mínimo requerido en los distintos tipos de crédito.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">El modelo muestra que a mayor nivel de deuda, menor es el score crediticio, por lo que se recomienda reducir y pagar las deudas existentes, así como utilizar el crédito de manera moderada y únicamente cuando sea realmente necesario.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span style="color:#34d399; flex-shrink:0;">✓</span>
+            <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:justify;">También se sugiere no acumular un número excesivo de tarjetas de crédito, ya que este es otro factor que, según el modelo, puede afectar negativamente el score crediticio.</p>
+          </div>
+        </div>
+
+        <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:10px; padding:16px 20px;">
+          <p style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:8px;">Factor externo</p>
+          <p style="font-size:13px; color:var(--text); line-height:1.8; text-align:center;">
+            Existe un factor que influye en el modelo y que escapa al control directo de las personas: la tasa de interés, la cual, cuando es más alta, tiende a afectar negativamente el score. No obstante, seguir las recomendaciones anteriores puede ayudar a mejorar el perfil crediticio, lo que a su vez aumenta la probabilidad de acceder a tasas de interés más bajas en futuros instrumentos de deuda.
+          </p>
+        </div>
+
+      </div></div>
+    </div>
+
   </div>
 </section>
 
-<!-- 9. REFLEXIÓN -->
+<!-- 8. REFLEXIÓN -->
 <section class="page-section" id="reflexion">
   <div class="section-eyebrow">
-    <span class="section-num">09</span>
+    <span class="section-num">08</span>
     <span class="section-label">Perspectiva del equipo</span>
   </div>
   <h2 class="section-title">Reflexión del Equipo</h2>
-  <p class="section-desc">Los mayores retos, cómo los superaron y qué se llevan de esta experiencia.</p>
-  <div class="reflection-grid">
-    <div class="reflection-card"><span class="rc-icon">🧗</span><h3>Mayores Retos</h3><div class="placeholder-box">¿Cuáles fueron los obstáculos más grandes? (datos sucios, elección de variables, calibración de pesos, tiempo, trabajo en equipo).</div></div>
-    <div class="reflection-card"><span class="rc-icon">🔧</span><h3>Cómo los Superaron</h3><div class="placeholder-box">¿Qué estrategias tomaron? ¿Buscaron referencias externas, iteraron el modelo, dividieron el trabajo de cierta manera?</div></div>
-    <div class="reflection-card"><span class="rc-icon">💡</span><h3>Aprendizajes del Equipo</h3><div class="placeholder-box">Más allá del contenido técnico, ¿qué se llevan? Trabajo colaborativo, pensamiento crítico, el rol del crédito en la sociedad.</div></div>
+  <p class="section-desc">Los mayores retos, cómo los superamos y qué nos llevamos de esta experiencia.</p>
+
+  <div class="accordion" style="max-width:900px; width:100%;">
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Reflexión General</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          El desarrollo de este proyecto representó una experiencia académica muy enriquecedora, ya que implicó enfrentar distintos retos técnicos, metodológicos y creativos. Uno de los primeros desafíos fue trabajar con una base de datos que presentaba inconsistencias, valores faltantes y formatos incorrectos, lo que requirió un proceso cuidadoso de limpieza y preparación antes de iniciar el modelado.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Asimismo, la selección de variables y la elección de los métodos adecuados para el modelo representaron una parte clave del proceso. Para ello se exploraron distintas herramientas y metodologías, como el uso de feature importance, valores SHAP y algoritmos como XGBoost, además de la aplicación de técnicas como la optimización bayesiana con Optuna para la selección de thresholds. Este proceso permitió integrar conocimientos de distintas materias, como estadística, machine learning y programación. También fue necesario realizar investigación teórica para contextualizar el riesgo de crédito, comprender los modelos de scoring crediticio y explicar las métricas utilizadas para evaluar el desempeño del modelo.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Finalmente, la libertad en el formato de entrega permitió presentar el proyecto de forma más creativa mediante una página web interactiva, lo que facilitó comunicar los resultados de manera más clara y visual.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          En conjunto, el proyecto permitió combinar investigación, análisis de datos y desarrollo técnico, además de fomentar el trabajo en equipo y el aprendizaje autónomo, contribuyendo a comprender mejor cómo se construyen y evalúan modelos de scoring crediticio en la práctica.
+        </p>
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Ana Sofía Hinojosa</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Al realizar este proyecto y enfrentarme a diversos retos técnicos, tuve muchas oportunidades para aprender conceptos y herramientas nuevas. Algunos de los principales desafíos fueron la selección de variables y la elección del método más adecuado, y fue en este proceso donde aprendí sobre los SHAP values, una herramienta que no había visto en otras clases y que me pareció muy interesante y útil para interpretar modelos.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Otro de los retos importantes fue la selección de los thresholds para la clasificación del score. En esta etapa pude aplicar conocimientos que adquirí en otras materias, como la optimización bayesiana, la cual en este caso se implementó utilizando Optuna. Esta experiencia permitió integrar distintos conceptos aprendidos durante la carrera y aplicarlos de forma práctica en el desarrollo del modelo.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          En general, este proyecto representó una muy buena oportunidad para poner a prueba distintos conocimientos y habilidades. No solo me permitió aplicar y consolidar mis conocimientos técnicos, sino también desarrollar habilidades de trabajo en equipo y de autoaprendizaje al enfrentar distintos retos a lo largo del proceso.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          En este sentido, la experiencia me pareció muy valiosa, ya que combinó la aplicación práctica de herramientas con la necesidad de investigar, aprender nuevas metodologías y colaborar de manera efectiva para lograr los objetivos del proyecto.
+        </p>
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Ivanna Herrera</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Uno de los principales retos que tuve fue pensar en una forma creativa y única de presentar nuestro proyecto, ya que fui motivada por el punto extra para la mejor presentación. Quería que fuera algo interactivo y ordenado, por lo que se me ocurrió crear una página web utilizando mis conocimientos sobre html. Algo que me gustó sobre esto es que se nos da total libertad para el formato del documento, lo cual se me hizo padre por que pudimos presentar nuestro trabajo de una forma visualmente más atractiva que un documento escrito.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          En cuánto a la investigación, uno de los principales retos fue encontrar información que pudiera sustentar la forma en la que decidimos desarrollar el modelo. Además, el pensar en que información sería necesaria para poder dar un contexto completo de lo que es el otorgamiento de crédito, los tipos de riesgo que conlleva, los distintos modelos de scoring crediticio que existen, enfocándonos en el de FICO, y los factores que influyen en la calificación de los clientes y los rangos que se consideran. También se investigó sobre las métricas de evaluación que se utilizaron para poder dar una explicación detallada sobre como funcionan y para que se pueden utilizar. Por último, investigar para poder explicar como es que se pudó aplicar Machine Learning en la elección de variables y el por qué funciona.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Otro reto fue encontrar buenas formas de elegir las variables finales para el modelo y el hacer distintas pruebas para ver si se podía llegar a un mejor resultado en cuanto al accuracy del modelo final. Para esto realizamos investigaciones sobre las variables, observamos gráficas sobre la relación, distribución y separabilidad de estas, y utilizamos el feature importance para elegir las que son más relevantes para el modelo.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          En general, me gustó mucho la libertad que se dió en cuanto a la realización del proyecto, la forma en la que se nos permitió combinar investigación teórica con análisis de datos y entender mejor cómo se construye y se evalúa un modelo de scoring crediticio en la práctica.
+        </p>
+      </div></div>
+    </div>
+
+    <div class="accord-item" data-acc>
+      <div class="accord-header"><h3>Luis Fernando Márquez</h3><div class="accord-icon">+</div></div>
+      <div class="accord-body"><div class="accord-body-inner">
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Uno de los principales retos fue trabajar con una base de datos con múltiples inconsistencias: formatos erróneos, valores nulos y registros incompletos, situación poco común en proyectos previos. El proceso de limpieza de datos requirió de tiempo y mucha atención al detalle para llegar a una base de datos limpia y utilizable.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Además, la selección de variables relevantes para el modelo fue una tarea compleja debido a la gran cantidad de técnicas disponibles. Fue necesario contrastar diferentes metodologías como el análisis de valores SHAP y las métricas de importancia del algoritmo XGBoost para fundamentar adecuadamente la inclusión o exclusión de predictores en el modelo final.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:12px;">
+          Un punto positivo del proyecto, que a su vez representó un reto, es la libertad en el desarrollo de este. Esto se debe a la posibilidad de aplicar conocimientos de muchas materias ya vistas como machine learning, programación y estadística, además de realizar investigaciones para fundamentar conceptos económicos y financieros.
+        </p>
+        <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify;">
+          En general el proyecto fue una experiencia muy satisfactoria con retos únicos en comparación a otras materias, ya que nos permitió utilizar y aplicar mucho de lo aprendido previamente con libertad y criterio propio.
+        </p>
+      </div></div>
+    </div>
+
   </div>
 </section>
 
-<!-- 10. REFERENCIAS -->
+<!-- 09. REFERENCIAS -->
 <section class="page-section" id="referencias">
   <div class="section-eyebrow">
-    <span class="section-num">10</span>
+    <span class="section-num">09</span>
     <span class="section-label">Fuentes consultadas</span>
   </div>
   <h2 class="section-title">Referencias</h2>
   <p class="section-desc">Bibliografía y fuentes utilizadas para el desarrollo del modelo.</p>
 
-  <div class="accordion">
-    <div class="accord-item" data-acc>
-      <div class="accord-header"><h3>Libros y Artículos Académicos</h3><div class="accord-icon">+</div></div>
-      <div class="accord-body"><div class="accord-body-inner">
-        <div class="placeholder-box">Apellido, N. (Año). <em>Título del libro</em>. Editorial.<br>
-        Apellido, N. (Año). Título del artículo. <em>Nombre de la revista</em>, volumen(número), páginas.</div>
-      </div></div>
+  <div style="max-width:900px; width:100%; background:rgba(15,45,94,0.6); border:1px solid var(--glass-border); border-radius:10px; padding:20px 28px; display:flex; flex-direction:column; gap:12px;">
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">1</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Team, A., Team, A., & Team, A. (2024, November 20). Fundamentals of credit risk. <em style="color:var(--muted);">CFA, FRM, and Actuarial Exams Study Notes.</em> <a href="https://analystprep.com/study-notes/frm-part-i/fundamentals-of-credit-risk/" style="color:var(--accent); text-decoration:none;" target="_blank">https://analystprep.com/...</a></p>
     </div>
-    <div class="accord-item" data-acc>
-      <div class="accord-header"><h3>Documentación Técnica y Datasets</h3><div class="accord-icon">+</div></div>
-      <div class="accord-body"><div class="accord-body-inner">
-        <div class="placeholder-box">Nombre del dataset o documentación técnica. (Año). <em>Título</em>. Recuperado de: URL</div>
-      </div></div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">2</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Metodologías de cuantificación del riesgo de crédito. (n.d.). <em style="color:var(--muted);">BBVA Financial Report 2010.</em> <a href="https://shareholdersandinvestors.bbva.com/microsites/informes2010/es/Gestiondelriesgo/Metodologiasdecuantificaciondelriesgodecredito.html" style="color:var(--accent); text-decoration:none;" target="_blank">https://shareholdersandinvestors.bbva.com/...</a></p>
     </div>
-    <div class="accord-item" data-acc>
-      <div class="accord-header"><h3>Sitios Web y Recursos en Línea</h3><div class="accord-icon">+</div></div>
-      <div class="accord-body"><div class="accord-body-inner">
-        <div class="placeholder-box">Autor o Institución. (Año). <em>Título de la página</em>. Recuperado de: URL</div>
-      </div></div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">3</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Risk in banking - English open captions. (n.d.). [Video]. <em style="color:var(--muted);">SAS.</em> <a href="https://www.sas.com/es_mx/insights/risk-management/credit-risk-management.html" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.sas.com/...</a></p>
     </div>
-  </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">4</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Tiffanycaballero. (n.d.). Los indicadores esenciales de riesgo de crédito: guía para su identificación y gestión. <em style="color:var(--muted);">Equality Company.</em> <a href="https://www.equality.company/los-indicadores-esenciales-de-riesgo-de-credito/" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.equality.company/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">5</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Peterdy, K. (2022, June 11). Credit risk. <em style="color:var(--muted);">Corporate Finance Institute.</em> <a href="https://corporatefinanceinstitute.com/resources/commercial-lending/credit-risk/" style="color:var(--accent); text-decoration:none;" target="_blank">https://corporatefinanceinstitute.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">6</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Team, I. (2025, October 29). Credit scoring: Purpose, factors, and role in lending. <em style="color:var(--muted);">Investopedia.</em> <a href="https://www.investopedia.com/terms/c/credit_scoring.asp" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.investopedia.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">7</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">SA, C. (2024, February 8). What is credit scoring? About types, model and method. <em style="color:var(--muted);">Comarch S.A.</em> <a href="https://www.comarch.com/finance/articles/what-is-credit-scoring-about-types-model-and-method/" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.comarch.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">8</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Clasificación: Exactitud, recuperación, precisión y métricas relacionadas. (n.d.). <em style="color:var(--muted);">Google for Developers.</em> <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall?hl=es-419" style="color:var(--accent); text-decoration:none;" target="_blank">https://developers.google.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">9</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Sandhu, D. R. (2021, November 5). Class imbalance vs accuracy. <em style="color:var(--muted);">Medium.</em> <a href="https://medium.com/@rajsandhu1989/class-imbalance-vs-accuracy-9739f5deece0" style="color:var(--accent); text-decoration:none;" target="_blank">https://medium.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">10</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">GeeksforGeeks. (2025, October 29). Evaluation metrics in machine learning. <em style="color:var(--muted);">GeeksforGeeks.</em> <a href="https://www.geeksforgeeks.org/machine-learning/metrics-for-machine-learning-model/" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.geeksforgeeks.org/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">11</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Kaur, T. (2025, February 19). KNN Imputation: The Complete Guide. <em style="color:var(--muted);">Medium.</em> <a href="https://medium.com/@tarangds/knn-imputation-the-complete-guide-146f932870a7" style="color:var(--accent); text-decoration:none;" target="_blank">https://medium.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">12</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">World Bank Group. (2019). <em style="color:var(--muted);">Credit scoring approaches guidelines.</em> The World Bank Group. <a href="https://thedocs.worldbank.org/en/doc/935891585869698451-0130022020/original/CREDITSCORINGAPPROACHESGUIDELINESFINALWEB.pdf" style="color:var(--accent); text-decoration:none;" target="_blank">https://thedocs.worldbank.org/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">13</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Bozagiu, A.-M., Mihai, G.-D., Neacșu, A. C., & Neacșu, G. A. (2025). A comparative analysis of credit scoring models and generative AI techniques. <em style="color:var(--muted);">Proceedings of the 19th International Conference on Business Excellence, 19,</em> 1235–1247. <a href="https://reference-global.com/article/10.2478/picbe-2025-0098" style="color:var(--accent); text-decoration:none;" target="_blank">https://doi.org/10.2478/picbe-2025-0098</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">14</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Cao, A., He, H., Chen, Z., & Zhang, W. (2018). Performance evaluation of machine learning approaches for credit scoring. <em style="color:var(--muted);">International Journal of Economics, Finance and Management Sciences, 6</em>(6), 255–260. <a href="https://www.sciencepublishinggroup.com/article/10.11648/j.ijefm.20180606.12" style="color:var(--accent); text-decoration:none;" target="_blank">https://doi.org/10.11648/j.ijefm.20180606.12</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">15</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Banco Bilbao Vizcaya Argentaria. (2013). Probabilidad de incumplimiento (PD). <a href="https://accionistaseinversores.bbva.com/microsites/bbvain2013/es/G/c2.html" style="color:var(--accent); text-decoration:none;" target="_blank">https://accionistaseinversores.bbva.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">16</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Team, O. (2022, April 15). OPTUNA: an Automatic Hyperparameter Optimization Framework. <em style="color:var(--muted);">Open Data Science Conference.</em> <a href="https://odsc.com/blog/optuna-an-automatic-hyperparameter-optimization-framework/" style="color:var(--accent); text-decoration:none;" target="_blank">https://odsc.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">17</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Basel Committee on Banking Supervision. (2006). <em style="color:var(--muted);">International convergence of capital measurement and capital standards: A revised framework (Comprehensive version).</em> Bank for International Settlements.</p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">18</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Merton, R. C. (1974). On the pricing of corporate debt: The risk structure of interest rates. <em style="color:var(--muted);">The Journal of Finance, 29</em>(2), 449–470. <a href="https://doi.org/10.1111/j.1540-6261.1974.tb03058.x" style="color:var(--accent); text-decoration:none;" target="_blank">https://doi.org/10.1111/j.1540-6261.1974.tb03058.x</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">19</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Thomas, L. C., Crook, J. N., & Edelman, D. B. (2002). <em style="color:var(--muted);">Credit scoring and its applications.</em> Society for Industrial and Applied Mathematics.</p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">20</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">FICO. (n.d.). What's in my FICO® scores? <em style="color:var(--muted);">Fair Isaac Corporation.</em> <a href="https://www.myfico.com/credit-education/whats-in-your-credit-score" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.myfico.com/...</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">21</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Hand, D. J., & Henley, W. E. (1997). Statistical classification methods in consumer credit scoring: A review. <em style="color:var(--muted);">Journal of the Royal Statistical Society: Series A, 160</em>(3), 523–541. <a href="https://www.jstor.org/stable/2983268" style="color:var(--accent); text-decoration:none;" target="_blank">https://www.jstor.org/stable/2983268</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">22</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Hastie, T., Tibshirani, R., & Friedman, J. (2009). <em style="color:var(--muted);">The elements of statistical learning: Data mining, inference, and prediction</em> (2nd ed.). Springer.</p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">23</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. <em style="color:var(--muted);">Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining,</em> 785–794. <a href="https://doi.org/10.1145/2939672.2939785" style="color:var(--accent); text-decoration:none;" target="_blank">https://doi.org/10.1145/2939672.2939785</a></p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">24</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Siddiqi, N. (2012). <em style="color:var(--muted);">Credit risk scorecards: Developing and implementing intelligent credit scoring.</em> John Wiley & Sons.</p>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
+
+    <div style="display:flex; gap:16px; align-items:flex-start;">
+      <span style="font-family:'DM Serif Display',serif; font-size:16px; color:var(--accent); flex-shrink:0; min-width:24px;">25</span>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; text-align:justify;">Breiman, L. (2001). Statistical modeling: The two cultures. <em style="color:var(--muted);">Statistical Science, 16</em>(3), 199–231. <a href="https://doi.org/10.1214/ss/1009213726" style="color:var(--accent); text-decoration:none;" target="_blank">https://doi.org/10.1214/ss/1009213726</a></p>
+    </div>
+
+</div>
 </section>
 
 <!-- ANEXOS -->
@@ -2021,7 +3399,7 @@ footer {
       </div>
       <div class="accord-body">
         <div class="accord-body-inner">
-          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
+          <button onclick="forceDownload('Credit_Score.ipynb')" class="download-btn" style="border:none; cursor:pointer;">Descargar</button>
           <div class="placeholder-box">Este archivo contiene el código para el modelo de puntuación crediticia, incluyendo la carga de datos, la definición de variables y el entrenamiento del modelo.</div>
         </div>
       </div>
@@ -2035,7 +3413,7 @@ footer {
       </div>
       <div class="accord-body">
         <div class="accord-body-inner">
-          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
+          <button onclick="forceDownload('Data_Cleaning.ipynb')" class="download-btn" style="border:none; cursor:pointer;">Descargar</button>
           <div class="placeholder-box">Este archivo contiene el código para la limpieza de datos, incluyendo corrección de formatos, transformación de variables e imputación para los datos faltantes.</div>
         </div>
       </div>
@@ -2049,8 +3427,22 @@ footer {
       </div>
       <div class="accord-body">
         <div class="accord-body-inner">
-          <a href="docs/documento.pdf" download class="download-btn">Descargar</a>
+          <a href="clean_train.csv" download class="download-btn">Descargar</a>
           <div class="placeholder-box">Este archivo contiene el dataset limpio utilizado para entrenar el modelo de puntuación crediticia.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anexo D -->
+    <div class="annex-card accord-item" data-acc>
+      <div class="accord-header">
+        <div class="annex-letter">trial_data.csv</div>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-body-inner">
+          <a href="trial_data.csv" download class="download-btn">Descargar</a>
+          <div class="placeholder-box">Este archivo contiene el dataset para evaluar la función del score crediticio.</div>
         </div>
       </div>
     </div>
@@ -2136,6 +3528,28 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.getElementById('tab-' + tab).classList.add('active');
   });
 });
+
+document.querySelectorAll('[data-card]').forEach(card => {
+  const header = card.querySelector('.content-card-header');
+  header.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('[data-card]').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  });
+});
+
+function forceDownload(filename) {
+  fetch(filename)
+    .then(res => res.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+}
 
 </script>
 </body>
