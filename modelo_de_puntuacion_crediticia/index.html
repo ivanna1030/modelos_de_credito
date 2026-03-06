@@ -1589,8 +1589,18 @@ footer {
               </div>
 
               <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:14px 18px;">
+                <p style="font-size:12px; color:var(--accent); letter-spacing:1px; margin-bottom:4px;">Change_Credit_Limit / Credit_Mix / Outstanding_Debt / Amount_invested_monthly</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6;">Se eliminaron los caracteres <code style="background:rgba(56,189,248,0.1); padding:1px 6px; border-radius:4px; color:var(--accent);">_</code> para normalizar su formato..</p>
+              </div>
+
+              <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:14px 18px;">
                 <p style="font-size:12px; color:var(--accent); letter-spacing:1px; margin-bottom:4px;">Credit_Inquiries</p>
                 <p style="font-size:13px; color:var(--text); line-height:1.6;">Al ser un indicador acumulativo, se imputaron valores intermedios cuando el primero y el tercero coincidían, asignando al segundo el mismo valor.</p>
+              </div>
+
+              <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:14px 18px;">
+                <p style="font-size:12px; color:var(--accent); letter-spacing:1px; margin-bottom:4px;">Payment_of_Min_Amount</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6;">Se transformó en una <strong style="color:var(--white);">variable dummy</strong> para su uso en el modelo.</p>
               </div>
 
               <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:14px 18px;">
@@ -1600,7 +1610,7 @@ footer {
 
               <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:14px 18px;">
                 <p style="font-size:12px; color:var(--accent); letter-spacing:1px; margin-bottom:4px;">Credit_History_Age</p>
-                <p style="font-size:13px; color:var(--text); line-height:1.6;">Almacenada como texto tipo <code style="background:rgba(56,189,248,0.1); padding:1px 6px; border-radius:4px; color:var(--accent);">"X Years and Y Months"</code>. Se convirtió a años decimales (ej. 5 años y 6 meses → <strong style="color:var(--white);">5.5</strong>). Valores faltantes imputados sumando o restando <strong style="color:var(--white);">1/12</strong> por cliente.</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6;">Almacenada como texto tipo <code style="background:rgba(56,189,248,0.1); padding:1px 6px; border-radius:4px; color:var(--accent);">"X Years and Y Months"</code>. Se convirtió a años decimales (ej. 5 años y 6 meses → <strong style="color:var(--white);">5.5</strong>) mediante una función que extrae los años y meses y los expresa como años decimales. Valores faltantes imputados sumando o restando un mes de forma decimal <strong style="color:var(--white);">(1/12)</strong> según sea el caso por cliente.</p>
               </div>
 
               <div style="background:rgba(15,45,94,0.8); border:1px solid var(--glass-border); border-radius:10px; padding:14px 18px;">
@@ -1646,6 +1656,10 @@ footer {
 
             <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Por qué One-Hot Encoding</p>
             <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:12px; align-items:flex-start;">
+                <span style="color:var(--accent); flex-shrink:0;">—</span>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left;">Permite convertir cada categoría en una variable binaria sin imponer un orden artificial entre ellas.</p>
+              </div>
               <div style="display:flex; gap:12px; align-items:flex-start;">
                 <span style="color:var(--accent); flex-shrink:0;">—</span>
                 <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left;">Preserva la información cualitativa original.</p>
@@ -1749,7 +1763,7 @@ footer {
             </div>
 
             <p style="font-size:14px; color:var(--text); line-height:1.8; text-align:justify; margin-bottom:0px;">
-              La separación de variables se realizó de manera que X contuviera las variables independientes o características del modelo, mientras que y representa la variable objetivo <code style="background:rgba(56,189,248,0.1); padding:1px 6px; border-radius:4px; color:var(--accent);">Credit_Score</code>. Se utilizó una semilla aleatoria con propósito de facilitar la reproducibilidad, garantizando que la partición sea siempre la misma al ejecutar el código múltiples veces.
+              La separación de variables se realizó de manera que "X" contuviera las variables independientes o características del modelo, mientras que "y" representa la variable objetivo <code style="background:rgba(56,189,248,0.1); padding:1px 6px; border-radius:4px; color:var(--accent);">Credit_Score</code>. Se utilizó una semilla aleatoria con propósito de facilitar la reproducibilidad, garantizando que la partición sea siempre la misma al ejecutar el código múltiples veces.
             </p>
 
           </div></div>
@@ -1891,18 +1905,19 @@ footer {
             <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
               <div style="display:flex; gap:12px; align-items:flex-start;">
                 <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">1</span>
-                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left; padding-top:3px;">Valores SHAP para las <strong style="color:var(--white);">tres clases</strong></p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left; padding-top:3px;">Valores SHAP para las <strong style="color:var(--white);">tres clases</strong>.</p>
               </div>
               <div style="display:flex; gap:12px; align-items:flex-start;">
                 <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">2</span>
-                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left; padding-top:3px;">Valores SHAP para la clase <strong style="color:var(--white);">Poor Credit Score</strong></p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left; padding-top:3px;">Valores SHAP para la clase <strong style="color:var(--white);">Poor Credit Score</strong>.</p>
               </div>
               <div style="display:flex; gap:12px; align-items:flex-start;">
                 <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--accent); flex-shrink:0;">3</span>
-                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left; padding-top:3px;"><strong style="color:var(--white);">Importancia de variables</strong> (feature importance)</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6; text-align:left; padding-top:3px;"><strong style="color:var(--white);">Importancia de variables</strong> (feature importance).</p>
               </div>
             </div>
 
+            <p style="font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:12px;">Variables que pasaron el primer filtro</p>
             <div style="display:flex; gap:16px; flex-wrap:wrap;">
               <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:14px 24px; text-align:center; flex:1; min-width:120px;">
                 <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--white);">14</div>
@@ -2151,7 +2166,7 @@ footer {
             <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px;">
               <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:16px 20px; flex:1; min-width:200px;">
                 <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#f87171; margin-bottom:8px;">Signo negativo</p>
-                <p style="font-size:13px; color:var(--text); line-height:1.6;">Las 6 variables numéricas presentan relación negativa con la calidad crediticia — a mayor valor, mayor riesgo. Sus pesos se definen con signo negativo para que incrementos en estas variables <strong style="color:var(--white);">reduzcan el puntaje final</strong>.</p>
+                <p style="font-size:13px; color:var(--text); line-height:1.6;">Las 6 variables numéricas presentan relación negativa con la calidad crediticia — a mayor valor, mayor riesgo y peor calificación. Sus pesos se definen con signo negativo para que incrementos en estas variables <strong style="color:var(--white);">reduzcan el puntaje final</strong>.</p>
               </div>
               <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:16px 20px; flex:1; min-width:200px;">
                 <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#34d399; margin-bottom:8px;">Signo positivo</p>
@@ -3201,7 +3216,7 @@ footer {
     <span class="section-label">Fuentes consultadas</span>
   </div>
   <h2 class="section-title">Referencias</h2>
-  <p class="section-desc">Bibliografía y fuentes utilizadas para el desarrollo del modelo.</p>
+  <p class="section-desc">Bibliografía y fuentes utilizadas a lo largo del proyecto.</p>
 
   <div style="max-width:900px; width:100%; background:rgba(15,45,94,0.6); border:1px solid var(--glass-border); border-radius:10px; padding:20px 28px; display:flex; flex-direction:column; gap:12px;">
 
@@ -3388,7 +3403,7 @@ footer {
     <span class="section-label">Material complementario</span>
   </div>
   <h2 class="section-title">Anexos</h2>
-  <p class="section-desc">Código fuente, dataset y referencias bibliográficas del proyecto.</p>
+  <p class="section-desc">Código fuente y datasets utilizados en el desarrollo del proyecto.</p>
   
   <div class="annex-grid">
     <!-- Anexo A -->
@@ -3446,6 +3461,21 @@ footer {
         </div>
       </div>
     </div>
+
+    <!-- Anexo E -->
+    <div class="annex-card accord-item" data-acc>
+      <div class="accord-header">
+        <div class="annex-letter">train.csv</div>
+        <div class="accord-icon">+</div>
+      </div>
+      <div class="accord-body">
+        <div class="accord-body-inner">
+          <a href="train.csv" download class="download-btn">Descargar</a>
+          <div class="placeholder-box">Este archivo contiene la base de datos original.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -3497,16 +3527,33 @@ document.querySelectorAll('[data-acc]').forEach(item => {
   const header = item.querySelector('.accord-header');
   const body = item.querySelector('.accord-body');
   if (item.classList.contains('open')) body.style.maxHeight = body.scrollHeight + 'px';
+
   header.addEventListener('click', () => {
     const isOpen = item.classList.contains('open');
+    const headerTop = header.getBoundingClientRect().top;
+
+    // Colapsar TODO sin transición
     document.querySelectorAll('[data-acc]').forEach(i => {
+      const b = i.querySelector('.accord-body');
+      b.style.transition = 'none';
       i.classList.remove('open');
-      i.querySelector('.accord-body').style.maxHeight = '0';
+      b.style.maxHeight = '0';
     });
-    if (!isOpen) {
-      item.classList.add('open');
-      body.style.maxHeight = body.scrollHeight + 'px';
-    }
+
+    // Corregir scroll AHORA que el layout ya cambió
+    const newHeaderTop = header.getBoundingClientRect().top;
+    window.scrollBy({ top: newHeaderTop - headerTop, behavior: 'instant' });
+
+    // Restaurar transición y abrir el nuevo
+    requestAnimationFrame(() => {
+      document.querySelectorAll('[data-acc] .accord-body').forEach(b => {
+        b.style.transition = '';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
   });
 });
 
