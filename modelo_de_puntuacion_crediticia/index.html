@@ -3532,6 +3532,12 @@ document.querySelectorAll('[data-acc]').forEach(item => {
     const isOpen = item.classList.contains('open');
     const headerTop = header.getBoundingClientRect().top;
 
+    // Ver si el acordeón abierto actualmente está ARRIBA del clickeado
+    const currentOpen = document.querySelector('[data-acc].open');
+    const openIsAbove = currentOpen && 
+      currentOpen !== item &&
+      currentOpen.getBoundingClientRect().top < header.getBoundingClientRect().top;
+
     // Colapsar TODO sin transición
     document.querySelectorAll('[data-acc]').forEach(i => {
       const b = i.querySelector('.accord-body');
@@ -3540,11 +3546,15 @@ document.querySelectorAll('[data-acc]').forEach(item => {
       b.style.maxHeight = '0';
     });
 
-    // Corregir scroll AHORA que el layout ya cambió
     const newHeaderTop = header.getBoundingClientRect().top;
-    window.scrollBy({ top: newHeaderTop - headerTop, behavior: 'instant' });
+    const delta = newHeaderTop - headerTop;
 
-    // Restaurar transición y abrir el nuevo
+    // Si el abierto estaba arriba: siempre corregir
+    // Si estaba abajo: solo corregir si bajó mucho
+    if (openIsAbove || delta > 5) {
+      window.scrollBy({ top: delta, behavior: 'instant' });
+    }
+
     requestAnimationFrame(() => {
       document.querySelectorAll('[data-acc] .accord-body').forEach(b => {
         b.style.transition = '';
