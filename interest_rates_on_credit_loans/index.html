@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasas de Interés — Análisis Financiero</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060c18;
+    --surface: #0b1526;
+    --surface2: #101e35;
+    --border: #1a3055;
+    --accent: #4d9fff;
+    --accent2: #7ec8ff;
+    --accent3: #38d9c0;
+    --text: #cce0ff;
+    --text-dim: #5a80aa;
+    --text-bright: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(91,140,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91,140,247,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(77,159,255,0.12) 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--text-bright);
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 4rem;
+    margin-top: 4rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .stat-item { position: relative; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  .section-title em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* ─── COMPONENTS GRID ─── */
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .comp-card {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .comp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .comp-card:hover { background: var(--surface2); }
+  .comp-card:hover::before { transform: scaleX(1); }
+
+  .comp-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .comp-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .comp-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ─── COMPARISON TABLE ─── */
+  .comparison-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .country-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .country-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .country-header.usa { background: rgba(77,159,255,0.12); }
+  .country-header.mx  { background: rgba(56,217,192,0.08); }
+
+  .country-flag { font-size: 2rem; }
+
+  .country-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-bright);
+  }
+
+  .country-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .country-rate {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+  }
+
+  .country-rate.usa { color: var(--accent2); }  .country-rate.mx  { color: var(--accent3); }
+
+  .country-body { padding: 2rem; }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .metric-row:last-child { border-bottom: none; }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .metric-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-bright);
+  }
+
+  /* ─── BAR CHART ─── */
+  .chart-container {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 2.5rem;
+    margin-top: 2rem;
+    border-radius: 2px;
+  }
+
+  .chart-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    width: 220px;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 1px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 1px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0;
+  }
+
+  .bar-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    width: 60px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ─── LOANS SECTION ─── */
+  .loans-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .loan-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .loan-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .loan-card.hipotecario::after { background: var(--accent); }
+  .loan-card.tarjeta::after     { background: var(--accent3); }
+
+  .loan-header {
+    padding: 2rem;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .loan-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .loan-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-bright);
+  }
+
+  .loan-rate-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .loan-card.hipotecario .loan-rate-big { color: var(--accent); }
+  .loan-card.tarjeta .loan-rate-big     { color: var(--accent3); }
+
+  .loan-body { padding: 2rem; }
+
+  .loan-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+
+  .loan-row:last-child { border-bottom: none; }
+  .loan-row span:first-child { color: var(--text-dim); }
+  .loan-row span:last-child  { color: var(--text-bright); font-family: 'DM Mono', monospace; }
+
+  /* ─── RISK SECTION ─── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .risk-card {
+    background: var(--surface);
+    padding: 2rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.25s;
+    position: relative;
+  }
+
+  .risk-card:hover, .risk-card.active { background: var(--surface2); }
+
+  .risk-card.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .risk-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .risk-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 0.5rem;
+  }
+
+  .risk-short {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .risk-detail {
+    display: none;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    padding: 2.5rem;
+    margin-top: 1.5px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .risk-detail.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── JAPAN CASE STUDY ─── */
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -3.4rem;
+    top: 0.3rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-body {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    max-width: 700px;
+  }
+
+  .japan-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .jstat {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 2rem;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .jstat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .jstat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ─── CONCLUSION ─── */
+  .conclusion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .takeaway {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 2rem;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .takeaway-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .takeaway-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 0.75rem;
+  }
+
+  .takeaway-body {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 0 4rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section { padding: 5rem 1.5rem 3rem; }
+    .components-grid { grid-template-columns: 1fr 1fr; }
+    .comparison-container, .loans-grid, .risk-grid, .conclusion-grid { grid-template-columns: 1fr; }
+    .japan-stats { grid-template-columns: 1fr; }
+  }
+
+  .refs-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0.8rem;
+  max-width:900px;
+  margin-top:2rem;
+  counter-reset:ref;
+  list-style:none;
+  padding:0;
+}
+
+.refs-grid li{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:1rem 1rem 1rem 2.5rem;
+  font-size:0.8rem;
+  line-height:1.7;
+  color:var(--text-dim);
+  position:relative;
+}
+
+.refs-grid li::before{
+  counter-increment:ref;
+  content: counter(ref);
+  position:absolute;
+  left:0.6rem;
+  top:0.9rem;
+  font-family:'DM Mono', monospace;
+  font-size:0.7rem;
+  color:var(--accent);
+}
+
+/* =========================
+   SECCIONES CENTRADAS
+   ========================= */
+
+section{
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+  width:100%;
+}
+
+
+/* =========================
+   HERO CENTRADO
+   ========================= */
+
+.hero{
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+  width:100%;
+}
+
+
+/* =========================
+   TITULOS CENTRADOS
+   ========================= */
+
+.section-title{
+  text-align:center;
+}
+
+.section-num{
+  text-align:center;
+}
+
+
+/* =========================
+   CONTENEDORES / GRIDS
+   ========================= */
+
+.refs-grid,
+.grid,
+.cards,
+.two-col,
+.columns,
+.hero-grid{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+/* =========================
+   REFERENCIAS CENTRADAS
+   ========================= */
+
+.refs-grid{
+  max-width:900px;
+}
+
+
+/* =========================
+   TEXTO GENERAL
+   ========================= */
+
+p{
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tasas de interés en los préstamos de crédito</div>
+  <ul class="nav-links">
+    <li><a href="#introduccion">Introducción</a></li>
+    <li><a href="#componentes">Componentes</a></li>
+    <li><a href="#comparacion">Comparación</a></li>
+    <li><a href="#prestamos">Préstamos</a></li>
+    <li><a href="#riesgos">Riesgos</a></li>
+    <li><a href="#japon">Caso Japón</a></li>
+    <li><a href="#conclusiones">Conclusiones</a></li>
+    <li><a href="#referencias">Referencias</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag">Modelos de Crédito · Reporte Final</div>
+
+  <h1>
+    Understanding the Formation<br>
+    of <span>Interest Rates</span><br>
+    on Credit Loans
+  </h1>
+
+  <!-- DATOS -->
+  <div style="
+  margin-top:1.8rem;
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;
+  color:var(--text-dim);
+  letter-spacing:0.08em;
+  line-height:1.8;
+  opacity:0;
+  animation:fadeUp 0.8s 0.4s forwards;
+  ">
+
+    <div style="color:var(--accent)">Materia</div>
+    <div>Modelos de Crédito</div>
+    <div style="border-bottom:1px solid var(--border);margin:6px 0 10px 0;"></div>
+
+    <div style="color:var(--accent)">Profesor</div>
+    <div>Rodolfo Slay Ramos</div>
+    <div style="border-bottom:1px solid var(--border);margin:6px 0 10px 0;"></div>
+
+    <div style="color:var(--accent)">Fecha</div>
+    <div>18 de marzo de 2026</div>
+    <div style="border-bottom:1px solid var(--border);margin:6px 0 10px 0;"></div>
+
+    <div style="color:var(--accent)">Integrantes</div>
+
+    <div>Ivanna Herrera Ibarra — 744614</div>
+    <div>Arantza Gomez Haro Gamboa — 744249</div>
+    <div>Javier A. Fajardo López — 740448</div>
+    <div>Luis F. Márquez Bañuelos — 744489</div>
+
+  </div>
+
+</section>
+
+<!-- 00. INTRODUCCIÓN -->
+<section id="introduccion">
+  <div class="section-num">00 — Introducción</div>
+
+  <h2 class="section-title">
+    Determinación de las<br>
+    <em>tasas de interés</em>
+  </h2>
+
+  <div style="
+    max-width:900px;
+    font-size:0.9rem;
+    line-height:1.9;
+    color:var(--text-dim);
+  ">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3.5rem;max-width:960px;opacity:0;animation:fadeUp 0.8s 0.6s forwards;">
+
+  <!-- Objetivo -->
+  <div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1.25rem">
+      Objetivo del trabajo
+    </div>
+
+    <div style="font-size:0.9rem;color:var(--text-dim);line-height:1.9">
+
+      Las tasas de interés son un elemento esencial dentro del sistema financiero, sin embargo, estas no se establecen de manera arbitraria, sino que dependen de distintos factores económicos y de riesgo.
+
+      <br><br>
+
+      El objetivo de este trabajo es analizar y comprender como es que se determinan las tasas de interés y cuáles son los principales factores que influyen en su formación, reconocer como las tasas de interés varían entre países y tipos de préstamos y entender los distintos riesgos que se deben considerar.
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Alcance -->
+  <div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1.25rem">
+      Alcance del análisis
+    </div>
+
+    <div style="font-size:0.9rem;color:var(--text-dim);line-height:1.9">
+
+      Para esto, se analizarán los componentes que conforman la tasa de interés, al igual que los riesgos que se asocian, se realizará una comparación entre Estados Unidos y México para observar las diferencias entre ellos y se explicarán los distintos tipos de préstamos que hay en un país, junto con un caso de estudio con el fin de entender como estos factores afectan el comportamiento de las tasas de interés.
+
+      <br><br>
+
+      Este análisis permite observar como las tasas de interés reflejan tanto las condiciones económicas como el nivel de riesgo presente en el sistema financiero. Además, el comprender como funcionan las tasas es fundamental para analizar la forma en que las instituciones financieras toman decisiones al otorgar crédito. Con esto, se busca identificar como factores económicos, financieros y de riesgo interactúan entre sí para determinar el nivel de las tasas de interés dadas.
+
+    </div>
+
+  </div>
+
+</div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="divider"></div>
+
+<!-- 1. COMPONENTES -->
+<section id="componentes">
+  <div class="section-num">01 — Componentes</div>
+  <h2 class="section-title">Los elementos que <em>forman</em><br>una tasa de interés</h2>
+
+  <div class="components-grid">
+    <div class="comp-card">
+      <div class="comp-icon">🏦</div>
+      <div class="comp-title">Tasa Base</div>
+      <div class="comp-desc">Porcentaje al cual presta dinero el Banco de México. Sirve como referencia para definir las tasas bancarias y refleja el estado de la economía nacional.</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">📈</div>
+      <div class="comp-title">Prima por Inflación</div>
+      <div class="comp-desc">Compensación al prestamista por la pérdida de poder adquisitivo que ocurre cuando se otorga un préstamo en un entorno inflacionario.</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">⚠️</div>
+      <div class="comp-title">Prima por Riesgo de Incumplimiento</div>
+      <div class="comp-desc">Rendimiento adicional exigido por el mayor riesgo de que el deudor no cumpla con sus obligaciones, comparado con un activo libre de riesgo.</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">💧</div>
+      <div class="comp-title">Prima por Riesgo de Liquidez</div>
+      <div class="comp-desc">Rendimiento extra exigido por mantener activos que no pueden convertirse fácilmente en efectivo a su valor justo de mercado.</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">⚙️</div>
+      <div class="comp-title">Costos de Administración</div>
+      <div class="comp-desc">Costos operativos en los que incurre el prestamista para ejecutar y gestionar el préstamo, incorporados directamente en la tasa.</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">💰</div>
+      <div class="comp-title">Margen de Ganancia</div>
+      <div class="comp-desc">Componente añadido para que la institución financiera obtenga utilidad neta después de cubrir todos los costos asociados al crédito.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 2. COMPARACIÓN INTERNACIONAL -->
+<section id="comparacion">
+  <div class="section-num">02 — Comparación Internacional</div>
+  <h2 class="section-title">EUA vs México:<br><em>tasas hipotecarias</em></h2>
+
+  <div class="comparison-container">
+    <!-- USA -->
+    <div class="country-card">
+      <div class="country-header usa">
+        <div>
+          <div class="country-flag">🇺🇸</div>
+          <div class="country-name">Estados Unidos</div>
+          <div class="country-type">País Desarrollado</div>
+        </div>
+        <div>
+          <div class="country-rate usa">6%</div>
+          <div class="metric-label" style="text-align:right">tasa hipotecaria promedio</div>
+        </div>
+      </div>
+      <div class="country-body">
+        <div class="metric-row">
+          <div class="metric-label">Inflación Anual</div>
+          <div class="metric-val">2.4%</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Acceso a Crédito</div>
+          <div class="metric-val">81% adultos con tarjeta</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Competencia Financiera</div>
+          <div class="metric-val">Alta</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Marco Regulatorio</div>
+          <div class="metric-val">Muy estructurado</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Estabilidad Económica</div>
+          <div class="metric-val">Alta</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEXICO -->
+    <div class="country-card">
+      <div class="country-header mx">
+        <div>
+          <div class="country-flag">🇲🇽</div>
+          <div class="country-name">México</div>
+          <div class="country-type">País en Desarrollo</div>
+        </div>
+        <div>
+          <div class="country-rate mx">11.45%</div>
+          <div class="metric-label" style="text-align:right">tasa hipotecaria promedio</div>
+        </div>
+      </div>
+      <div class="country-body">
+        <div class="metric-row">
+          <div class="metric-label">Inflación Anual</div>
+          <div class="metric-val">4.02%</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Acceso a Crédito</div>
+          <div class="metric-val">37.3% con crédito formal</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Competencia Financiera</div>
+          <div class="metric-val">Media-baja</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Marco Regulatorio</div>
+          <div class="metric-val">En desarrollo</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Estabilidad Económica</div>
+          <div class="metric-val">Media</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container" id="barChart">
+    <div class="chart-title">Indicadores Comparativos — EUA vs México</div>
+
+    <div class="bar-row">
+      <div class="bar-label">Tasa Hipotecaria Promedio</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="27" style="background: var(--accent2);"></div>
+      </div>
+      <div class="bar-val" style="color:var(--accent2)">6%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label"></div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="54" style="background: var(--accent);"></div>
+      </div>
+      <div class="bar-val" style="color:var(--accent)">11.45%</div>
+    </div>
+
+    <div class="bar-row" style="margin-top:1.5rem">
+      <div class="bar-label">Inflación Anual</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="11" style="background: var(--accent2);"></div>
+      </div>
+      <div class="bar-val" style="color:var(--accent2)">2.4%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label"></div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="19" style="background: var(--accent);"></div>
+      </div>
+      <div class="bar-val" style="color:var(--accent)">4.02%</div>
+    </div>
+
+    <div class="bar-row" style="margin-top:1.5rem">
+      <div class="bar-label">Acceso a Crédito Formal (%)</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="81" style="background: var(--accent2);"></div>
+      </div>
+      <div class="bar-val" style="color:var(--accent2)">81%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label"></div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="37.3" style="background: var(--accent);"></div>
+      </div>
+      <div class="bar-val" style="color:var(--accent)">37.3%</div>
+    </div>
+
+    <div style="display:flex;gap:2rem;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:0.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text-dim)">
+        <div style="width:12px;height:3px;background:var(--accent2)"></div> Estados Unidos
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text-dim)">
+        <div style="width:12px;height:3px;background:var(--accent)"></div> México
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 3. TIPOS DE PRÉSTAMOS -->
+<section id="prestamos">
+  <div class="section-num">03 — Tipos de Préstamo en México</div>
+  <h2 class="section-title">Hipotecario vs<br><em>Tarjeta de Crédito</em></h2>
+
+  <div class="loans-grid">
+    <!-- HIPOTECARIO -->
+    <div class="loan-card hipotecario">
+      <div class="loan-header">
+        <div>
+          <div class="loan-type">Largo Plazo · Con Garantía</div>
+          <div class="loan-name">Crédito Hipotecario</div>
+        </div>
+        <div style="text-align:right">
+          <div class="loan-rate-big">11.45%</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-dim)">tasa promedio anual</div>
+        </div>
+      </div>
+      <div class="loan-body">
+        <div class="loan-row">
+          <span>Plazo</span><span>5 – 30 años</span>
+        </div>
+        <div class="loan-row">
+          <span>Garantía</span><span>La propiedad</span>
+        </div>
+        <div class="loan-row">
+          <span>Tasa mínima</span><span>9.99%</span>
+        </div>
+        <div class="loan-row">
+          <span>Tasa máxima</span><span>21.13%</span>
+        </div>
+        <div class="loan-row">
+          <span>CAT promedio</span><span>13.92%</span>
+        </div>
+        <div class="loan-row">
+          <span>Tipo de tasa</span><span>Fija (común en MX)</span>
+        </div>
+        <div class="loan-row">
+          <span>Riesgo para banco</span><span>Bajo</span>
+        </div>
+        <div class="loan-row">
+          <span>Enganche requerido</span><span>5% – 20% del valor</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA -->
+    <div class="loan-card tarjeta">
+      <div class="loan-header">
+        <div>
+          <div class="loan-type">Corto Plazo · Sin Garantía</div>
+          <div class="loan-name">Tarjeta de Crédito</div>
+        </div>
+        <div style="text-align:right">
+          <div class="loan-rate-big">37.15%</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-dim)">tasa promedio (sin pago total)</div>
+        </div>
+      </div>
+      <div class="loan-body">
+        <div class="loan-row">
+          <span>Plazo</span><span>Hasta 50 días sin interés</span>
+        </div>
+        <div class="loan-row">
+          <span>Garantía</span><span>Ninguna</span>
+        </div>
+        <div class="loan-row">
+          <span>Tasa todos los clientes</span><span>23.89%</span>
+        </div>
+        <div class="loan-row">
+          <span>Tasa sin pago total</span><span>37.15%</span>
+        </div>
+        <div class="loan-row">
+          <span>Sin promociones</span><span>52.74%</span>
+        </div>
+        <div class="loan-row">
+          <span>Tipo de tasa</span><span>Variable</span>
+        </div>
+        <div class="loan-row">
+          <span>Riesgo para banco</span><span>Alto</span>
+        </div>
+        <div class="loan-row">
+          <span>Otros costos</span><span>Anualidad + comisiones</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1.5px solid var(--border);padding:2rem;margin-top:2rem;border-radius:2px;">
+    <div class="comp-title" style="margin-bottom:1rem">¿Por qué la diferencia?</div>
+    <p style="font-size:0.88rem;color:var(--text-dim);line-height:1.8;max-width:900px">
+      La diferencia fundamental radica en el <strong style="color:var(--text-bright)">riesgo</strong> y la <strong style="color:var(--text-bright)">garantía</strong>. El crédito hipotecario usa la propiedad como respaldo — si el cliente no paga, el banco recupera su dinero mediante la venta del inmueble. En contraste, la tarjeta de crédito no tiene ningún activo que respalde el préstamo, lo que eleva significativamente el riesgo percibido y, por ende, la tasa cobrada. A mayor riesgo, mayor costo del crédito.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 4. FACTORES DE RIESGO -->
+<section id="riesgos">
+  <div class="section-num">04 — Factores de Riesgo</div>
+  <h2 class="section-title">Los <em>cinco riesgos</em> que<br>mueven las tasas</h2>
+
+  <div class="risk-grid" id="riskGrid">
+    <div class="risk-card active" data-idx="0" onclick="showRisk(0)">
+      <div class="risk-num">01</div>
+      <div class="risk-name">Crediticio</div>
+      <div class="risk-short">Probabilidad de impago del deudor</div>
+    </div>
+    <div class="risk-card" data-idx="1" onclick="showRisk(1)">
+      <div class="risk-num">02</div>
+      <div class="risk-name">Mercado</div>
+      <div class="risk-short">Cambios en condiciones financieras globales</div>
+    </div>
+    <div class="risk-card" data-idx="2" onclick="showRisk(2)">
+      <div class="risk-num">03</div>
+      <div class="risk-name">Operativo</div>
+      <div class="risk-short">Fallas internas en la institución</div>
+    </div>
+    <div class="risk-card" data-idx="3" onclick="showRisk(3)">
+      <div class="risk-num">04</div>
+      <div class="risk-name">Legal</div>
+      <div class="risk-short">Cambios en regulaciones y leyes</div>
+    </div>
+    <div class="risk-card" data-idx="4" onclick="showRisk(4)">
+      <div class="risk-num">05</div>
+      <div class="risk-name">País</div>
+      <div class="risk-short">Factores políticos, económicos o sociales</div>
+    </div>
+  </div>
+
+  <div class="risk-detail visible" id="riskDetail">
+    <strong style="color:var(--text-bright);font-family:'Playfair Display',serif;font-size:1.1rem">Riesgo Crediticio</strong><br><br>
+    El riesgo crediticio es la probabilidad que tiene un prestamista de sufrir pérdidas por el impago —parcial o total— de un crédito. Cuando el prestatario presenta historial débil: altos niveles de endeudamiento, pagos tardíos o historial corto, el prestamista percibe mayor probabilidad de incumplimiento y aumenta la tasa como compensación. Un correcto análisis del riesgo crediticio permite tomar decisiones informadas, prevenir incumplimientos y construir relaciones sólidas con los clientes.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 5. CASO JAPÓN -->
+<section id="japon">
+  <div class="section-num">05 — Caso de Estudio</div>
+  <h2 class="section-title">Japón: salida de las tasas<br><em>negativas (2024–2025)</em></h2>
+
+  <div class="timeline">
+    <div class="timeline-item" id="t1">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Marzo 2024</div>
+      <div class="timeline-title">Fin de las tasas negativas</div>
+      <div class="timeline-body">El Bank of Japan (BOJ) puso fin a casi ocho años de tasas de interés negativas, elevando su tasa de política monetaria de –0.1% a aproximadamente 0–0.1%. Fue el primer aumento de tasas desde 2007 y también implicó el abandono del control de la curva de rendimientos.</div>
+    </div>
+
+    <div class="timeline-item" id="t2">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Factores Económicos</div>
+      <div class="timeline-title">¿Qué motivó el cambio?</div>
+      <div class="timeline-body">Tres catalizadores: (1) Inflación persistente cercana o superior al objetivo del 2% del BOJ, señalando que las presiones deflacionarias disminuían. (2) Aumento de salarios y escasez de mano de obra, sosteniendo un ciclo inflacionario. (3) Normalización económica: condiciones suficientemente mejoradas tras décadas de política ultra-expansiva.</div>
+    </div>
+
+    <div class="timeline-item" id="t3">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2024 — Bancos Principales</div>
+      <div class="timeline-title">Impacto en hipotecas variables</div>
+      <div class="timeline-body">Los principales bancos japoneses aumentaron tasas hipotecarias ajustables tras el segundo aumento del BOJ. Aproximadamente el 80% de los préstamos hipotecarios en Japón son de tasa flotante, transmitiendo ampliamente el impacto a los hogares, especialmente a jóvenes de 20 y 30 años.</div>
+    </div>
+
+    <div class="timeline-item" id="t4">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Enero 2025</div>
+      <div class="timeline-title">Nuevas subidas de tasas</div>
+      <div class="timeline-body">Tras el incremento de enero de 2025, se esperaba que las tasas variables para nuevos préstamos hipotecarios aumentaran 25 puntos base, pasando de 0.35% a 0.60% — un salto significativo para una economía habituada a décadas de tasas cercanas a cero.</div>
+    </div>
+
+    <div class="timeline-item" id="t5">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Diciembre 2025</div>
+      <div class="timeline-title">Rendimientos históricos</div>
+      <div class="timeline-body">El rendimiento del bono gubernamental japonés (JGB) a 10 años aumentó hasta 2.019% y el bono a 20 años alcanzó 2.975%, ambos los niveles más altos desde 1999 — marcando un punto de inflexión histórico para la economía japonesa.</div>
+    </div>
+  </div>
+
+  <div class="japan-stats">
+    <div class="jstat">
+      <div class="jstat-val">¥10.5 T</div>
+      <div class="jstat-label">Pagos de interés gobierno · FY2025</div>
+    </div>
+    <div class="jstat">
+      <div class="jstat-val">¥25.8 T</div>
+      <div class="jstat-label">Proyección pagos de interés · FY2034</div>
+    </div>
+    <div class="jstat">
+      <div class="jstat-val">80%</div>
+      <div class="jstat-label">Hipotecas de tasa variable en Japón</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 6. CONCLUSIONES -->
+<section id="conclusiones">
+  <div class="section-num">06 — Conclusiones</div>
+  <h2 class="section-title">Aprendizajes clave sobre<br><em>la formación de tasas</em></h2>
+
+<div class="conclusion-grid">
+
+  <div class="takeaway">
+    <div class="takeaway-num">01</div>
+    <div class="takeaway-title">Las tasas se determinan por varios componentes</div>
+    <div class="takeaway-body">
+      Las tasas de interés se determinan considerando distintos componentes que reflejan los riesgos asociados a un préstamo. La tasa base del banco central, la inflación, las primas por riesgo, los costos administrativos y el margen de ganancia influyen directamente en el nivel final de la tasa. Esto demuestra que la tasa compensa la incertidumbre del préstamo y el costo del dinero en el tiempo.
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-num">02</div>
+    <div class="takeaway-title">Las condiciones macroeconómicas influyen</div>
+    <div class="takeaway-body">
+      La comparación entre Estados Unidos y México muestra que factores como la inflación, la estabilidad económica, la política monetaria y el nivel de competencia dentro del sistema financiero afectan significativamente las tasas de interés. En economías con mayor estabilidad las tasas tienden a ser más bajas que en países en desarrollo.
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-num">03</div>
+    <div class="takeaway-title">El tipo de préstamo cambia la tasa</div>
+    <div class="takeaway-body">
+      Las tasas de interés varían dependiendo del tipo de préstamo y del riesgo asociado a cada producto financiero. Los créditos hipotecarios tienen tasas más bajas porque cuentan con garantía real y plazos largos, mientras que las tarjetas de crédito presentan tasas más elevadas por su mayor riesgo de incumplimiento y por no tener garantía.
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-num">04</div>
+    <div class="takeaway-title">Los riesgos aumentan el costo del crédito</div>
+    <div class="takeaway-body">
+      Los riesgos financieros influyen directamente en la determinación de las tasas de interés. Cuando las instituciones perciben mayor incertidumbre, ya sea por riesgo crediticio, de mercado, operativo, legal o de país, incrementan las tasas para compensar ese riesgo y evitar posibles pérdidas.
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-num">05</div>
+    <div class="takeaway-title">La política monetaria afecta las tasas</div>
+    <div class="takeaway-body">
+      El caso de Japón muestra cómo las decisiones de política monetaria pueden modificar las tasas de interés. El aumento de la inflación y de los salarios cambió las condiciones macroeconómicas del país y llevó al banco central a aumentar la tasa de referencia después de varios años con tasas negativas, afectando el mercado financiero y los préstamos.
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-num">06</div>
+    <div class="takeaway-title">Importancia en ingeniería financiera</div>
+    <div class="takeaway-body">
+      Comprender cómo se determinan las tasas de interés es fundamental en la ingeniería financiera, ya que son una variable clave en la valuación de activos, el diseño de instrumentos financieros y la toma de decisiones. Conocer estos factores permite desarrollar modelos más precisos y tomar decisiones mejor fundamentadas.
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 7. REFERENCIAS -->
+<section id="referencias">
+
+  <div class="section-num">07 — Referencias</div>
+
+  <h2 class="section-title">
+    Fuentes y<br><em>referencias</em>
+  </h2>
+
+
+  <ol class="refs-grid">
+
+<li>Bank of America. (n.d.). Préstamos para vivienda y las tasas actuales de Bank of America. https://www.bankofamerica.com/mortgage/es/</li>
+
+<li>TRADING ECONOMICS. (n.d.). Tasa de inflación de Estados Unidos. https://es.tradingeconomics.com/united-states/inflation-cpi</li>
+
+<li>Estructura de información (SIE, Banco de México). (n.d.). https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=8&idCuadro=CP151&accion=consultarCuadro&locale=es</li>
+
+<li>Average American Credit Card Debt 2025 Statistics | Academy Bank. (n.d.). Academy Bank. https://www.academybank.com/article/average-american-credit-card-debt-2025-statistics</li>
+
+<li>Torres, Y. (2025, June 30). Más personas acceden a créditos formales; tecnología impulsa inclusión. El Economista. https://www.eleconomista.com.mx/finanzaspersonales/personas-acceden-creditos-formales-tecnologia-impulsa-inclusion-20250326-752212.html</li>
+
+<li>CONDUSEF. (s.f.). Cómo seleccionar un crédito hipotecario. https://www.condusef.gob.mx/?p=contenido&idc=848&idcat=1</li>
+
+<li>Estructura de información (SIE, Banco de México). (n.d.). https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=18&accion=consultarCuadro&idCuadro=CF303&locale=es</li>
+
+<li>¿Qué debes saber sobre una tarjeta de crédito? (n.d.). https://www.santander.com.mx/educacion-financiera/blog/que-debes-saber-sobre-una-tarjeta-de-credito/index.html</li>
+
+<li>Estructura de información (SIE, Banco de México). (n.d.). https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=18&accion=consultarCuadro&idCuadro=CF840&locale=es</li>
+
+<li>Candian, M. (2026, January 21). Riesgo de Crédito: qué es, cómo funciona y cómo evaluarlo. Blog SYDLE. https://www.sydle.com/es/blog/riesgo-de-credito-66c3576d3064907f04634f08</li>
+
+<li>IBM. (n.d.). ¿Qué es el riesgo operacional? IBM Think. https://www.ibm.com/mx-es/think/topics/operational-risk</li>
+
+<li>Comité de Supervisión Bancaria de Basilea. (2003). Buenas prácticas para la gestión y supervisión del riesgo operativo. Banco de Pagos Internacionales. https://www.bis.org/publ/bcbs96esp.pdf</li>
+
+<li>Jiménez, M. M. (2021, December 1). Gestión del riesgo legal y recomendaciones. Pirani. https://www.piranirisk.com/es/blog/gestion-del-riesgo-legal-y-recomendaciones</li>
+
+<li>Bancomext. (2014, August 1). Riesgo País (Country risk). Banco Nacional de Comercio Exterior. https://www.bancomext.com/glosario/riesgo-pais-country-risk/</li>
+
+<li>Tan, C. (2024, marzo 20). Bank of Japan ends the world’s only negative rates regime. CNBC. https://www.cnbc.com/2024/03/19/bank-of-japan-boj-march-2024-policy-decision-mpm-meeting.html</li>
+
+<li>Weforum.org. Recuperado el 16 de marzo de 2026. https://www.weforum.org/stories/2024/03/japan-ends-negative-interest-rates-economy-monetary-policy/</li>
+
+<li>Euronews. (2024, 19 marzo). Bank of Japan ends negative interest rate policy. https://www.euronews.com/business/2024/03/19/bank-of-japan-ends-negative-interest-rate-policy-opting-for-first-hike-in-17-years</li>
+
+<li>Nippon.com. (2026, 17 enero). Fiscal Headaches Mount Despite End of Negative Interest Rates. https://www.nippon.com/en/in-depth/d01115/fiscal-headaches-mount-despite-end-of-negative-interest-rates.html</li>
+
+<li>The Japan Times. (2025, 20 diciembre). BOJ rate hike could be both good and bad for households. https://www.japantimes.co.jp/business/2025/12/20/economy/boj-rate-impact-households/</li>
+
+  </ol>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Modelos de Crédito · Tasas de Interés · 2026</div>
+</footer>
+
+<script>
+  // ─── RISK CARDS ───
+  const riskData = [
+    {
+      name: "Riesgo Crediticio",
+      body: "El riesgo crediticio es la probabilidad que tiene un prestamista de sufrir pérdidas por el impago —parcial o total— de un crédito. Cuando el prestatario presenta historial débil: altos niveles de endeudamiento, pagos tardíos o historial corto, el prestamista percibe mayor probabilidad de incumplimiento y aumenta la tasa como compensación. Un correcto análisis permite tomar decisiones informadas, prevenir incumplimientos y construir relaciones sólidas con los clientes."
+    },
+    {
+      name: "Riesgo de Mercado",
+      body: "Se refiere a los cambios en las condiciones del mercado financiero — inflación, política monetaria, crecimiento económico — que provocan variaciones en las tasas de interés. Estos cambios afectan directamente el valor real del dinero prestado. Ante aumento de inflación o cambios en política monetaria, las tasas tienden a incrementar. En mercados estables, el riesgo percibido baja y las tasas se nivelan."
+    },
+    {
+      name: "Riesgo Operativo",
+      body: "Posibilidad de pérdidas resultantes de procesos internos fallidos: errores humanos, sistemas inadecuados, fallas tecnológicas o fraudes. A mayor complejidad operativa de la institución, mayor exposición. Según el Comité de Supervisión Bancaria de Basilea, las instituciones deben establecer políticas y estructuras organizacionales para administrar este riesgo, con planes de contingencia para eventos inesperados. Cuando es alto, las tasas aumentan para compensar posibles costos adicionales."
+    },
+    {
+      name: "Riesgo Legal y Regulatorio",
+      body: "Riesgo de incumplimiento de leyes y regulaciones emitidas por gobiernos, así como de contratos comerciales. Puede generar pérdidas financieras graves, sanciones, multas y daño reputacional. En contextos de incertidumbre regulatoria o cambios frecuentes de leyes — como periodos de cambio de gobierno o políticas — los prestamistas incrementan tasas y ajustan condiciones de crédito para anticipar posibles modificaciones."
+    },
+    {
+      name: "Riesgo País",
+      body: "Riesgo generado por factores políticos, económicos, legales o sociales de un país, que pueden afectar la capacidad de pago de los deudores. Relevante especialmente en operaciones financieras internacionales. Factores como crisis económicas o inestabilidad política afectan la certidumbre sobre el cumplimiento de obligaciones. Cuando un país presenta mayor nivel de riesgo percibido, la tasa de interés en operaciones con ese país suele aumentar."
+    }
+  ];
+
+  function showRisk(idx) {
+    document.querySelectorAll('.risk-card').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.risk-card')[idx].classList.add('active');
+    const detail = document.getElementById('riskDetail');
+    detail.classList.remove('visible');
+    setTimeout(() => {
+      detail.innerHTML = `<strong style="color:var(--text-bright);font-family:'Playfair Display',serif;font-size:1.1rem">${riskData[idx].name}</strong><br><br>${riskData[idx].body}`;
+      detail.classList.add('visible');
+    }, 150);
+  }
+
+  // ─── ANIMATE BARS ON SCROLL ───
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const barChart = document.getElementById('barChart');
+  if (barChart) observer.observe(barChart);
+
+  // ─── ANIMATE TIMELINE ───
+  const tlObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+
+  ['t1','t2','t3','t4','t5'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      tlObserver.observe(el);
+    }
+  });
+</script>
+</body>
+</html>
