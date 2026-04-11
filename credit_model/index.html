@@ -4216,22 +4216,23 @@ pre {
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div class="panel">
             <div class="panel-header">
-              <span class="panel-title">PARÁMETROS DEL MODELO</span>
+              <span class="panel-title">PARÁMETROS Y MÉTRICAS DE NEGOCIO</span>
             </div>
             <table class="dash-table">
-              <thead><tr><th>Parámetro</th><th>Valor</th><th>Fuente</th></tr></thead>
+              <thead><tr><th>Parámetro / Métrica</th><th>Valor</th><th>Fuente</th></tr></thead>
               <tbody>
-                <tr><td>PD — Morosidad hipotecaria</td><td style="font-family:'Space Mono',monospace;color:var(--red);">2.70%</td><td style="font-size:10px;color:var(--muted);">Banxico 2024</td></tr>
-                <tr><td>LGD — Pérdida dado incumplimiento</td><td style="font-family:'Space Mono',monospace;color:var(--orange);">35%</td><td style="font-size:10px;color:var(--muted);">CNBV 2015</td></tr>
+                <tr><td colspan="3" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:1px;padding:8px 12px;">PARÁMETROS</td></tr>
+                <tr><td>PD — Morosidad hipotecaria nacional</td><td style="font-family:'Space Mono',monospace;color:var(--red);">2.70%</td><td style="font-size:10px;color:var(--muted);">Banxico 2024</td></tr>
+                <tr><td>LGD promedio — Pérdida dado incumplimiento</td><td style="font-family:'Space Mono',monospace;color:var(--orange);">35%</td><td style="font-size:10px;color:var(--muted);">CNBV 2015</td></tr>
                 <tr><td>Haircut sobre colateral</td><td style="font-family:'Space Mono',monospace;color:var(--yellow);">30%</td><td style="font-size:10px;color:var(--muted);">CUB Art. 99 Bis 2</td></tr>
                 <tr><td>Threshold óptimo (ROC)</td><td style="font-family:'Space Mono',monospace;color:var(--cyan);">0.143</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
                 <tr><td>Tasa amortización (LOAN)</td><td style="font-family:'Space Mono',monospace;color:var(--cyan);">11.5040%</td><td style="font-size:10px;color:var(--muted);">Modelo propio</td></tr>
                 <tr><td>Plazo simulación</td><td style="font-family:'Space Mono',monospace;color:var(--muted2);">20 años</td><td style="font-size:10px;color:var(--muted);">Mercado MX</td></tr>
+                <tr><td colspan="3" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:1px;padding:8px 12px;">MÉTRICAS DE NEGOCIO — VALIDATION SET</td></tr>
                 <tr><td>EAD Total (MORTDUE)</td><td style="font-family:'Space Mono',monospace;color:var(--cyan);">$76,593,144.82</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
                 <tr><td>Expected Loss</td><td style="font-family:'Space Mono',monospace;color:var(--red);">$964,766.50</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
                 <tr><td>EL / EAD</td><td style="font-family:'Space Mono',monospace;color:var(--orange);">1.26%</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
                 <tr><td>PD promedio ponderada EAD</td><td style="font-family:'Space Mono',monospace;color:var(--yellow);">14.73%</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
-                <tr><td>Morosidad nacional</td><td style="font-family:'Space Mono',monospace;color:var(--muted2);">2.70%</td><td style="font-size:10px;color:var(--muted);">Banxico</td></tr>
               </tbody>
             </table>
           </div>
@@ -4239,7 +4240,7 @@ pre {
             <div class="panel-header">
               <span class="panel-title">MÉTRICAS DE DESEMPEÑO</span>
             </div>
-            <div class="panel-body" style="display:flex;gap:16px;justify-content:space-around;padding:31px 16px;">
+            <div class="panel-body" style="display:flex;gap:16px;justify-content:space-around;padding:20px 16px;">
               <div class="gauge-wrap">
                 <div class="gauge"><div class="gauge-bg"></div><div class="gauge-fill" style="transform:rotate(165deg)"></div></div>
                 <div class="gauge-val">92%</div>
