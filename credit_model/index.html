@@ -4597,15 +4597,19 @@ updateClock();
 
 // Views
 function showView(id) {
+  // Ocultar todas las vistas
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.tb-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
-  document.querySelectorAll('.tb-tab').forEach(t => {
-    if (t.textContent.toLowerCase().includes(id.substring(0,4))) t.classList.add('active');
-  });
 
-  if (id === 'overview') updateRates();
+  // Actualizar tabs superiores
+  document.querySelectorAll('.tb-tab').forEach(b => b.classList.remove('active'));
+  const activeTab = document.querySelector('.tb-tab[onclick*="' + id + '"]');
+  if (activeTab) activeTab.classList.add('active');
+
+  // Actualizar sidebar
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  const activeSb = document.querySelector('.sb-item[onclick*="' + id + '"]');
+  if (activeSb) activeSb.classList.add('active');
 }
 
 // Rate builder
