@@ -4216,16 +4216,22 @@ pre {
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div class="panel">
             <div class="panel-header">
-              <span class="panel-title">VARIABLES DEL MODELO</span>
+              <span class="panel-title">PARÁMETROS DEL MODELO</span>
             </div>
             <table class="dash-table">
-              <thead><tr><th>Variable</th><th>Coeficiente</th><th>Dirección</th></tr></thead>
+              <thead><tr><th>Parámetro</th><th>Valor</th><th>Fuente</th></tr></thead>
               <tbody>
-                <tr><td>Outstanding Debt</td><td style="font-family:'Space Mono',monospace;color:var(--red);">−0.0322</td><td><span class="pill pill-r">↑ RIESGO</span></td></tr>
-                <tr><td>Interest Rate</td><td style="font-family:'Space Mono',monospace;color:var(--red);">−0.0267</td><td><span class="pill pill-r">↑ RIESGO</span></td></tr>
-                <tr><td>Delay from Due Date</td><td style="font-family:'Space Mono',monospace;color:var(--red);">−0.0141</td><td><span class="pill pill-r">↑ RIESGO</span></td></tr>
-                <tr><td>Credit Mix Good</td><td style="font-family:'Space Mono',monospace;color:var(--green);">+0.2620</td><td><span class="pill pill-g">↓ RIESGO</span></td></tr>
-                <tr><td>Pay Min Amount</td><td style="font-family:'Space Mono',monospace;color:var(--green);">+0.0910</td><td><span class="pill pill-g">↓ RIESGO</span></td></tr>
+                <tr><td>PD — Morosidad hipotecaria</td><td style="font-family:'Space Mono',monospace;color:var(--red);">2.70%</td><td style="font-size:10px;color:var(--muted);">Banxico 2024</td></tr>
+                <tr><td>LGD — Pérdida dado incumplimiento</td><td style="font-family:'Space Mono',monospace;color:var(--orange);">35%</td><td style="font-size:10px;color:var(--muted);">CNBV 2015</td></tr>
+                <tr><td>Haircut sobre colateral</td><td style="font-family:'Space Mono',monospace;color:var(--yellow);">30%</td><td style="font-size:10px;color:var(--muted);">CUB Art. 99 Bis 2</td></tr>
+                <tr><td>Threshold óptimo (ROC)</td><td style="font-family:'Space Mono',monospace;color:var(--cyan);">0.143</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
+                <tr><td>Tasa amortización (LOAN)</td><td style="font-family:'Space Mono',monospace;color:var(--cyan);">11.5040%</td><td style="font-size:10px;color:var(--muted);">Modelo propio</td></tr>
+                <tr><td>Plazo simulación</td><td style="font-family:'Space Mono',monospace;color:var(--muted2);">20 años</td><td style="font-size:10px;color:var(--muted);">Mercado MX</td></tr>
+                <tr><td>EAD Total (MORTDUE)</td><td style="font-family:'Space Mono',monospace;color:var(--cyan);">$76,593,144.82</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
+                <tr><td>Expected Loss</td><td style="font-family:'Space Mono',monospace;color:var(--red);">$964,766.50</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
+                <tr><td>EL / EAD</td><td style="font-family:'Space Mono',monospace;color:var(--orange);">1.26%</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
+                <tr><td>PD promedio ponderada EAD</td><td style="font-family:'Space Mono',monospace;color:var(--yellow);">14.73%</td><td style="font-size:10px;color:var(--muted);">Validation set</td></tr>
+                <tr><td>Morosidad nacional</td><td style="font-family:'Space Mono',monospace;color:var(--muted2);">2.70%</td><td style="font-size:10px;color:var(--muted);">Banxico</td></tr>
               </tbody>
             </table>
           </div>
@@ -4233,29 +4239,20 @@ pre {
             <div class="panel-header">
               <span class="panel-title">MÉTRICAS DE DESEMPEÑO</span>
             </div>
-            <div class="panel-body" style="display:flex;gap:16px;justify-content:space-around;">
+            <div class="panel-body" style="display:flex;gap:16px;justify-content:space-around;padding:31px 16px;">
               <div class="gauge-wrap">
-                <div class="gauge">
-                  <div class="gauge-bg"></div>
-                  <div class="gauge-fill" style="transform:rotate(140deg)"></div>
-                </div>
+                <div class="gauge"><div class="gauge-bg"></div><div class="gauge-fill" style="transform:rotate(165deg)"></div></div>
                 <div class="gauge-val">92%</div>
                 <div class="gauge-label">ACCURACY</div>
               </div>
               <div class="gauge-wrap">
-                <div class="gauge">
-                  <div class="gauge-bg"></div>
-                  <div class="gauge-fill" style="background:var(--purple);border-color:var(--purple);transform:rotate(151deg)"></div>
-                </div>
+                <div class="gauge"><div class="gauge-bg"></div><div class="gauge-fill" style="background:var(--purple);border-color:var(--purple);transform:rotate(173deg)"></div></div>
                 <div class="gauge-val" style="color:var(--purple);">0.961</div>
                 <div class="gauge-label">AUC-ROC</div>
               </div>
               <div class="gauge-wrap">
-                <div class="gauge">
-                  <div class="gauge-bg"></div>
-                  <div class="gauge-fill" style="background:var(--green);border-color:var(--green);transform:rotate(100deg)"></div>
-                </div>
-                <div class="gauge-val" style="color:var(--green);">55%</div>
+                <div class="gauge"><div class="gauge-bg"></div><div class="gauge-fill" style="background:var(--green);border-color:var(--green);transform:rotate(159deg)"></div></div>
+                <div class="gauge-val" style="color:var(--green);">88.8%</div>
                 <div class="gauge-label">RECALL</div>
               </div>
             </div>
